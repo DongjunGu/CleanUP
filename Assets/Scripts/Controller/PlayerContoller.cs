@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerContoller : MonoBehaviour
 {
     [SerializeField] private float _speed = 10.0f;
-    //[SerializeField] private float _jump = 5.0f;
+    [SerializeField] private float _jump = 3.0f;
 
     Animator anim;
     private float v = 0.0f;
@@ -18,6 +18,10 @@ public class PlayerContoller : MonoBehaviour
     private Rigidbody playerRigidbody;
 
     bool _isJumping; //점프 상태
+    bool _isDodge;
+
+    Vector3 dir;
+    Vector3 dogeVec;
     void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
@@ -29,7 +33,7 @@ public class PlayerContoller : MonoBehaviour
         GetInput();
         PlayerMove();
         PlayerJump();
-
+        PlayerDodge();
     }
 
     void GetInput()
@@ -39,43 +43,77 @@ public class PlayerContoller : MonoBehaviour
     }
     void PlayerMove()
     {
-
-        Vector3 dir = new Vector3(h, 0, v).normalized;
+        dir = new Vector3(h, 0, v).normalized;
 
         //Move
-        transform.position += dir * _speed * Time.deltaTime;
+        if (!(v==0 && h == 0))
+        {
+            anim.SetBool("isRun", true);
+            if (_isDodge)
+                dir = dogeVec;
+            transform.position += dir * _speed * Time.deltaTime;
+
+            
+        }
+        else
+        {
+            anim.SetBool("isRun", false);
+        }
+
+        if (_isDodge)
+            dir = dogeVec;
 
         //Rotate
         if (dir != Vector3.zero)
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * _rotateSpeed);
 
         //Idle-Run Blending
-        if (dir != Vector3.zero)
-        {
-            Idle_Run_Ratio = Mathf.Lerp(Idle_Run_Ratio, 1, 10.0f * Time.deltaTime);
-            anim.SetFloat("Idle_Run_Ratio", Idle_Run_Ratio);
-            anim.Play("Idle_Run");
-        }
-        else
-        {
-            Idle_Run_Ratio = Mathf.Lerp(Idle_Run_Ratio, 0, 10.0f * Time.deltaTime);
-            anim.SetFloat("Idle_Run_Ratio", Idle_Run_Ratio);
-            anim.Play("Idle_Run");
-        }
+        //if (dir != Vector3.zero)
+        //{
+        //    Idle_Run_Ratio = Mathf.Lerp(Idle_Run_Ratio, 1, 10.0f * Time.deltaTime);
+        //    anim.SetFloat("Idle_Run_Ratio", Idle_Run_Ratio);
+        //    anim.Play("Idle_Run");
+        //}
+        //else
+        //{
+        //    Idle_Run_Ratio = Mathf.Lerp(Idle_Run_Ratio, 0, 10.0f * Time.deltaTime);
+        //    anim.SetFloat("Idle_Run_Ratio", Idle_Run_Ratio);
+        //    anim.Play("Idle_Run");
+        //}
     }
 
     void PlayerJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !_isJumping)
+        if (Input.GetKeyDown(KeyCode.Space) && !_isJumping && !_isDodge)
         {
-            playerRigidbody.AddForce(Vector3.up * 5, ForceMode.Impulse);
+            playerRigidbody.AddForce(Vector3.up * _jump, ForceMode.Impulse);
+            anim.SetBool("isJump", true);
+            anim.SetTrigger("playJump");
             _isJumping = true;
         }
+    }
 
+    void PlayerDodge()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isJumping && !_isDodge && dir != Vector3.zero)
+        {
+            playerRigidbody.AddForce(Vector3.up * _jump, ForceMode.Impulse);
+            dogeVec = dir;
+            anim.SetTrigger("playDodge");
+            _isDodge = true;
+            Invoke("FinishDodge", 1.0f);
+        }
+    }
+
+    void FinishDodge()
+    {
+        _isDodge = false;
     }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Ground")
-            _isJumping = false;
+            anim.SetBool("isJump", false);
+        _isJumping = false;
+
     }
 }

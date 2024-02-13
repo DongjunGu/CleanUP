@@ -24,14 +24,17 @@ public class PlayerContoller : MonoBehaviour
     bool _obtainItem;
     bool _swapItem1;
     bool _swapItem2;
+    bool _attackKey;
+    bool _isAttack;
 
     Vector3 dir;
     Vector3 dogeVec;
 
     GameObject getItem;
-    GameObject orginWeapon;
+    Weapons orginWeapon;
 
     int orginWeaponIndex = -1;
+    float _attackDelay;
     void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
@@ -45,7 +48,8 @@ public class PlayerContoller : MonoBehaviour
         PlayerJump();
         PlayerDodge();
         ObtainItem(); //TODO 아이템 주울때 모션 추가
-        SwapWeapon();
+        SwapWeapon(); //TODO 스왑 모션 추가
+        Attack();
     }
 
     void GetInput()
@@ -55,11 +59,14 @@ public class PlayerContoller : MonoBehaviour
         _obtainItem = Input.GetButtonDown("Grab");
         _swapItem1 = Input.GetButtonDown("SwapItem1");
         _swapItem2 = Input.GetButtonDown("SwapItem2");
+        _attackKey = Input.GetButtonDown("Attack1");
+
     }
     void PlayerMove()
     {
         dir = new Vector3(h, 0, v).normalized;
-
+        if (_isAttack)
+            dir = new Vector3(h, 0, v).normalized;
         //Move
         if (!(v==0 && h == 0))
         {
@@ -78,23 +85,11 @@ public class PlayerContoller : MonoBehaviour
         if (_isDodge)
             dir = dogeVec;
 
+        
+
         //Rotate
         if (dir != Vector3.zero)
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * _rotateSpeed);
-
-        //Idle-Run Blending
-        //if (dir != Vector3.zero)
-        //{
-        //    Idle_Run_Ratio = Mathf.Lerp(Idle_Run_Ratio, 1, 10.0f * Time.deltaTime);
-        //    anim.SetFloat("Idle_Run_Ratio", Idle_Run_Ratio);
-        //    anim.Play("Idle_Run");
-        //}
-        //else
-        //{
-        //    Idle_Run_Ratio = Mathf.Lerp(Idle_Run_Ratio, 0, 10.0f * Time.deltaTime);
-        //    anim.SetFloat("Idle_Run_Ratio", Idle_Run_Ratio);
-        //    anim.Play("Idle_Run");
-        //}
     }
 
     void PlayerJump()
@@ -138,16 +133,30 @@ public class PlayerContoller : MonoBehaviour
         if ((_swapItem1 || _swapItem2) && !_isJumping && !_isDodge)
         {
             if (orginWeapon != null)
-                orginWeapon.SetActive(false);
+                orginWeapon.gameObject.SetActive(false);
 
 
             orginWeaponIndex = weaponIndex;
-            orginWeapon = weapons[weaponIndex];
-            orginWeapon.SetActive(true);
+            orginWeapon = weapons[weaponIndex].GetComponent<Weapons>();
+            orginWeapon.gameObject.SetActive(true);
 
         }
     }
 
+    void Attack()
+    {
+        if (orginWeapon == null)
+            return;
+        _attackDelay += Time.deltaTime;
+        _isAttack = orginWeapon.attackSpeed < _attackDelay;
+
+        if (_attackKey && _isAttack && !_isDodge)
+        {
+            orginWeapon.Attack();
+            anim.SetTrigger("playWipe");
+            _attackDelay = 0;
+        }
+    }
     /// <summary>
     /// hasWeapons 배열에 무기를 얻으면 true 체크하고 그 오브젝트 파괴
     /// </summary>
@@ -177,7 +186,7 @@ public class PlayerContoller : MonoBehaviour
     {
         if (other.tag == "Weapon")
             getItem = other.gameObject;
-        Debug.Log(getItem.name);
+        //Debug.Log(getItem.name);
     }
 
     void OnTriggerExit(Collider other)

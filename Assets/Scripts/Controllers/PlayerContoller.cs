@@ -19,7 +19,10 @@ public class PlayerContoller : MonoBehaviour
 
     private Rigidbody playerRigidbody;
 
-    bool _isJumping; //점프 상태
+    bool _isJumping
+    {
+        get => anim.GetBool("isJumping");
+    }
     bool _isDodge;
     bool _obtainItem;
     bool _swapItem1;
@@ -54,8 +57,8 @@ public class PlayerContoller : MonoBehaviour
 
     void GetInput()
     {
-        v = Input.GetAxis("Vertical");
-        h = Input.GetAxis("Horizontal");
+        v = Input.GetAxisRaw("Vertical");
+        h = Input.GetAxisRaw("Horizontal");
         _obtainItem = Input.GetButtonDown("Grab");
         _swapItem1 = Input.GetButtonDown("SwapItem1");
         _swapItem2 = Input.GetButtonDown("SwapItem2");
@@ -96,18 +99,18 @@ public class PlayerContoller : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && !_isJumping && !_isDodge)
         {
-            playerRigidbody.AddForce(Vector3.up * _jump, ForceMode.Impulse);
-            anim.SetBool("isJump", true);
+            //playerRigidbody.AddForce(Vector3.up * _jump, ForceMode.Impulse);
+            
             anim.SetTrigger("playJump");
-            _isJumping = true;
+            //_isJumping = true;
         }
     }
-
+        
     void PlayerDodge()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift) && !_isJumping && !_isDodge && dir != Vector3.zero)
         {
-            playerRigidbody.AddForce(Vector3.up * _jump, ForceMode.Impulse);
+            
             dogeVec = dir;
             anim.SetTrigger("playDodge");
             _isDodge = true;
@@ -175,18 +178,22 @@ public class PlayerContoller : MonoBehaviour
         }
     }
 
+    private void OnAnimatorMove()
+    {
+        transform.Translate(anim.deltaPosition, Space.World);
+        transform.rotation *= anim.deltaRotation;
+    }
+
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Ground")
-            anim.SetBool("isJump", false);
-        _isJumping = false;
+        //if (collision.gameObject.tag == "Ground")
+            //_isJumping = false;
     }
 
     void OnTriggerStay(Collider other)
     {
         if (other.tag == "Weapon")
             getItem = other.gameObject;
-        //Debug.Log(getItem.name);
     }
 
     void OnTriggerExit(Collider other)

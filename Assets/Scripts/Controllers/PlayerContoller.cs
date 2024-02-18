@@ -106,7 +106,6 @@ public class PlayerContoller : MonoBehaviour
                 _canDoubleJump = false;
                 anim.SetTrigger("playDoubleJump");
                 anim.SetBool("isDoubleJumping", true);
-                anim.ResetTrigger("playJump");
                 playerRigidbody.AddForce(Vector3.up * 12.0f, ForceMode.Impulse);
                 Invoke("PlayFall", 0.8f);
                 return;
@@ -270,4 +269,5 @@ public class PlayerContoller : MonoBehaviour
         RotationFreeze();
         StopBeforeObject();
     }
+
 }

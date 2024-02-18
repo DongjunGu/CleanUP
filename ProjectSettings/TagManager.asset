@@ -17,12 +17,12 @@ TagManager:
   - Water
   - UI
   - Wall
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Enemy
+  - DeadEnemy
+  - Ground
+  - BackGround
+  - Player
+  - Weapon
   - 
   - 
   - 

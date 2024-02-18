@@ -8,6 +8,7 @@ TagManager:
   - Item
   - Weapon
   - basicAttack
+  - enemy
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Wall
   - 
   - 
   - 

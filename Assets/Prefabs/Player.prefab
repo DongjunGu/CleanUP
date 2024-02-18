@@ -618,7 +618,7 @@ GameObject:
   - component: {fileID: 740887546371490534}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -688,7 +688,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 10
-  _jump: 10
   weapons:
   - {fileID: 6712400302473478321}
   - {fileID: 4652410648148809802}
@@ -702,11 +701,11 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740887546371490530}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 76171ddde931600418395f23213eaf39, type: 3}
   m_Controller: {fileID: 9100000, guid: 35d37627fa44cc44f99c007c19416f42, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 

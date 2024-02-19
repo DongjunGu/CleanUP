@@ -42,12 +42,13 @@ public class PlayerContoller : MonoBehaviour
 
     int orginWeaponIndex = -1;
     float _attackDelay;
+
     void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-    }
 
+    }
     void Update()
     {
         GetInput();
@@ -110,6 +111,7 @@ public class PlayerContoller : MonoBehaviour
                 Invoke("PlayFall", 0.8f);
                 return;
             }
+
             initialJumpPosition = transform.position;
             playerRigidbody.AddForce(Vector3.up * 10.0f, ForceMode.Impulse);
             anim.SetBool("isJumping", true);
@@ -117,8 +119,9 @@ public class PlayerContoller : MonoBehaviour
             anim.SetTrigger("playJump");
 
         }
+
     }
-    
+
     void PlayFall()
     {
         anim.SetTrigger("playFall");
@@ -227,20 +230,20 @@ public class PlayerContoller : MonoBehaviour
         transform.rotation *= anim.deltaRotation;
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            anim.SetBool("isJumping", false);
-            _isJumping = false;
-            _canDoubleJump = true;
+    //void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "Ground")
+    //    {
+    //        anim.SetBool("isJumping", false);
+    //        _isJumping = false;
+    //        _canDoubleJump = true;
 
-            anim.SetBool("isDoubleJumping", false);
+    //        anim.SetBool("isDoubleJumping", false);
 
-            //_isFalling = false;
-        }
+    //        //_isFalling = false;
+    //    }
             
-    }
+    //}
 
     void OnTriggerStay(Collider other)
     {

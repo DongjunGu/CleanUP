@@ -7,8 +7,6 @@ public class Example : MonoBehaviour
     float maxJumpHeight = 3.0f;
     float groundHeight;
     Vector3 groundPos;
-    float jumpSpeed = 10.0f;
-    float fallSpeed = 5.0f;
     public bool inputJump = false;
     public bool grounded = true;
     Animator anim;
@@ -29,7 +27,6 @@ public class Example : MonoBehaviour
                 groundPos = transform.position;
                 inputJump = true;
                 StartCoroutine("Jumping");
-                //anim.SetTrigger("playJump");
 
             }
         }

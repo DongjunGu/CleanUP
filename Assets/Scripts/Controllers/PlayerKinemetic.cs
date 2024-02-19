@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerKinemetic : MonoBehaviour
 {
     [SerializeField] public float _speed = 10.0f;
-
+    [SerializeField] LayerMask groundLayer = 1 << 9;
     public GameObject[] weapons;
     public bool[] hasWeapons;
     Animator anim;
@@ -22,6 +22,7 @@ public class PlayerKinemetic : MonoBehaviour
     //{
     //    get => anim.GetBool("isJumping");
     //}
+    bool _isGrounded;
     bool _isJumping;
     bool _isDodge;
     bool _obtainItem;
@@ -31,17 +32,18 @@ public class PlayerKinemetic : MonoBehaviour
     bool _isAttack;
     //bool _isFalling;
     bool _isBorder; //충돌감지
-    //bool isFallingTriggered = false;
     bool _canDoubleJump = true;
 
     Vector3 dir;
     Vector3 dogeVec;
+    Vector3 orgPos;
     Vector3 initialJumpPosition;
     GameObject getItem;
     Weapons orginWeapon;
 
     int orginWeaponIndex = -1;
     float _attackDelay;
+
 
     void Awake()
     {
@@ -53,15 +55,27 @@ public class PlayerKinemetic : MonoBehaviour
     {
         GetInput();
         PlayerMove();
-        PlayerJump();
         PlayerDodge();
+        PlayerJump();
         //PlayerFall();
         ObtainItem(); //TODO 아이템 주울때 모션 추가
         SwapWeapon(); //TODO 스왑 모션 추가
         Attack();
+        CheckGrounded();
 
     }
+    void CheckGrounded()
+    {
+        RaycastHit hit;
+        float raycastDistance = 0.5f;
+        Vector3 raycastOrigin = transform.position + Vector3.up * 0.1f;
 
+
+        _isGrounded = Physics.Raycast(raycastOrigin, Vector3.down, out hit, raycastDistance, groundLayer);
+
+
+        Debug.DrawRay(raycastOrigin, Vector3.down * raycastDistance, _isGrounded ? Color.green : Color.red);
+    }
     void GetInput()
     {
         v = Input.GetAxisRaw("Vertical");
@@ -74,17 +88,24 @@ public class PlayerKinemetic : MonoBehaviour
     }
     void PlayerMove()
     {
-        dir = new Vector3(h, 0, v).normalized;
         if (_isAttack)
             dir = new Vector3(h, 0, v).normalized;
         //Move
+        dir = new Vector3(h, 0, v).normalized;
+
         if (!(v == 0 && h == 0))
         {
             anim.SetBool("isRun", true);
+
             if (_isDodge)
                 dir = dogeVec;
+
             if (!_isBorder)
+            {
                 transform.position += dir * _speed * Time.deltaTime;
+            }
+
+
         }
         else
         {
@@ -93,49 +114,104 @@ public class PlayerKinemetic : MonoBehaviour
 
         if (_isDodge)
             dir = dogeVec;
-        //Rotate
+        // Rotate
         if (dir != Vector3.zero)
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * _rotateSpeed);
     }
-
     void PlayerJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && (!_isJumping || (_canDoubleJump && !_isDodge)))
+        if (_isGrounded)
         {
-            if (_isJumping)
+            // On the ground
+            _canDoubleJump = true;
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                _canDoubleJump = false;
-                anim.SetTrigger("playDoubleJump");
-                StartCoroutine("Jumping");
-                anim.SetBool("isDoubleJumping", true);
-                return;
+                anim.SetTrigger("playJump");
+                StartCoroutine(Jumping());
             }
-            StartCoroutine("Jumping");
-            anim.SetBool("isJumping", true);
-            _isJumping = true;
-            anim.SetTrigger("playJump");
 
+            anim.SetBool("isGrounded", true);
         }
+        else if (_canDoubleJump)
+        {
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                anim.SetTrigger("playDoubleJump");
+                StartCoroutine(Jumping());
+
+                _canDoubleJump = false;
+            }
+        }
+        anim.SetBool("isGrounded", true);
 
     }
+    //IEnumerator Jumping()
+    //{
+    //    float playTime = 0.0f;
+    //    float jumpHeight = 0.0f;
+    //    orgPos = transform.position;
+
+    //    _isJumping = true;
+    //    anim.SetBool("isJumping", true);
+    //    if (_isGrounded || _canDoubleJump)
+    //    {
+    //        if (_isGrounded)
+    //        {
+    //            _canDoubleJump = false;
+    //            anim.SetBool("isDoubleJumping", true);
+    //            anim.SetTrigger("playDoubleJump");
+
+    //        }
+    //        while (playTime < 1.0f)
+    //        {
+    //            jumpHeight = Mathf.Sin(playTime * Mathf.PI) * 4.0f;
+    //            transform.position = orgPos + Vector3.up * jumpHeight;
+    //            playTime += Time.deltaTime;
+    //            anim.SetBool("isGrounded", false);
+    //            yield return null;
+    //        }
+    //        //transform.position = new Vector3(orgPos.x, orgPos.y, orgPos.z);
+    //        transform.position = orgPos;
+    //        _isJumping = false;
+    //        _canDoubleJump = true;
+    //        anim.SetBool("isJumping", false);
+    //        anim.SetBool("isDoubleJumping", false);
+    //    }
+    //}
     IEnumerator Jumping()
     {
         float playTime = 0.0f;
         float jumpHeight = 0.0f;
-        Vector3 orgPos = transform.position;
+        orgPos = transform.position;
 
-        while (playTime < 1.0f)
+        _isJumping = true;
+        anim.SetBool("isJumping", true);
+
+        if (_isGrounded || _canDoubleJump) // Check if it's the first jump or double jump
         {
-            jumpHeight = Mathf.Sin(playTime * Mathf.PI) * 3.0f;
-            transform.position = orgPos + Vector3.up * jumpHeight;
-            playTime += Time.deltaTime;
+            if (!_isGrounded)
+            {
+                _canDoubleJump = false;
+                anim.SetBool("isDoubleJumping", true);
+            }
 
-            yield return null;
+            while (playTime < 1.0f)
+            {
+                jumpHeight = Mathf.Sin(playTime * Mathf.PI) * 4.0f;
+                transform.position = orgPos + Vector3.up * jumpHeight;
+                playTime += Time.deltaTime;
+                anim.SetBool("isGrounded", false);
+                yield return null;
+            }
         }
-        anim.SetBool("isJumping", false);
+
+        // Reset the animation states and position
+        transform.position = orgPos;
         _isJumping = false;
-        _canDoubleJump = true;
+        anim.SetBool("isJumping", false);
         anim.SetBool("isDoubleJumping", false);
+        anim.SetBool("isGrounded", true);
     }
     void PlayFall()
     {
@@ -245,20 +321,6 @@ public class PlayerKinemetic : MonoBehaviour
         transform.rotation *= anim.deltaRotation;
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            anim.SetBool("isJumping", false);
-            _isJumping = false;
-            _canDoubleJump = true;
-            Debug.Log("DEBUG");
-            anim.SetBool("isDoubleJumping", false);
-
-            //_isFalling = false;
-        }
-
-    }
 
     void OnTriggerStay(Collider other)
     {

@@ -6,7 +6,8 @@ using UnityEngine;
 public class PlayerContoller : MonoBehaviour
 {
     [SerializeField] public float _speed = 10.0f;
-
+    [SerializeField] LayerMask groundLayer = 1 << 9;
+    [SerializeField] LayerMask wallLayer = 1 << 6;
     public GameObject[] weapons;
     public bool[] hasWeapons;
     Animator anim;
@@ -29,9 +30,8 @@ public class PlayerContoller : MonoBehaviour
     bool _swapItem2;
     bool _attackKey;
     bool _isAttack;
-    //bool _isFalling;
+    bool _isGrounded;
     bool _isBorder; //충돌감지
-    //bool isFallingTriggered = false;
     bool _canDoubleJump = true;
 
     Vector3 dir;
@@ -42,24 +42,22 @@ public class PlayerContoller : MonoBehaviour
 
     int orginWeaponIndex = -1;
     float _attackDelay;
-
     void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-
     }
+
     void Update()
     {
         GetInput();
         PlayerMove();
         PlayerJump();
         PlayerDodge();
-        //PlayerFall();
         ObtainItem(); //TODO 아이템 주울때 모션 추가
         SwapWeapon(); //TODO 스왑 모션 추가
         Attack();
-
+        CheckGrounded();
     }
 
     void GetInput()
@@ -108,55 +106,27 @@ public class PlayerContoller : MonoBehaviour
                 anim.SetTrigger("playDoubleJump");
                 anim.SetBool("isDoubleJumping", true);
                 playerRigidbody.AddForce(Vector3.up * 12.0f, ForceMode.Impulse);
-                Invoke("PlayFall", 0.8f);
+                
                 return;
             }
-
             initialJumpPosition = transform.position;
             playerRigidbody.AddForce(Vector3.up * 10.0f, ForceMode.Impulse);
             anim.SetBool("isJumping", true);
             _isJumping = true;
             anim.SetTrigger("playJump");
-
         }
-
     }
 
     void PlayFall()
     {
         anim.SetTrigger("playFall");
     }
-    //void PlayerFall()
-    //{
-    //    if (!_isJumping && !_isDodge && !_isFalling)
-    //    {
-    //        RaycastHit hit;
-    //        float raycastDistance = 0.5f;
-    //        Vector3 raycastOrigin = transform.position + Vector3.up * 0.1f;
-
-    //        // 레이캐스트를 player의 아래 방향으로 쏘아 충돌을 감지
-    //        if (!Physics.Raycast(raycastOrigin, Vector3.down, out hit, raycastDistance))
-    //        {
-    //            if (!isFallingTriggered) // isFallingTriggered가 false일 때만 실행
-    //            {
-    //                anim.SetTrigger("playFall");
-    //                isFallingTriggered = true;
-    //            }
-    //            _isFalling = true;
-    //        }
-    //        else
-    //        {
-    //            _isFalling = false;
-    //            isFallingTriggered = false; // 충돌이 감지되면 리셋
-    //        }
-    //    }
-    //}
 
     void PlayerDodge()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift) && !_isJumping && !_isDodge && dir != Vector3.zero)
         {
-            
+
             dogeVec = dir;
             anim.SetTrigger("playDodge");
             _isDodge = true;
@@ -211,9 +181,9 @@ public class PlayerContoller : MonoBehaviour
     /// </summary>
     void ObtainItem()
     {
-        if(_obtainItem && getItem != null && !_isJumping && !_isDodge)
+        if (_obtainItem && getItem != null && !_isJumping && !_isDodge)
         {
-            if(getItem.tag == "Weapon")
+            if (getItem.tag == "Weapon")
             {
                 Items item = getItem.GetComponent<Items>();
                 int weaponIndex = item.value;
@@ -230,20 +200,18 @@ public class PlayerContoller : MonoBehaviour
         transform.rotation *= anim.deltaRotation;
     }
 
-    //void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.tag == "Ground")
-    //    {
-    //        anim.SetBool("isJumping", false);
-    //        _isJumping = false;
-    //        _canDoubleJump = true;
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            anim.SetBool("isJumping", false);
+            _isJumping = false;
+            _canDoubleJump = true;
+            anim.SetBool("isDoubleJumping", false);
+            //anim.SetBool("isGrounded", true);
+        }
 
-    //        anim.SetBool("isDoubleJumping", false);
-
-    //        //_isFalling = false;
-    //    }
-            
-    //}
+    }
 
     void OnTriggerStay(Collider other)
     {
@@ -256,7 +224,24 @@ public class PlayerContoller : MonoBehaviour
         if (other.tag == "Weapon")
             getItem = null;
     }
+    void CheckGrounded()
+    {
+        RaycastHit hit;
+        float raycastDistance = 0.5f;
+        Vector3 raycastOrigin = transform.position + Vector3.up * 0.1f;
+        anim.ResetTrigger("playFall");
+        LayerMask combinedLayers = groundLayer | wallLayer;
 
+        _isGrounded = Physics.Raycast(raycastOrigin, Vector3.down, out hit, raycastDistance, combinedLayers);
+
+        Debug.DrawRay(raycastOrigin, Vector3.down * raycastDistance, _isGrounded ? Color.green : Color.red);
+        anim.SetBool("isGrounded", true);
+        if (!_isGrounded)
+        {
+            anim.SetBool("isGrounded", false);
+            PlayFall();
+        }
+    }
     void RotationFreeze()
     {
         playerRigidbody.angularVelocity = Vector3.zero;

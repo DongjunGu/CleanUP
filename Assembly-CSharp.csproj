@@ -53,10 +53,12 @@
     <UnityVersion>2020.3.48f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlayerKinemetic.cs" />
+    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Prefabs\Apartment\Apartment Kit\Common\Scripts &amp; Animation\Z Axis -1\Drawer_Pull_Zopp.cs" />
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\Drawer\X Axis\Drawer_Pull_X.cs" />
     <Compile Include="Assets\Scripts\Items.cs" />
@@ -69,6 +71,7 @@
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\MouseLook.cs" />
     <Compile Include="Assets\Prefabs\Apartment\Apartment Kit\Common\Scripts &amp; Animation\OvenOpen\OvenFlip.cs" />
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow.cs" />
+    <Compile Include="Assets\Scripts\Example.cs" />
     <Compile Include="Assets\Scripts\Weapons.cs" />
     <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
     <Compile Include="Assets\Idle_State.cs" />
@@ -83,18 +86,6 @@
     <Compile Include="Assets\Scripts\Controllers\PlayerContoller.cs" />
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow1.cs" />
     <Compile Include="Assets\Prefabs\Apartment\Apartment Kit\Scenes\Quitgame.cs" />
-    <Compile Include="Assets\Scripts\Example.cs" />
-    <Compile Include="Assets\Scripts\Controllers\PlayerKinemetic.cs" />
-    <Compile Include="Assets\KinematicCharacterController\ExampleCharacter\Scripts\ExampleCharacterCamera.cs" />
-    <Compile Include="Assets\KinematicCharacterController\Core\KCCSettings.cs" />
-    <Compile Include="Assets\KinematicCharacterController\ExampleCharacter\Scripts\ExamplePlayer.cs" />
-    <Compile Include="Assets\KinematicCharacterController\Core\ICharacterController.cs" />
-    <Compile Include="Assets\KinematicCharacterController\Core\IMoverController.cs" />
-    <Compile Include="Assets\KinematicCharacterController\Core\PhysicsMover.cs" />
-    <Compile Include="Assets\KinematicCharacterController\Core\ReadOnlyAttribute.cs" />
-    <Compile Include="Assets\KinematicCharacterController\ExampleCharacter\Scripts\ExampleCharacterController.cs" />
-    <Compile Include="Assets\KinematicCharacterController\Core\KinematicCharacterSystem.cs" />
-    <Compile Include="Assets\KinematicCharacterController\Core\KinematicCharacterMotor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Prefabs\Apartment\Apartment Kit\Scenes\BPS Apartment Kit.txt" />

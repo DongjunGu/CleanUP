@@ -146,7 +146,7 @@ MonoBehaviour:
   Player: {fileID: 0}
 --- !u!95 &2302305627258387643
 Animator:
-  serializedVersion: 5
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -159,12 +159,10 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2302305627513817226
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,7 +212,7 @@ BoxCollider:
   m_Center: {x: 0.85352767, y: 0.18706265, z: 1.558624}
 --- !u!95 &2302305627513817229
 Animator:
-  serializedVersion: 5
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -227,12 +225,10 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &2302305627513817228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -730,7 +726,6 @@ GameObject:
   - component: {fileID: 187172125052320357}
   - component: {fileID: 6998527035024098074}
   - component: {fileID: 6998527035024098073}
-  - component: {fileID: 953580371169408976}
   m_Layer: 0
   m_Name: Bed_Apt_02_01
   m_TagString: Untagged
@@ -830,22 +825,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.19950223, y: 1.7988955, z: 3.1481352}
   m_Center: {x: -1.7885267, y: 0.8994476, z: 0.00000023841878}
---- !u!54 &953580371169408976
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6998527035024098072}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &7892085742027063612
 GameObject:
   m_ObjectHideFlags: 0

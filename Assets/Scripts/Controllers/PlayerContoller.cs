@@ -58,6 +58,8 @@ public class PlayerContoller : MonoBehaviour
         SwapWeapon(); //TODO 스왑 모션 추가
         Attack();
         CheckGrounded();
+
+        //UpdatePlayerDirection();
     }
 
     void GetInput()
@@ -106,7 +108,7 @@ public class PlayerContoller : MonoBehaviour
                 anim.SetTrigger("playDoubleJump");
                 anim.SetBool("isDoubleJumping", true);
                 playerRigidbody.AddForce(Vector3.up * 12.0f, ForceMode.Impulse);
-                
+
                 return;
             }
             initialJumpPosition = transform.position;
@@ -257,5 +259,24 @@ public class PlayerContoller : MonoBehaviour
         RotationFreeze();
         StopBeforeObject();
     }
+    //void UpdatePlayerDirection()
+    //{
+    //    // 현재 마우스 위치를 스크린 좌표로 변환
+    //    Vector3 mousePos = Input.mousePosition;
+    //    // 카메라에서 레이를 발사하여 월드 좌표로 변환
+    //    Ray ray = Camera.main.ScreenPointToRay(mousePos);
+    //    RaycastHit hit;
 
+    //    if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer)) // 여기에 필요한 레이어를 추가해야 할 수도 있습니다.
+    //    {
+    //        Vector3 lookDirection = hit.point - transform.position;
+    //        lookDirection.y = 0; // 수평 방향으로만 회전하도록 y 값을 0으로 설정
+    //        if (lookDirection != Vector3.zero)
+    //        {
+    //            Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+    //            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _rotateSpeed);
+    //        }
+    //    }
+
+    //}
 }

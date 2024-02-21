@@ -8,6 +8,12 @@ public class PlayerContoller : MonoBehaviour
     [SerializeField] public float _speed = 10.0f;
     [SerializeField] LayerMask groundLayer = 1 << 9;
     [SerializeField] LayerMask wallLayer = 1 << 6;
+
+    [SerializeField]
+    private float rotCamXAxisSpeed = 5.0f;
+    [SerializeField]
+    private float rotCamYAxisSpeed = 3.0f;
+
     public GameObject[] weapons;
     public bool[] hasWeapons;
     Animator anim;
@@ -23,18 +29,19 @@ public class PlayerContoller : MonoBehaviour
     //{
     //    get => anim.GetBool("isJumping");
     //}
-    bool _isJumping = false;
+    bool _isJumping;
     bool _isDodge;
     bool _obtainItem;
     bool _swapItem1;
     bool _swapItem2;
     bool _attackKey;
     bool _isAttack;
-    bool _isAttacking = false;
     bool _isGrounded;
     bool _isBorder; //충돌감지
     bool _isBorderDodge;
     bool _canDoubleJump = true;
+
+    private bool _isWipeAnimationPlaying = false;
 
     Vector3 dir;
     Vector3 dogeVec;
@@ -44,6 +51,12 @@ public class PlayerContoller : MonoBehaviour
 
     int orginWeaponIndex = -1;
     float _attackDelay;
+
+    private float limitMinX = -80;
+    private float limitMaxX = 50;
+    private float eulerAngleX;
+    private float eulerAngleY;
+    private Vector3 lastPosition;
     void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
@@ -62,7 +75,8 @@ public class PlayerContoller : MonoBehaviour
         Attack();
         CheckGrounded();
 
-
+        //UpdateRotate();
+        //UpdateMove();
     }
 
     void GetInput()
@@ -84,9 +98,9 @@ public class PlayerContoller : MonoBehaviour
         //Move
         if (!(v == 0 && h == 0))
         {
+            //if (_isDodge)
+            //    dir = dogeVec;
             anim.SetBool("isRun", true);
-            if (_isDodge)
-                dir = dogeVec;
             if (!_isBorder)
                 transform.position += dir * _speed * Time.deltaTime;
         }
@@ -106,7 +120,6 @@ public class PlayerContoller : MonoBehaviour
         {
             if (_isJumping)
             {
-
                 _canDoubleJump = false;
                 anim.SetTrigger("playDoubleJump");
                 anim.SetBool("isDoubleJumping", true);
@@ -119,10 +132,6 @@ public class PlayerContoller : MonoBehaviour
             _isJumping = true;
             anim.SetTrigger("playJump");
 
-            if (_isAttacking)
-                return;
-
-
         }
     }
 
@@ -134,14 +143,21 @@ public class PlayerContoller : MonoBehaviour
 
     void PlayerDodge()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isBorderDodge && !_isJumping && !_isDodge && dir != Vector3.zero)
+        //if (Input.GetKeyDown(KeyCode.LeftShift) && !_isBorderDodge && !_isJumping && !_isDodge && dir != Vector3.zero)
+        //if (Input.GetKeyDown(KeyCode.LeftShift) && !_isBorderDodge && !_isJumping && !_isDodge && !(h == 0 && v == 0))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isBorderDodge /*&& !_isJumping*/ && !_isDodge && dir != Vector3.zero)
         {
-
             dogeVec = dir;
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, dogeVec, out hit, _speed * 1.5f, LayerMask.GetMask("Wall")))
+            {
+                // If the ray hits a wall, adjust the dodge direction to be away from the wall
+                return;
+            }
             anim.SetTrigger("playDodge");
             _isDodge = true;
             _isJumping = true;
-            Invoke("FinishDodge", 1.0f);
+            Invoke("FinishDodge", 0.8f);
         }
     }
 
@@ -174,30 +190,60 @@ public class PlayerContoller : MonoBehaviour
         }
     }
 
+    //void Attack()
+    //{
+    //    if (orginWeapon == null)
+    //        return;
+    //    _attackDelay += Time.deltaTime;
+    //    _isAttack = orginWeapon.attackSpeed < _attackDelay;
+
+    //    if (_attackKey && _isAttack && !_isDodge && !_isJumping)
+    //    {
+    //        orginWeapon.Attack();
+    //        anim.SetTrigger("playWipe");
+    //        _attackDelay = 0.0f;
+    //        //공격하는 동안 점프 불가
+    //    }
+
+    //}
     void Attack()
     {
         if (orginWeapon == null)
             return;
+
         _attackDelay += Time.deltaTime;
         _isAttack = orginWeapon.attackSpeed < _attackDelay;
 
-        if (_attackKey && _isAttack && !_isDodge && !_isJumping)
+        if (_attackKey && _isAttack && !_isDodge && !_isJumping && !_isWipeAnimationPlaying)
         {
-            orginWeapon.Attack();
-            anim.SetTrigger("playWipe");
-            _attackDelay = 0.0f;
-            _isAttacking = true;
-            Debug.Log("공격중");
-            //공격하는 동안 점프 불가
+            StartCoroutine(PlayWipeAnimation());
         }
-        Invoke("FinishAttack", 1.0f);
-
     }
-
-    void FinishAttack()
+    IEnumerator PlayWipeAnimation()
     {
-        _isAttacking = false;
+        _isWipeAnimationPlaying = true;
+
+        orginWeapon.Attack();
+        anim.SetTrigger("playWipe");
+        _attackDelay = 0.0f;
+
+        // Disable jumping during the attack
+        _isJumping = true;
+        anim.SetBool("isJumping", false);
+        _canDoubleJump = false;
+        anim.SetBool("isDoubleJumping", false);
+
+        
+        yield return new WaitForSeconds(0.9f);
+
+        // Enable jumping after the wipe animation
+        _isJumping = false;
+        _canDoubleJump = true;
+        anim.SetBool("isDoubleJumping", false);
+
+        _isWipeAnimationPlaying = false;
     }
+
     /// <summary>
     /// hasWeapons 배열에 무기를 얻으면 true 체크하고 그 오브젝트 파괴
     /// </summary>
@@ -281,5 +327,59 @@ public class PlayerContoller : MonoBehaviour
         StopBeforeObject();
     }
 
+    void UpdateRotate()
+    {
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        eulerAngleY += mouseX * rotCamXAxisSpeed;
+        eulerAngleX -= mouseY * rotCamYAxisSpeed;
+
+        eulerAngleX = ClampAngle(eulerAngleX, limitMinX, limitMaxX);
+
+        transform.rotation = Quaternion.Euler(eulerAngleX, eulerAngleY, 0);
+
+    }
+
+    private void UpdateMove()
+    {
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
+
+        Vector3 dir = new Vector3(h, 0, v).normalized;
+        if (_isAttack)
+            dir = new Vector3(h, 0, v).normalized;
+        //Vector3 moveVector = dir * _speed * Time.deltaTime;
+        if (!(h == 0 && v == 0))
+        {
+
+            anim.SetBool("isRun", true);
+            if (_isDodge)
+                dir = dogeVec;
+            //Quaternion targetRotation = Quaternion.LookRotation(dir, Vector3.up);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _rotateSpeed);
+            if (!_isBorder)
+                transform.Translate(dir * _speed * Time.deltaTime, Space.Self);
+            //transform.position += moveVector;
+        }
+        else
+        {
+            anim.SetBool("isRun", false);
+        }
+
+
+        //Vector3 dir = transform.rotation * new Vector3(x, 0, z);
+
+        //Vector3 moveForce = new Vector3(dir.x * moveSpeed, 0, dir.z * moveSpeed);
+
+        //characterController.Move(moveForce * Time.deltaTime);
+    }
+    private float ClampAngle(float angle, float min, float max)
+    {
+        if (angle < -360) angle += 360;
+        if (angle > 360) angle -= 360;
+
+        return Mathf.Clamp(angle, min, max);
+    }
+
 }
-    

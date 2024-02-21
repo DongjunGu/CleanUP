@@ -23,15 +23,17 @@ public class PlayerContoller : MonoBehaviour
     //{
     //    get => anim.GetBool("isJumping");
     //}
-    bool _isJumping;
+    bool _isJumping = false;
     bool _isDodge;
     bool _obtainItem;
     bool _swapItem1;
     bool _swapItem2;
     bool _attackKey;
     bool _isAttack;
+    bool _isAttacking = false;
     bool _isGrounded;
     bool _isBorder; //충돌감지
+    bool _isBorderDodge;
     bool _canDoubleJump = true;
 
     Vector3 dir;
@@ -51,6 +53,7 @@ public class PlayerContoller : MonoBehaviour
     void Update()
     {
         GetInput();
+
         PlayerMove();
         PlayerJump();
         PlayerDodge();
@@ -59,7 +62,7 @@ public class PlayerContoller : MonoBehaviour
         Attack();
         CheckGrounded();
 
-        //UpdatePlayerDirection();
+
     }
 
     void GetInput()
@@ -72,6 +75,7 @@ public class PlayerContoller : MonoBehaviour
         _attackKey = Input.GetButtonDown("Attack1");
 
     }
+
     void PlayerMove()
     {
         dir = new Vector3(h, 0, v).normalized;
@@ -91,8 +95,6 @@ public class PlayerContoller : MonoBehaviour
             anim.SetBool("isRun", false);
         }
 
-        if (_isDodge)
-            dir = dogeVec;
         //Rotate
         if (dir != Vector3.zero)
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * _rotateSpeed);
@@ -104,34 +106,41 @@ public class PlayerContoller : MonoBehaviour
         {
             if (_isJumping)
             {
+
                 _canDoubleJump = false;
                 anim.SetTrigger("playDoubleJump");
                 anim.SetBool("isDoubleJumping", true);
-                playerRigidbody.AddForce(Vector3.up * 12.0f, ForceMode.Impulse);
+                playerRigidbody.AddForce(Vector3.up * 10.0f, ForceMode.Impulse);
 
                 return;
             }
-            initialJumpPosition = transform.position;
             playerRigidbody.AddForce(Vector3.up * 10.0f, ForceMode.Impulse);
             anim.SetBool("isJumping", true);
             _isJumping = true;
             anim.SetTrigger("playJump");
+
+            if (_isAttacking)
+                return;
+
+
         }
     }
 
     void PlayFall()
     {
         anim.SetTrigger("playFall");
+        _isJumping = true;
     }
 
     void PlayerDodge()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isJumping && !_isDodge && dir != Vector3.zero)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isBorderDodge && !_isJumping && !_isDodge && dir != Vector3.zero)
         {
 
             dogeVec = dir;
             anim.SetTrigger("playDodge");
             _isDodge = true;
+            _isJumping = true;
             Invoke("FinishDodge", 1.0f);
         }
     }
@@ -139,6 +148,7 @@ public class PlayerContoller : MonoBehaviour
     void FinishDodge()
     {
         _isDodge = false;
+        _isJumping = false;
     }
 
     void SwapWeapon()
@@ -171,12 +181,22 @@ public class PlayerContoller : MonoBehaviour
         _attackDelay += Time.deltaTime;
         _isAttack = orginWeapon.attackSpeed < _attackDelay;
 
-        if (_attackKey && _isAttack && !_isDodge)
+        if (_attackKey && _isAttack && !_isDodge && !_isJumping)
         {
             orginWeapon.Attack();
             anim.SetTrigger("playWipe");
-            _attackDelay = 0;
+            _attackDelay = 0.0f;
+            _isAttacking = true;
+            Debug.Log("공격중");
+            //공격하는 동안 점프 불가
         }
+        Invoke("FinishAttack", 1.0f);
+
+    }
+
+    void FinishAttack()
+    {
+        _isAttacking = false;
     }
     /// <summary>
     /// hasWeapons 배열에 무기를 얻으면 true 체크하고 그 오브젝트 파괴
@@ -253,30 +273,13 @@ public class PlayerContoller : MonoBehaviour
     {
         //Debug.DrawRay(transform.position + Vector3.up, transform.forward * 3, Color.green);
         _isBorder = Physics.Raycast(transform.position + Vector3.up, transform.forward, 2, LayerMask.GetMask("Wall"));
+        _isBorderDodge = Physics.Raycast(transform.position + Vector3.up, transform.forward, 5, LayerMask.GetMask("Wall"));
     }
     private void FixedUpdate()
     {
         RotationFreeze();
         StopBeforeObject();
     }
-    //void UpdatePlayerDirection()
-    //{
-    //    // 현재 마우스 위치를 스크린 좌표로 변환
-    //    Vector3 mousePos = Input.mousePosition;
-    //    // 카메라에서 레이를 발사하여 월드 좌표로 변환
-    //    Ray ray = Camera.main.ScreenPointToRay(mousePos);
-    //    RaycastHit hit;
 
-    //    if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer)) // 여기에 필요한 레이어를 추가해야 할 수도 있습니다.
-    //    {
-    //        Vector3 lookDirection = hit.point - transform.position;
-    //        lookDirection.y = 0; // 수평 방향으로만 회전하도록 y 값을 0으로 설정
-    //        if (lookDirection != Vector3.zero)
-    //        {
-    //            Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
-    //            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _rotateSpeed);
-    //        }
-    //    }
-
-    //}
 }
+    

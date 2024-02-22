@@ -51,6 +51,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
+            offset = originalOffset;
             // Restore the original camera position and rotation
             transform.position = target.position + originalOffset;
             transform.rotation = originalRotation;

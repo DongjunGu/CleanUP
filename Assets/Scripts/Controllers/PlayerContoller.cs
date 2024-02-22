@@ -40,7 +40,7 @@ public class PlayerContoller : MonoBehaviour
     bool _isBorder; //충돌감지
     bool _isBorderDodge;
     bool _canDoubleJump = true;
-
+    bool isJumpZone = false;
     private bool _isWipeAnimationPlaying = false;
 
     Vector3 dir;
@@ -75,6 +75,7 @@ public class PlayerContoller : MonoBehaviour
         Attack();
         CheckGrounded();
 
+        //Debug.Log(isJumpZone);
         //UpdateRotate();
         //UpdateMove();
     }
@@ -127,11 +128,30 @@ public class PlayerContoller : MonoBehaviour
 
                 return;
             }
-            playerRigidbody.AddForce(Vector3.up * 10.0f, ForceMode.Impulse);
-            anim.SetBool("isJumping", true);
-            _isJumping = true;
-            anim.SetTrigger("playJump");
 
+            if (isJumpZone)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    playerRigidbody.AddForce(Vector3.up * 20.0f, ForceMode.Impulse);
+                    _isJumping = true;
+                    anim.SetBool("isJumping", true);
+                    anim.SetTrigger("playJump");
+                    Debug.Log("JUMPZONE JUMP");
+                    isJumpZone = false;
+
+                    return;
+                }
+            }
+            else
+            {
+                playerRigidbody.AddForce(Vector3.up * 10.0f, ForceMode.Impulse);
+                anim.SetBool("isJumping", true);
+                _isJumping = true;
+                anim.SetTrigger("playJump");
+                Debug.Log("NORMAL JUMP");
+
+            }
         }
     }
 
@@ -276,8 +296,25 @@ public class PlayerContoller : MonoBehaviour
             _isJumping = false;
             _canDoubleJump = true;
             anim.SetBool("isDoubleJumping", false);
+            isJumpZone = false;
             //anim.SetBool("isGrounded", true);
         }
+
+        if (collision.gameObject.tag == "JumpZone")
+        {
+            isJumpZone = true;
+            anim.SetBool("isJumping", false);
+            _isJumping = false;
+            _canDoubleJump = true;
+            anim.SetBool("isDoubleJumping", false);
+        }
+
+        if (collision.gameObject.tag == "CumpulsionJumpZone")
+        {
+            playerRigidbody.AddForce(Vector3.up * 30.0f, ForceMode.Impulse);
+            Debug.Log("CumpulsionJump");
+        }
+
 
     }
 

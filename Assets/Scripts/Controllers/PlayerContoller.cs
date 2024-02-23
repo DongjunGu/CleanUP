@@ -98,7 +98,7 @@ public class PlayerContoller : MonoBehaviour
         _swapItem1 = Input.GetButtonDown("SwapItem1");
         _swapItem2 = Input.GetButtonDown("SwapItem2");
         _attackKey = Input.GetButtonDown("Attack1");
-        _dustAttack = Input.GetButtonDown("Fire2");
+        _dustAttack = Input.GetButtonDown("Attack2");
 
     }
 

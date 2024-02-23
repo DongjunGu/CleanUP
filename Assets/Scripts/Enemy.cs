@@ -13,10 +13,12 @@ public class Enemy : MonoBehaviour
     public Transform target;
     private bool canTakeDamage = true;
 
+    bool _isDestroyed;
     bool _isDetected;
     Rigidbody rigid;
     BoxCollider boxCol;
-    Material mat;
+    Material skinned_mat;
+    Material normal_mat;
     NavMeshAgent nav;
     Vector3 enemyOrgPlace;
     void Awake()
@@ -24,7 +26,8 @@ public class Enemy : MonoBehaviour
         enemyOrgPlace = transform.position;
         rigid = GetComponent<Rigidbody>();
         boxCol = GetComponent<BoxCollider>();
-        mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
+        skinned_mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
+        //normal_mat = GetComponent<MeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
     }
 
@@ -36,24 +39,28 @@ public class Enemy : MonoBehaviour
     void DetectPlayer()
     {
         float distance = (target.transform.position - transform.position).magnitude;
+
+        if (!_isDestroyed)
+        {
+            if (distance <= _scanRange) //Detect
+            {
+                _isDetected = true;
+                nav.SetDestination(target.position);
+            }
+
+            if (_isDetected && (distance < 30.0f)) //Chase
+            {
+                nav.SetDestination(target.position);
+            }
+
+            if (distance > 30.0f) //Go Back
+            {
+                //transform.position = enemyOrgPlace;
+                nav.SetDestination(enemyOrgPlace);
+                //NavMesh.CalculatePath
+            }
+        }
         
-        if (distance <= _scanRange) //Detect
-        {
-            _isDetected = true;
-            nav.SetDestination(target.position);
-        }
-
-        if (_isDetected && (distance < 30.0f)) //Chase
-        {
-            nav.SetDestination(target.position);
-        }
-
-        if (distance > 30.0f) //Go Back
-        {
-            //transform.position = enemyOrgPlace;
-            nav.SetDestination(enemyOrgPlace);
-            //NavMesh.CalculatePath
-        }
     }
     void OnTriggerEnter(Collider other)
     {
@@ -64,7 +71,7 @@ public class Enemy : MonoBehaviour
             Vector3 knockBack = transform.position - other.transform.position;
             Debug.Log(currentHp);
             StartCoroutine(DamageCooldown());
-            StartCoroutine(Damaged(knockBack));
+            StartCoroutine(Damaged_Skinned(knockBack,false));
         }
     }
     IEnumerator DamageCooldown() //0.5ÃÊ¸¶´Ù µ¥¹ÌÁö ÀÔÈ÷±â
@@ -74,26 +81,96 @@ public class Enemy : MonoBehaviour
         canTakeDamage = true;
     }
 
-    IEnumerator Damaged(Vector3 knockBack)
+    IEnumerator Damaged(Vector3 knockBack, bool isDusted)
     {
-        mat.color = Color.black;
+        skinned_mat.color = Color.red;
+        normal_mat.color = Color.red;
         yield return new WaitForSeconds(0.1f);
 
         if (currentHp > 0)
         {
-            mat.color = Color.white;
+            skinned_mat.color = Color.white;
+            normal_mat.color = Color.white;
 
-            knockBack = knockBack.normalized;
-            knockBack += Vector3.up;
-            rigid.AddForce(knockBack * 10, ForceMode.Impulse);
+            //knockBack = knockBack.normalized;
+            //knockBack += Vector3.up;
+            //rigid.AddForce(knockBack * 10, ForceMode.Impulse);
         }
+        
         else
         {
-            mat.color = Color.red;
+            skinned_mat.color = Color.black;
+            normal_mat.color = Color.black;
             gameObject.layer = 8; //DeadEnemy
-            //³Ë¹é
-            Destroy(gameObject, 1);
+
+            if (isDusted)
+            {
+                skinned_mat.color = Color.red;
+                normal_mat.color = Color.red;
+                //³Ë¹é
+                knockBack = knockBack.normalized;
+                knockBack += Vector3.up * 50;
+
+                rigid.freezeRotation = false;
+                rigid.AddForce(knockBack * 20, ForceMode.Impulse);
+                rigid.AddTorque(knockBack * 15, ForceMode.Impulse);
+            }
+            else
+            {
+                knockBack = knockBack.normalized;
+                knockBack += Vector3.up;
+                rigid.AddForce(knockBack * 10, ForceMode.Impulse);
+            }
+            Destroy(gameObject, 2);
         }
+    }
+    IEnumerator Damaged_Skinned(Vector3 knockBack, bool isDusted)
+    {
+        skinned_mat.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+
+        if (currentHp > 0)
+        {
+            skinned_mat.color = Color.white;
+
+            //knockBack = knockBack.normalized;
+            //knockBack += Vector3.up;
+            //rigid.AddForce(knockBack * 10, ForceMode.Impulse);
+        }
+
+        else
+        {
+            gameObject.layer = 8; //DeadEnemy
+
+            if (isDusted)
+            {
+                skinned_mat.color = Color.red;
+                //³Ë¹é
+                knockBack = knockBack.normalized;
+                knockBack += Vector3.up * 50;
+
+                rigid.freezeRotation = false;
+                rigid.AddForce(knockBack * 20, ForceMode.Impulse);
+                rigid.AddTorque(knockBack * 15, ForceMode.Impulse);
+            }
+            else
+            {
+                knockBack = knockBack.normalized;
+                knockBack += Vector3.up;
+                rigid.AddForce(knockBack * 10, ForceMode.Impulse);
+            }
+            skinned_mat.color = Color.black;
+            _isDestroyed = true;
+            Destroy(gameObject, 2);
+        }
+    }
+    public void HitByDust(Vector3 pos)
+    {
+        currentHp -= 100;
+        Vector3 knockBack = transform.position - pos;
+        Debug.Log(currentHp);
+        StartCoroutine(Damaged_Skinned(knockBack,true));
+
     }
     private void FixedUpdate()
     {

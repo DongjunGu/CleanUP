@@ -14,13 +14,23 @@ public class PlayerContoller : MonoBehaviour
     [SerializeField]
     private float rotCamYAxisSpeed = 3.0f;
 
+    public Camera mainCamera;
+
     public GameObject[] weapons;
     public bool[] hasWeapons;
+
+    public GameObject[] dusts;
+    public int hasDust;
+
+    public int maxDust;
+    public GameObject dustObject;
+    
+
     Animator anim;
     private float v = 0.0f;
     private float h = 0.0f;
     private float _rotateSpeed = 10.0f;
-
+   
     //float Idle_Run_Ratio = 0;
 
     private Rigidbody playerRigidbody;
@@ -34,8 +44,10 @@ public class PlayerContoller : MonoBehaviour
     bool _obtainItem;
     bool _swapItem1;
     bool _swapItem2;
+    bool _isSwap;
     bool _attackKey;
     bool _isAttack;
+    bool _dustAttack;
     bool _isGrounded;
     bool _isBorder; //충돌감지
     bool _isBorderDodge;
@@ -45,7 +57,6 @@ public class PlayerContoller : MonoBehaviour
 
     Vector3 dir;
     Vector3 dogeVec;
-    Vector3 initialJumpPosition;
     GameObject getItem;
     Weapons orginWeapon;
 
@@ -56,7 +67,6 @@ public class PlayerContoller : MonoBehaviour
     private float limitMaxX = 50;
     private float eulerAngleX;
     private float eulerAngleY;
-    private Vector3 lastPosition;
     void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
@@ -73,9 +83,9 @@ public class PlayerContoller : MonoBehaviour
         ObtainItem(); //TODO 아이템 주울때 모션 추가
         SwapWeapon(); //TODO 스왑 모션 추가
         Attack();
+        Dust();
         CheckGrounded();
 
-        //Debug.Log(isJumpZone);
         //UpdateRotate();
         //UpdateMove();
     }
@@ -88,6 +98,7 @@ public class PlayerContoller : MonoBehaviour
         _swapItem1 = Input.GetButtonDown("SwapItem1");
         _swapItem2 = Input.GetButtonDown("SwapItem2");
         _attackKey = Input.GetButtonDown("Attack1");
+        _dustAttack = Input.GetButtonDown("Fire2");
 
     }
 
@@ -99,8 +110,8 @@ public class PlayerContoller : MonoBehaviour
         //Move
         if (!(v == 0 && h == 0))
         {
-            //if (_isDodge)
-            //    dir = dogeVec;
+            if (_isSwap)
+                dir = Vector3.zero;
             anim.SetBool("isRun", true);
             if (!_isBorder)
                 transform.position += dir * _speed * Time.deltaTime;
@@ -117,7 +128,7 @@ public class PlayerContoller : MonoBehaviour
 
     void PlayerJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && (!_isJumping || (_canDoubleJump && !_isDodge)))
+        if (Input.GetKeyDown(KeyCode.Space) && !_isSwap && (!_isJumping || (_canDoubleJump && !_isDodge)))
         {
             if (_isJumping)
             {
@@ -125,7 +136,7 @@ public class PlayerContoller : MonoBehaviour
                 anim.SetTrigger("playDoubleJump");
                 anim.SetBool("isDoubleJumping", true);
                 playerRigidbody.AddForce(Vector3.up * 10.0f, ForceMode.Impulse);
-
+                
                 return;
             }
 
@@ -138,8 +149,6 @@ public class PlayerContoller : MonoBehaviour
                     anim.SetBool("isJumping", true);
                     anim.SetTrigger("playJump");
                     Debug.Log("JUMPZONE JUMP");
-                    isJumpZone = false;
-
                     return;
                 }
             }
@@ -150,8 +159,9 @@ public class PlayerContoller : MonoBehaviour
                 _isJumping = true;
                 anim.SetTrigger("playJump");
                 Debug.Log("NORMAL JUMP");
-
+                return;
             }
+
         }
     }
 
@@ -165,8 +175,9 @@ public class PlayerContoller : MonoBehaviour
     {
         //if (Input.GetKeyDown(KeyCode.LeftShift) && !_isBorderDodge && !_isJumping && !_isDodge && dir != Vector3.zero)
         //if (Input.GetKeyDown(KeyCode.LeftShift) && !_isBorderDodge && !_isJumping && !_isDodge && !(h == 0 && v == 0))
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isBorderDodge /*&& !_isJumping*/ && !_isDodge && dir != Vector3.zero)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isBorderDodge && !_isSwap && !_isDodge && dir != Vector3.zero)
         {
+              
             dogeVec = dir;
             RaycastHit hit;
             if (Physics.Raycast(transform.position, dogeVec, out hit, _speed * 1.5f, LayerMask.GetMask("Wall")))
@@ -207,7 +218,15 @@ public class PlayerContoller : MonoBehaviour
             orginWeapon = weapons[weaponIndex].GetComponent<Weapons>();
             orginWeapon.gameObject.SetActive(true);
 
+            anim.SetTrigger("playSwap");
+            _isSwap = true;
+            Invoke("SwapFinish", 0.8f);
+
         }
+    }
+    void SwapFinish()
+    {
+        _isSwap = false;
     }
 
     //void Attack()
@@ -237,6 +256,30 @@ public class PlayerContoller : MonoBehaviour
         if (_attackKey && _isAttack && !_isDodge && !_isJumping && !_isWipeAnimationPlaying)
         {
             StartCoroutine(PlayWipeAnimation());
+        }
+    }
+
+    void Dust()
+    {
+        if (hasDust == 0)
+            return;
+        if (_dustAttack)
+        {
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                Vector3 nextVec = hit.point - transform.position;
+                nextVec.y = 10;
+
+                GameObject instantDust = Instantiate(dustObject, transform.position, transform.rotation);
+                Rigidbody rigidDust = instantDust.GetComponent<Rigidbody>();
+                rigidDust.AddForce(nextVec, ForceMode.Impulse);
+                rigidDust.AddTorque(Vector3.back * 10, ForceMode.Impulse); //회전
+
+                hasDust--;
+            }
+
         }
     }
     IEnumerator PlayWipeAnimation()
@@ -297,9 +340,10 @@ public class PlayerContoller : MonoBehaviour
             _canDoubleJump = true;
             anim.SetBool("isDoubleJumping", false);
             isJumpZone = false;
+            Debug.Log(collision.gameObject.tag);
+
             //anim.SetBool("isGrounded", true);
         }
-
         if (collision.gameObject.tag == "JumpZone")
         {
             isJumpZone = true;
@@ -307,12 +351,14 @@ public class PlayerContoller : MonoBehaviour
             _isJumping = false;
             _canDoubleJump = true;
             anim.SetBool("isDoubleJumping", false);
+            Debug.Log(collision.gameObject.tag);
         }
 
         if (collision.gameObject.tag == "CumpulsionJumpZone")
         {
             playerRigidbody.AddForce(Vector3.up * 30.0f, ForceMode.Impulse);
             Debug.Log("CumpulsionJump");
+            Debug.Log(collision.gameObject.tag);
         }
 
 
@@ -328,6 +374,25 @@ public class PlayerContoller : MonoBehaviour
     {
         if (other.tag == "Weapon")
             getItem = null;
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Item")
+        {
+            Items item = other.GetComponent<Items>();
+            switch (item.type)
+            {
+                case Items.Type.Dust:
+                    dusts[hasDust].SetActive(true);
+                    hasDust += item.value;
+                    if (hasDust > maxDust)
+                        hasDust = maxDust;
+                    break;
+            }
+            Destroy(other.gameObject);
+        }
     }
     void CheckGrounded()
     {

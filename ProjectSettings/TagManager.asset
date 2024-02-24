@@ -8,9 +8,9 @@ TagManager:
   - Item
   - Weapon
   - basicAttack
-  - enemy
   - JumpZone
   - CumpulsionJumpZone
+  - Enemy
   layers:
   - Default
   - TransparentFX

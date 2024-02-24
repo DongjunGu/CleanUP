@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -366,6 +366,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlimePolyart (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2863436456904412064, guid: eaa1bc851fa276b48a9883607020f8c9,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 3240103424284463386, guid: eaa1bc851fa276b48a9883607020f8c9,
         type: 3}
       propertyPath: m_RootOrder
@@ -687,6 +692,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SlimePolyart (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863436456904412064, guid: eaa1bc851fa276b48a9883607020f8c9,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 3240103424284463386, guid: eaa1bc851fa276b48a9883607020f8c9,
         type: 3}
@@ -1136,7 +1146,7 @@ PrefabInstance:
     - target: {fileID: 1833970410475473646, guid: 5c771900069038340aac7d9f82f7daf5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 27.23
+      value: 15.62
       objectReference: {fileID: 0}
     - target: {fileID: 1833970410475473646, guid: 5c771900069038340aac7d9f82f7daf5,
         type: 3}
@@ -1987,7 +1997,7 @@ PrefabInstance:
     - target: {fileID: 1833970410475473646, guid: 5c771900069038340aac7d9f82f7daf5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 27.23
+      value: 15.62
       objectReference: {fileID: 0}
     - target: {fileID: 1833970410475473646, guid: 5c771900069038340aac7d9f82f7daf5,
         type: 3}
@@ -2047,6 +2057,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TurtleShellPolyart
+      objectReference: {fileID: 0}
+    - target: {fileID: 1499923314512341871, guid: 8ffb923a88124264993ae95327f5930b,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 2277445794181542357, guid: 8ffb923a88124264993ae95327f5930b,
         type: 3}
@@ -2480,6 +2495,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TurtleShellPolyart (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1499923314512341871, guid: 8ffb923a88124264993ae95327f5930b,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 2277445794181542357, guid: 8ffb923a88124264993ae95327f5930b,
         type: 3}
       propertyPath: m_RootOrder
@@ -2553,6 +2573,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TurtleShellPolyart (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1499923314512341871, guid: 8ffb923a88124264993ae95327f5930b,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 2277445794181542357, guid: 8ffb923a88124264993ae95327f5930b,
         type: 3}
@@ -2780,7 +2805,7 @@ PrefabInstance:
     - target: {fileID: 1833970410475473646, guid: 5c771900069038340aac7d9f82f7daf5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 27.23
+      value: 15.62
       objectReference: {fileID: 0}
     - target: {fileID: 1833970410475473646, guid: 5c771900069038340aac7d9f82f7daf5,
         type: 3}
@@ -3015,7 +3040,7 @@ PrefabInstance:
     - target: {fileID: 1833970410475473646, guid: 5c771900069038340aac7d9f82f7daf5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 27.23
+      value: 15.62
       objectReference: {fileID: 0}
     - target: {fileID: 1833970410475473646, guid: 5c771900069038340aac7d9f82f7daf5,
         type: 3}
@@ -4925,6 +4950,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SlimePolyart
+      objectReference: {fileID: 0}
+    - target: {fileID: 2863436456904412064, guid: eaa1bc851fa276b48a9883607020f8c9,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 3240103424284463386, guid: eaa1bc851fa276b48a9883607020f8c9,
         type: 3}

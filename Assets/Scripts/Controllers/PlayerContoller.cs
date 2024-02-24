@@ -416,7 +416,6 @@ public class PlayerContoller : MonoBehaviour
     {
         playerRigidbody.angularVelocity = Vector3.zero;
     }
-
     void StopBeforeObject() //충돌전 확인
     {
         //Debug.DrawRay(transform.position + Vector3.up, transform.forward * 3, Color.green);
@@ -427,61 +426,6 @@ public class PlayerContoller : MonoBehaviour
     {
         RotationFreeze();
         StopBeforeObject();
-    }
-
-    void UpdateRotate()
-    {
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
-
-        eulerAngleY += mouseX * rotCamXAxisSpeed;
-        eulerAngleX -= mouseY * rotCamYAxisSpeed;
-
-        eulerAngleX = ClampAngle(eulerAngleX, limitMinX, limitMaxX);
-
-        transform.rotation = Quaternion.Euler(eulerAngleX, eulerAngleY, 0);
-
-    }
-
-    private void UpdateMove()
-    {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-
-        Vector3 dir = new Vector3(h, 0, v).normalized;
-        if (_isAttack)
-            dir = new Vector3(h, 0, v).normalized;
-        //Vector3 moveVector = dir * _speed * Time.deltaTime;
-        if (!(h == 0 && v == 0))
-        {
-
-            anim.SetBool("isRun", true);
-            if (_isDodge)
-                dir = dogeVec;
-            //Quaternion targetRotation = Quaternion.LookRotation(dir, Vector3.up);
-            //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _rotateSpeed);
-            if (!_isBorder)
-                transform.Translate(dir * _speed * Time.deltaTime, Space.Self);
-            //transform.position += moveVector;
-        }
-        else
-        {
-            anim.SetBool("isRun", false);
-        }
-
-
-        //Vector3 dir = transform.rotation * new Vector3(x, 0, z);
-
-        //Vector3 moveForce = new Vector3(dir.x * moveSpeed, 0, dir.z * moveSpeed);
-
-        //characterController.Move(moveForce * Time.deltaTime);
-    }
-    private float ClampAngle(float angle, float min, float max)
-    {
-        if (angle < -360) angle += 360;
-        if (angle > 360) angle -= 360;
-
-        return Mathf.Clamp(angle, min, max);
     }
 
 }

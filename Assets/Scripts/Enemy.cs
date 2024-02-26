@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     public int maxHP;
     public int currentHp;
     public Transform target;
+    public GameObject dustItemObject;
     private bool canTakeDamage = true;
 
     bool _isDestroyed;
@@ -55,9 +56,8 @@ public class Enemy : MonoBehaviour
 
             if (distance > 30.0f) //Go Back
             {
-                //transform.position = enemyOrgPlace;
+                
                 nav.SetDestination(enemyOrgPlace);
-                //NavMesh.CalculatePath
             }
         }
         
@@ -122,6 +122,7 @@ public class Enemy : MonoBehaviour
                 rigid.AddForce(knockBack * 10, ForceMode.Impulse);
             }
             Destroy(gameObject, 2);
+            int randomRangeInt = Random.Range(0, 2);
         }
     }
     IEnumerator Damaged_Skinned(Vector3 knockBack, bool isDusted)
@@ -162,6 +163,15 @@ public class Enemy : MonoBehaviour
             skinned_mat.color = Color.black;
             _isDestroyed = true;
             Destroy(gameObject, 2);
+            //아이템 드랍
+
+            int randomRangeInt = Random.Range(0, 2);
+            if (randomRangeInt < 1)
+            {
+                GameObject instantDust = Instantiate(dustItemObject, transform.position + Vector3.up * 2, transform.rotation);
+            }
+
+
         }
     }
     public void HitByDust(Vector3 pos)

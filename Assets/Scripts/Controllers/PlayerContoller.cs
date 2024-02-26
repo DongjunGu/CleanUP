@@ -9,11 +9,6 @@ public class PlayerContoller : MonoBehaviour
     [SerializeField] LayerMask groundLayer = 1 << 9;
     [SerializeField] LayerMask wallLayer = 1 << 6;
 
-    [SerializeField]
-    private float rotCamXAxisSpeed = 5.0f;
-    [SerializeField]
-    private float rotCamYAxisSpeed = 3.0f;
-
     public Camera mainCamera;
 
     public GameObject[] weapons;
@@ -62,11 +57,6 @@ public class PlayerContoller : MonoBehaviour
 
     int orginWeaponIndex = -1;
     float _attackDelay;
-
-    private float limitMinX = -80;
-    private float limitMaxX = 50;
-    private float eulerAngleX;
-    private float eulerAngleY;
     void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
@@ -128,13 +118,13 @@ public class PlayerContoller : MonoBehaviour
 
     void PlayerJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !_isSwap && (!_isJumping || (_canDoubleJump && !_isDodge)))
+        if (Input.GetKeyDown(KeyCode.Space) && !_isSwap && (!_isJumping || ( _canDoubleJump && !_isDodge)))
         {
-            if (_isJumping)
+            if (_isJumping && _canDoubleJump)
             {
                 _canDoubleJump = false;
                 anim.SetTrigger("playDoubleJump");
-                anim.SetBool("isDoubleJumping", true);
+                //anim.SetBool("isDoubleJumping", true);
                 playerRigidbody.AddForce(Vector3.up * 10.0f, ForceMode.Impulse);
                 
                 return;
@@ -148,7 +138,7 @@ public class PlayerContoller : MonoBehaviour
                     _isJumping = true;
                     anim.SetBool("isJumping", true);
                     anim.SetTrigger("playJump");
-                    Debug.Log("JUMPZONE JUMP");
+                    _canDoubleJump = true;
                     return;
                 }
             }
@@ -158,7 +148,7 @@ public class PlayerContoller : MonoBehaviour
                 anim.SetBool("isJumping", true);
                 _isJumping = true;
                 anim.SetTrigger("playJump");
-                Debug.Log("NORMAL JUMP");
+                _canDoubleJump = true;
                 return;
             }
 
@@ -167,14 +157,13 @@ public class PlayerContoller : MonoBehaviour
 
     void PlayFall()
     {
+        //Debug.Log("Falling");
         anim.SetTrigger("playFall");
-        _isJumping = true;
+        //_isJumping = true;
     }
 
     void PlayerDodge()
     {
-        //if (Input.GetKeyDown(KeyCode.LeftShift) && !_isBorderDodge && !_isJumping && !_isDodge && dir != Vector3.zero)
-        //if (Input.GetKeyDown(KeyCode.LeftShift) && !_isBorderDodge && !_isJumping && !_isDodge && !(h == 0 && v == 0))
         if (Input.GetKeyDown(KeyCode.LeftShift) && !_isBorderDodge && !_isSwap && !_isDodge && dir != Vector3.zero)
         {
               
@@ -229,22 +218,6 @@ public class PlayerContoller : MonoBehaviour
         _isSwap = false;
     }
 
-    //void Attack()
-    //{
-    //    if (orginWeapon == null)
-    //        return;
-    //    _attackDelay += Time.deltaTime;
-    //    _isAttack = orginWeapon.attackSpeed < _attackDelay;
-
-    //    if (_attackKey && _isAttack && !_isDodge && !_isJumping)
-    //    {
-    //        orginWeapon.Attack();
-    //        anim.SetTrigger("playWipe");
-    //        _attackDelay = 0.0f;
-    //        //공격하는 동안 점프 불가
-    //    }
-
-    //}
     void Attack()
     {
         if (orginWeapon == null)
@@ -290,7 +263,6 @@ public class PlayerContoller : MonoBehaviour
         anim.SetTrigger("playWipe");
         _attackDelay = 0.0f;
 
-        // Disable jumping during the attack
         _isJumping = true;
         anim.SetBool("isJumping", false);
         _canDoubleJump = false;
@@ -299,7 +271,6 @@ public class PlayerContoller : MonoBehaviour
         
         yield return new WaitForSeconds(0.9f);
 
-        // Enable jumping after the wipe animation
         _isJumping = false;
         _canDoubleJump = true;
         anim.SetBool("isDoubleJumping", false);
@@ -337,8 +308,8 @@ public class PlayerContoller : MonoBehaviour
         {
             anim.SetBool("isJumping", false);
             _isJumping = false;
-            _canDoubleJump = true;
-            anim.SetBool("isDoubleJumping", false);
+            //_canDoubleJump = true;
+            //anim.SetBool("isDoubleJumping", false);
             isJumpZone = false;
             Debug.Log(collision.gameObject.tag);
 
@@ -349,8 +320,8 @@ public class PlayerContoller : MonoBehaviour
             isJumpZone = true;
             anim.SetBool("isJumping", false);
             _isJumping = false;
-            _canDoubleJump = true;
-            anim.SetBool("isDoubleJumping", false);
+            //_canDoubleJump = true;
+            //anim.SetBool("isDoubleJumping", false);
             Debug.Log(collision.gameObject.tag);
         }
 
@@ -385,7 +356,7 @@ public class PlayerContoller : MonoBehaviour
             switch (item.type)
             {
                 case Items.Type.Dust:
-                    dusts[hasDust].SetActive(true);
+                    //dusts[hasDust].SetActive(true);
                     hasDust += item.value;
                     if (hasDust > maxDust)
                         hasDust = maxDust;

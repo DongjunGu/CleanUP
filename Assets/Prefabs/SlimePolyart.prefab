@@ -281,7 +281,9 @@ MonoBehaviour:
   _scanRange: 10
   maxHP: 100
   currentHp: 100
-  target: {fileID: 0}
+  target: {fileID: 73176762947442776, guid: 92094cf8c72cccf4191f4d1216b68fc7, type: 3}
+  dustItemObject: {fileID: 1833970410474985166, guid: 5c771900069038340aac7d9f82f7daf5,
+    type: 3}
 --- !u!1 &4218714228889669570
 GameObject:
   m_ObjectHideFlags: 0

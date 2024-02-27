@@ -100,10 +100,10 @@ public class PlayerContoller : MonoBehaviour
         //Move
         if (!(v == 0 && h == 0))
         {
-            if (_isSwap)
-                dir = Vector3.zero;
+            //if (_isSwap)
+            //    dir = Vector3.zero;
             anim.SetBool("isRun", true);
-            if (!_isBorder)
+            //if (!_isBorder)
                 transform.position += dir * _speed * Time.deltaTime;
         }
         else
@@ -120,6 +120,7 @@ public class PlayerContoller : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && !_isSwap && (!_isJumping || ( _canDoubleJump && !_isDodge)))
         {
+            
             if (_isJumping && _canDoubleJump)
             {
                 _canDoubleJump = false;
@@ -134,6 +135,7 @@ public class PlayerContoller : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    playerRigidbody.velocity = Vector3.zero;
                     playerRigidbody.AddForce(Vector3.up * 20.0f, ForceMode.Impulse);
                     _isJumping = true;
                     anim.SetBool("isJumping", true);
@@ -144,6 +146,7 @@ public class PlayerContoller : MonoBehaviour
             }
             else
             {
+                playerRigidbody.velocity = Vector3.zero;
                 playerRigidbody.AddForce(Vector3.up * 10.0f, ForceMode.Impulse);
                 anim.SetBool("isJumping", true);
                 _isJumping = true;
@@ -168,12 +171,12 @@ public class PlayerContoller : MonoBehaviour
         {
               
             dogeVec = dir;
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, dogeVec, out hit, _speed * 1.5f, LayerMask.GetMask("Wall")))
-            {
-                // If the ray hits a wall, adjust the dodge direction to be away from the wall
-                return;
-            }
+            //RaycastHit hit;
+            //if (Physics.Raycast(transform.position, dogeVec, out hit, _speed * 1.5f, LayerMask.GetMask("Wall")))
+            //{
+            //    // If the ray hits a wall, adjust the dodge direction to be away from the wall
+            //    return;
+            //}
             anim.SetTrigger("playDodge");
             _isDodge = true;
             _isJumping = true;
@@ -236,15 +239,33 @@ public class PlayerContoller : MonoBehaviour
     {
         if (hasDust == 0)
             return;
-        if (_dustAttack)
+
+        if (_dustAttack && !_isJumping && !_isDodge && !_isSwap)
         {
+            
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 100))
             {
+                anim.SetTrigger("playThrow");
+
+               
+
                 Vector3 nextVec = hit.point - transform.position;
                 nextVec.y = 10;
 
+                Vector3 lookAtPos = Input.mousePosition;
+                float lookAngle =  Vector3.Angle(transform.forward, nextVec.normalized); // 사이각구하기
+
+                if(Vector3.Dot(transform.right, nextVec.normalized) < 0) // 내적을 계산해서 0 : 직각, 음수 : 반시계
+                {
+                    transform.Rotate(Vector3.up * -lookAngle); //반시계
+                }
+                else
+                {
+                    transform.Rotate(Vector3.up * lookAngle); //시계
+                }
                 GameObject instantDust = Instantiate(dustObject, transform.position, transform.rotation);
                 Rigidbody rigidDust = instantDust.GetComponent<Rigidbody>();
                 rigidDust.AddForce(nextVec, ForceMode.Impulse);
@@ -298,10 +319,17 @@ public class PlayerContoller : MonoBehaviour
 
     private void OnAnimatorMove()
     {
-        transform.Translate(anim.deltaPosition, Space.World);
+        if (Physics.Raycast(new Ray(transform.position, anim.deltaPosition.normalized), out RaycastHit hit,
+            anim.deltaPosition.magnitude, LayerMask.GetMask("Wall")))
+        {
+            transform.position += anim.deltaPosition.normalized * hit.distance;
+        }
+        else
+        {
+            transform.Translate(anim.deltaPosition, Space.World);
+        }
         transform.rotation *= anim.deltaRotation;
     }
-
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Ground")
@@ -327,20 +355,24 @@ public class PlayerContoller : MonoBehaviour
 
         if (collision.gameObject.tag == "CumpulsionJumpZone")
         {
+            playerRigidbody.velocity = Vector3.zero;
             playerRigidbody.AddForce(Vector3.up * 30.0f, ForceMode.Impulse);
             Debug.Log("CumpulsionJump");
             Debug.Log(collision.gameObject.tag);
         }
+        
+        if(((1 << collision.gameObject.layer) & wallLayer) != 0) //Layer
+        {
+            
+        }
 
 
     }
-
     void OnTriggerStay(Collider other)
     {
         if (other.tag == "Weapon")
             getItem = other.gameObject;
     }
-
     void OnTriggerExit(Collider other)
     {
         if (other.tag == "Weapon")
@@ -391,7 +423,7 @@ public class PlayerContoller : MonoBehaviour
     {
         //Debug.DrawRay(transform.position + Vector3.up, transform.forward * 3, Color.green);
         _isBorder = Physics.Raycast(transform.position + Vector3.up, transform.forward, 2, LayerMask.GetMask("Wall"));
-        _isBorderDodge = Physics.Raycast(transform.position + Vector3.up, transform.forward, 5, LayerMask.GetMask("Wall"));
+        //_isBorderDodge = Physics.Raycast(transform.position + Vector3.up, transform.forward, 5, LayerMask.GetMask("Wall"));
     }
     private void FixedUpdate()
     {

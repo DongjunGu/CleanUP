@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class PlayerContoller : MonoBehaviour
 {
@@ -49,7 +50,6 @@ public class PlayerContoller : MonoBehaviour
     bool _canDoubleJump = true;
     bool isJumpZone = false;
     private bool _isWipeAnimationPlaying = false;
-
     Vector3 dir;
     Vector3 dogeVec;
     GameObject getItem;
@@ -65,20 +65,22 @@ public class PlayerContoller : MonoBehaviour
 
     void Update()
     {
+        
         GetInput();
-
-        PlayerMove();
+        //PlayerMove();
         PlayerJump();
         PlayerDodge();
         ObtainItem(); //TODO 아이템 주울때 모션 추가
         SwapWeapon(); //TODO 스왑 모션 추가
         Attack();
         Dust();
+
         CheckGrounded();
 
         //UpdateRotate();
         //UpdateMove();
     }
+
 
     void GetInput()
     {
@@ -104,7 +106,13 @@ public class PlayerContoller : MonoBehaviour
             //    dir = Vector3.zero;
             anim.SetBool("isRun", true);
             //if (!_isBorder)
-                transform.position += dir * _speed * Time.deltaTime;
+            float offset = 0.5f;
+            float dist = _speed * Time.deltaTime;
+            if (Physics.Raycast(new Ray(transform.position - dir * offset, dir), out RaycastHit hit, dist + offset * 2.0f, LayerMask.GetMask("Wall")))
+            {
+                dist = hit.distance - offset * 2.0f;
+            }
+            transform.position += dir * dist;
         }
         else
         {
@@ -319,10 +327,11 @@ public class PlayerContoller : MonoBehaviour
 
     private void OnAnimatorMove()
     {
-        if (Physics.Raycast(new Ray(transform.position, anim.deltaPosition.normalized), out RaycastHit hit,
-            anim.deltaPosition.magnitude, LayerMask.GetMask("Wall")))
+        float offset = 0.5f;
+        if (Physics.Raycast(new Ray(transform.position - anim.deltaPosition.normalized * offset, anim.deltaPosition.normalized), out RaycastHit hit,
+            anim.deltaPosition.magnitude + offset*2.0f, LayerMask.GetMask("Wall")))
         {
-            transform.position += anim.deltaPosition.normalized * hit.distance;
+            transform.position += anim.deltaPosition.normalized * (hit.distance - offset*2.0f);
         }
         else
         {
@@ -360,9 +369,10 @@ public class PlayerContoller : MonoBehaviour
             Debug.Log("CumpulsionJump");
             Debug.Log(collision.gameObject.tag);
         }
-        
-        if(((1 << collision.gameObject.layer) & wallLayer) != 0) //Layer
+
+        if (((1 << collision.gameObject.layer) & wallLayer) != 0) //Layer
         {
+            Debug.Log("Collision");
             
         }
 
@@ -388,7 +398,6 @@ public class PlayerContoller : MonoBehaviour
             switch (item.type)
             {
                 case Items.Type.Dust:
-                    //dusts[hasDust].SetActive(true);
                     hasDust += item.value;
                     if (hasDust > maxDust)
                         hasDust = maxDust;
@@ -427,6 +436,7 @@ public class PlayerContoller : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        PlayerMove();
         RotationFreeze();
         StopBeforeObject();
     }

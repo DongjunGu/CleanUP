@@ -24,13 +24,11 @@ public class Dust : MonoBehaviour
             if (rayHits.Length > 0)
             {
                 ExecuteExplosion();
-                Debug.Log("즉발");
                 yield break;
             }
             yield return null;
         }
         ExecuteExplosion();
-        Debug.Log("딜레이");
     }
 
     void ExecuteExplosion()
@@ -53,7 +51,6 @@ public class Dust : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            Debug.Log("충돌");
             ExecuteExplosion();
         }
     }

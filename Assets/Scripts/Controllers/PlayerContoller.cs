@@ -372,8 +372,7 @@ public class PlayerContoller : MonoBehaviour
 
         if (((1 << collision.gameObject.layer) & wallLayer) != 0) //Layer
         {
-            Debug.Log("Collision");
-            
+             
         }
 
 

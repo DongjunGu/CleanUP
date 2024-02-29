@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.UI;
 
 public class PlayerContoller : MonoBehaviour
 {
     [SerializeField] public float _speed = 10.0f;
     [SerializeField] LayerMask groundLayer = 1 << 9;
     [SerializeField] LayerMask wallLayer = 1 << 6;
-
+    [SerializeField] GameObject weaponImage1;
+    [SerializeField] GameObject weaponImage2;
     public Camera mainCamera;
 
     public GameObject[] weapons;
@@ -20,7 +22,6 @@ public class PlayerContoller : MonoBehaviour
 
     public int maxDust;
     public GameObject dustObject;
-    
 
     Animator anim;
     private float v = 0.0f;
@@ -53,6 +54,7 @@ public class PlayerContoller : MonoBehaviour
     Vector3 dir;
     Vector3 dogeVec;
     GameObject getItem;
+    GameObject getImage;
     Weapons orginWeapon;
 
     int orginWeaponIndex = -1;
@@ -319,8 +321,17 @@ public class PlayerContoller : MonoBehaviour
                 Items item = getItem.GetComponent<Items>();
                 int weaponIndex = item.value;
                 hasWeapons[weaponIndex] = true;
-
                 Destroy(getItem);
+
+                if (getItem.name == "Broom")
+                {
+                    weaponImage1.SetActive(true);
+                }
+                else if(getItem.name == "Hammer")
+                {
+                    weaponImage2.SetActive(true);
+                }
+                
             }
         }
     }

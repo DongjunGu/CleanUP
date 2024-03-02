@@ -136,7 +136,7 @@ public class PlayerContoller : MonoBehaviour
                 _canDoubleJump = false;
                 anim.SetTrigger("playDoubleJump");
                 //anim.SetBool("isDoubleJumping", true);
-                playerRigidbody.AddForce(Vector3.up * 10.0f, ForceMode.Impulse);
+                playerRigidbody.AddForce(Vector3.up * 13.0f, ForceMode.Impulse);
                 
                 return;
             }
@@ -177,7 +177,7 @@ public class PlayerContoller : MonoBehaviour
 
     void PlayerDodge()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isBorderDodge && !_isSwap && !_isDodge && dir != Vector3.zero)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isBorderDodge && !_isSwap && !_isDodge && dir != Vector3.zero && !_isJumping)
         {
               
             dogeVec = dir;

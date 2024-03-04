@@ -48,24 +48,15 @@ public class CameraController : MonoBehaviour
 
         transform.position = Vector3.Slerp(transform.position, newPos, cameraSmooth);
 
-        if(Physics.Raycast(target.transform.position, offset.normalized, out RaycastHit hit, offset.magnitude + 0.5f, LayerMask.GetMask("Wall")))
+        if(Physics.Raycast(target.transform.position + Vector3.up * 2.0f, offset.normalized, out RaycastHit hit, offset.magnitude + 0.5f, LayerMask.GetMask("Wall")))
         {
-            //tempOffset = (hit.point - target.position) * 0.8f;
-            //tempOffset.y += 2.0f;
-
             transform.position = hit.point - offset.normalized * 0.5f;
-            //transform.rotation = originalRotation;
 
         }
         
         if(Physics.Raycast(target.transform.position, offset.normalized, out RaycastHit cameraHit, offset.magnitude + 0.5f, LayerMask.GetMask("Ground")))
         {
-            //groundOffset = (cameraHit.point - transform.position)* 0.8f;
-
-            //transform.position = target.position + groundOffset;
-            //transform.rotation = originalRotation;
-            //Debug.Log("HIT!!");
-            transform.position = cameraHit.point - offset.normalized;
+            transform.position = (cameraHit.point + Vector3.up * 1.0f) - (offset.normalized * 0.5f);
         }
 
         if (Input.GetKey(KeyCode.LeftAlt))

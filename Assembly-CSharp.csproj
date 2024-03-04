@@ -53,7 +53,7 @@
     <UnityVersion>2020.3.48f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\PlayerMovement.cs" />
@@ -77,7 +77,9 @@
     <Compile Include="Assets\Scripts\Example.cs" />
     <Compile Include="Assets\Scripts\Weapons.cs" />
     <Compile Include="Assets\QuarterView 3D Action BE5\ReadMe\Scripts\ReadmeBE5.cs" />
+    <Compile Include="Assets\Scripts\CrossHair.cs" />
     <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Test\TestCamera.cs" />
     <Compile Include="Assets\Idle_State.cs" />
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\Doors\opencloseStallDoor.cs" />
     <Compile Include="Assets\Jump_State.cs" />
@@ -90,13 +92,13 @@
     <Compile Include="Assets\Scripts\Controllers\PlayerContoller.cs" />
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow1.cs" />
     <Compile Include="Assets\Prefabs\Apartment\Apartment Kit\Scenes\Quitgame.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Test\TestCamera.cs" />
-    <Compile Include="Assets\Scripts\CrossHair.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Prefabs\Particle\Materials\UnlitVertexColour_Alpha.shader" />
     <None Include="Assets\ClassRoom\read me .txt" />
+    <None Include="Assets\Office Vintage\QA_Books\Readme.txt" />
     <None Include="Assets\ClassRoom\ArtRoom\read me .txt" />
+    <None Include="Assets\Office Vintage\Read Me.txt" />
     <None Include="Assets\Chess\readme.txt" />
     <None Include="Assets\Prefabs\Teleportation Pad\README.txt" />
     <None Include="Assets\Prefabs\Apartment\Apartment Kit\Scenes\BPS Apartment Kit.txt" />

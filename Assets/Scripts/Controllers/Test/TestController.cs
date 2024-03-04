@@ -1,132 +1,35 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
+using UnityEngine;
 
-////[RequireComponent(typeof(CharacterController))]
+public class TestController : MonoBehaviour
+{
+    public float moveSpeed = 5f;
+    private Camera playerCamera;
 
-//public class TestController : MonoBehaviour
-//{
-//    [SerializeField]
-//    private float moveSpeed;
-//    [SerializeField]
-//    private float rotCamXAxisSpeed = 5.0f;
-//    [SerializeField]
-//    private float rotCamYAxisSpeed = 3.0f;
-//    [SerializeField] LayerMask groundLayer = 1 << 9;
-//    [SerializeField] LayerMask wallLayer = 1 << 6;
-//    private float limitMinX = -80;
-//    private float limitMaxX = 50;
-//    private float eulerAngleX;
-//    private float eulerAngleY;
+    private void Start()
+    {
+        // Player 스크립트가 추가된 GameObject의 Camera 컴포넌트 참조
+        playerCamera = GetComponentInChildren<Camera>();
+    }
 
-//    public GameObject[] weapons;
-//    public bool[] hasWeapons;
-//    Animator anim;
+    private void Update()
+    {
+        // 이동 입력 처리
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        Vector3 moveDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
 
-//    bool _isJumping;
-//    bool _isDodge;
-//    bool _obtainItem;
-//    bool _swapItem1;
-//    bool _swapItem2;
-//    bool _attackKey;
-//    bool _isAttack;
-//    bool _isAttacking = false;
-//    bool _isGrounded;
-//    bool _isBorder; //충돌감지
-//    bool _isBorderDodge;
-//    bool _canDoubleJump = true;
+        // Camera의 forward 방향을 기준으로 이동 방향 계산
+        Vector3 cameraForward = playerCamera.transform.forward;
+        Vector3 cameraRight = playerCamera.transform.right;
+        cameraForward.y = 0f;
+        cameraRight.y = 0f;
+        Vector3 moveDirectionRelativeToCamera = (cameraForward * verticalInput + cameraRight * horizontalInput).normalized;
 
-//    Vector3 dir;
-//    Vector3 dogeVec;
-//    Vector3 initialJumpPosition;
-//    GameObject getItem;
-//    Weapons orginWeapon;
-//    private Rigidbody playerRigidbody;
+        // 이동 적용
+        transform.Translate(moveDirectionRelativeToCamera * moveSpeed * Time.deltaTime, Space.World);
 
-//    void Awake()
-//    {
-//        //characterController = GetComponent<CharacterController>();
-//        playerRigidbody = GetComponent<Rigidbody>();
-//        anim = GetComponent<Animator>();
-//        // Initialize Cursor settings
-//        Cursor.visible = false;
-//        Cursor.lockState = CursorLockMode.Locked;
-//    }
-
-//    void Update()
-//    {
-//        GetInput();
-//        PlayerJump();
-
-//        UpdateRotate();
-//        UpdateMove();
-
-//    }
-//    void GetInput()
-//    {
-//        //_obtainItem = Input.GetButtonDown("Grab");
-//        //_swapItem1 = Input.GetButtonDown("SwapItem1");
-//        //_swapItem2 = Input.GetButtonDown("SwapItem2");
-//        //_attackKey = Input.GetButtonDown("Attack1");
-
-//    }
-//    void PlayerJump()
-//    {
-//        if (Input.GetKeyDown(KeyCode.Space) && (!_isJumping || (_canDoubleJump && !_isDodge)))
-//        {
-//            if (_isJumping)
-//            {
-//                _canDoubleJump = false;
-//                //anim.SetTrigger("playDoubleJump");
-//                //anim.SetBool("isDoubleJumping", true);
-//                //playerRigidbody.AddForce(Vector3.up * 10.0f, ForceMode.Impulse);
-
-//                return;
-//            }
-//            playerRigidbody.AddForce(Vector3.up * 10.0f, ForceMode.Impulse);
-//            //anim.SetBool("isJumping", true);
-//            _isJumping = true;
-//            //anim.SetTrigger("playJump");
-
-//            if (_isAttacking)
-//                return;
-
-
-//        }
-//    }
-
-//    void UpdateRotate()
-//    {
-//        float mouseX = Input.GetAxis("Mouse X");
-//        float mouseY = Input.GetAxis("Mouse Y");
-
-//        eulerAngleY += mouseX * rotCamXAxisSpeed;
-//        eulerAngleX -= mouseY * rotCamYAxisSpeed;
-
-//        eulerAngleX = ClampAngle(eulerAngleX, limitMinX, limitMaxX);
-
-//        transform.rotation = Quaternion.Euler(eulerAngleX, eulerAngleY, 0);
-//    }
-
-//    private void UpdateMove()
-//    {
-//        float x = Input.GetAxisRaw("Horizontal");
-//        float z = Input.GetAxisRaw("Vertical");
-
-//        Vector3 dir = new Vector3(x, 0, z).normalized;
-//        transform.Translate(dir * moveSpeed * Time.deltaTime, Space.Self);
-//        //Vector3 dir = transform.rotation * new Vector3(x, 0, z);
-
-//        //Vector3 moveForce = new Vector3(dir.x * moveSpeed, 0, dir.z * moveSpeed);
-
-//        //characterController.Move(moveForce * Time.deltaTime);
-//    }
-
-//    private float ClampAngle(float angle, float min, float max)
-//    {
-//        if (angle < -360) angle += 360;
-//        if (angle > 360) angle -= 360;
-
-//        return Mathf.Clamp(angle, min, max);
-//    }
-//}
+        // 회전 입력 처리
+        float mouseX = Input.GetAxis("Mouse X");
+        transform.Rotate(Vector3.up * mouseX);
+    }
+}

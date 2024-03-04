@@ -53,7 +53,7 @@
     <UnityVersion>2020.3.48f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\PlayerMovement.cs" />
@@ -90,6 +90,8 @@
     <Compile Include="Assets\Scripts\Controllers\PlayerContoller.cs" />
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow1.cs" />
     <Compile Include="Assets\Prefabs\Apartment\Apartment Kit\Scenes\Quitgame.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Test\TestCamera.cs" />
+    <Compile Include="Assets\Scripts\CrossHair.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Prefabs\Particle\Materials\UnlitVertexColour_Alpha.shader" />

@@ -13,7 +13,7 @@ public class PlayerContoller : MonoBehaviour
     [SerializeField] GameObject weaponImage1;
     [SerializeField] GameObject weaponImage2;
     public Camera mainCamera;
-
+    private Camera playerCamera;
     public GameObject[] weapons;
     public bool[] hasWeapons;
 
@@ -27,7 +27,7 @@ public class PlayerContoller : MonoBehaviour
     private float v = 0.0f;
     private float h = 0.0f;
     private float _rotateSpeed = 10.0f;
-   
+
     //float Idle_Run_Ratio = 0;
 
     private Rigidbody playerRigidbody;
@@ -63,11 +63,13 @@ public class PlayerContoller : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+
+        playerCamera = GetComponentInChildren<Camera>();
     }
 
     void Update()
     {
-        
+
         GetInput();
         //PlayerMove();
         PlayerJump();
@@ -95,35 +97,75 @@ public class PlayerContoller : MonoBehaviour
         _dustAttack = Input.GetButtonDown("Attack2");
 
     }
+    //void PlayerMove()
+    //{
+    //    dir = new Vector3(h, 0, v).normalized;
+    //    if (_isAttack)
+    //        dir = new Vector3(h, 0, v).normalized;
+    //    //Move
+    //    if (!(v == 0 && h == 0))
+    //    {
+    //        //if (_isSwap)
+    //        //    dir = Vector3.zero;
+    //        anim.SetBool("isRun", true);
+    //        //if (!_isBorder)
+    //        float offset = 0.5f;
+    //        float dist = _speed * Time.deltaTime;
+    //        if (Physics.Raycast(new Ray(transform.position - dir * offset, dir), out RaycastHit hit, dist + offset * 2.0f, LayerMask.GetMask("Wall")))
+    //        {
+    //            dist = hit.distance - offset * 2.0f;
+    //        }
+    //        transform.position += dir * dist;
+    //    }
+    //    else
+    //    {
+    //        anim.SetBool("isRun", false);
+    //    }
 
+    //    //Rotate
+    //    if (dir != Vector3.zero)
+    //        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * _rotateSpeed);
+    //}
     void PlayerMove()
     {
         dir = new Vector3(h, 0, v).normalized;
         if (_isAttack)
             dir = new Vector3(h, 0, v).normalized;
         //Move
+
+        Vector3 cameraForward = playerCamera.transform.forward;
+        Vector3 cameraRight = playerCamera.transform.right;
+        cameraForward.y = 0f;
+        cameraRight.y = 0f;
+
+        Vector3 dirRelativeToCamera = (cameraForward * v + cameraRight * h).normalized;
+
         if (!(v == 0 && h == 0))
         {
-            //if (_isSwap)
-            //    dir = Vector3.zero;
             anim.SetBool("isRun", true);
-            //if (!_isBorder)
             float offset = 0.5f;
             float dist = _speed * Time.deltaTime;
-            if (Physics.Raycast(new Ray(transform.position - dir * offset, dir), out RaycastHit hit, dist + offset * 2.0f, LayerMask.GetMask("Wall")))
+            if (Physics.Raycast(new Ray(transform.position - dirRelativeToCamera * offset, dirRelativeToCamera), out RaycastHit hit, dist + offset * 2.0f, LayerMask.GetMask("Wall")))
             {
                 dist = hit.distance - offset * 2.0f;
             }
-            transform.position += dir * dist;
+            //transform.position += dir * dist;
+            transform.Translate(dirRelativeToCamera * dist, Space.World);
+
+            Quaternion targetRotation = Quaternion.LookRotation(dirRelativeToCamera, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _rotateSpeed);
         }
         else
         {
             anim.SetBool("isRun", false);
         }
 
-        //Rotate
-        if (dir != Vector3.zero)
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * _rotateSpeed);
+        
+        float mouseX = Input.GetAxis("Mouse X");
+        transform.Rotate(Vector3.up * mouseX);
+
+        //if (dir != Vector3.zero)
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * _rotateSpeed);
     }
 
     void PlayerJump()

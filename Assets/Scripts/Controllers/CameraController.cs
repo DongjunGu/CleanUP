@@ -38,9 +38,10 @@ public class CameraController : MonoBehaviour
 
         if (rotateAroundPlayer)
         {
-            Quaternion horizontalRotation = Quaternion.AngleAxis(mouseX, Vector3.up);
+            //Quaternion horizontalRotation = Quaternion.AngleAxis(mouseX, Vector3.up);
             Quaternion verticalRotation = Quaternion.AngleAxis(mouseY, -Vector3.right);
-            offset = horizontalRotation * verticalRotation * offset;
+            //offset = horizontalRotation * verticalRotation * offset;
+            offset =  verticalRotation * offset;
 
         }
         newPos = target.position + offset;

@@ -6,15 +6,19 @@ using UnityEngine;
 public class SpringArmCamera : MonoBehaviour
 {
     public Transform target;
-
     public Vector3 offset;
     public Vector3 originalOffset;
-
+    Vector3 newPos;
+    public float rotationSpeed = 10.0f;
     public bool LookAtPlayer = false;
     public bool rotateAroundPlayer = true;
 
-    public float rotationSpeed = 2.0f;
+    [SerializeField]
+    private float cameraRotationLimit;
+    private float currentCameraRotationX;
 
+    [SerializeField]
+    private float lookSensitivity;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
@@ -22,6 +26,16 @@ public class SpringArmCamera : MonoBehaviour
     }
     void LateUpdate()
     {
-        transform.Rotate(-Input.GetAxis("Mouse Y") * rotationSpeed, 0f, 0f);
+        float _xRotation = Input.GetAxisRaw("Mouse Y");
+        float _cameraRotationX = _xRotation * lookSensitivity;
+
+        currentCameraRotationX -= _cameraRotationX;
+        currentCameraRotationX = Mathf.Clamp(currentCameraRotationX, -20.0f, 70.0f);
+
+        transform.localEulerAngles = new Vector3(currentCameraRotationX, 0f, 0f);
+
+        //if (LookAtPlayer)
+        //    transform.LookAt(target, Vector3.up);
+
     }
 }

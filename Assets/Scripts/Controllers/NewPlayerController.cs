@@ -11,7 +11,7 @@ public class NewPlayerController : MonoBehaviour
     [SerializeField] GameObject weaponImage1;
     [SerializeField] GameObject weaponImage2;
 
-    private Camera mainCamera;
+    public Camera mainCamera;
     public GameObject[] weapons;
     public bool[] hasWeapons;
 
@@ -38,7 +38,6 @@ public class NewPlayerController : MonoBehaviour
     bool _isAttack;
     bool _dustAttack;
     bool _isGrounded;
-    bool _isBorderDodge;
     bool _canDoubleJump = true;
     bool isJumpZone = false;
 
@@ -81,6 +80,43 @@ public class NewPlayerController : MonoBehaviour
 
     }
 
+    //void PlayerMove()
+    //{
+    //    dir = new Vector3(h, 0, v).normalized;
+
+    //    if (_isAttack)
+    //        dir = new Vector3(h, 0, v).normalized;
+
+    //    Vector3 cameraForward = mainCamera.transform.forward;
+    //    Vector3 cameraRight = mainCamera.transform.right;
+    //    cameraForward.y = 0f;
+    //    cameraRight.y = 0f;
+
+    //    Vector3 dirRelativeToCamera = (cameraForward * v + cameraRight * h).normalized;
+
+    //    if (!(v == 0 && h == 0))
+    //    {
+    //        anim.SetBool("isRun", true);
+    //        float offset = 0.5f;
+    //        float dist = _speed * Time.deltaTime;
+    //        if (Physics.Raycast(new Ray(transform.position - dirRelativeToCamera * offset, dirRelativeToCamera), out RaycastHit hit, dist + offset * 2.0f, LayerMask.GetMask("Wall")))
+    //        {
+    //            dist = hit.distance - offset * 2.0f;
+    //        }
+    //        transform.Translate(dirRelativeToCamera * dist, Space.World);
+
+    //        Quaternion targetRotation = Quaternion.LookRotation(new Vector3(dirRelativeToCamera.x, 0, dirRelativeToCamera.z), Vector3.up);
+    //        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _rotateSpeed);
+    //    }
+    //    else
+    //    {
+    //        anim.SetBool("isRun", false);
+    //    }
+
+    //    float mouseX = Input.GetAxis("Mouse X");
+    //    transform.Rotate(Vector3.up * mouseX * _rotateSpeed);
+    //}
+
     void PlayerMove()
     {
         dir = new Vector3(h, 0, v).normalized;
@@ -88,34 +124,26 @@ public class NewPlayerController : MonoBehaviour
         if (_isAttack)
             dir = new Vector3(h, 0, v).normalized;
 
-        Vector3 cameraForward = mainCamera.transform.forward;
-        Vector3 cameraRight = mainCamera.transform.right;
-        cameraForward.y = 0f;
-        cameraRight.y = 0f;
-
-        Vector3 dirRelativeToCamera = (cameraForward * v + cameraRight * h).normalized;
-
         if (!(v == 0 && h == 0))
         {
-            anim.SetBool("isRun", true);
-            float offset = 0.5f;
+            Vector3 _moveHorizontal = transform.right * h;
+            Vector3 _moveVertical = transform.forward * v;
             float dist = _speed * Time.deltaTime;
-            if (Physics.Raycast(new Ray(transform.position - dirRelativeToCamera * offset, dirRelativeToCamera), out RaycastHit hit, dist + offset * 2.0f, LayerMask.GetMask("Wall")))
-            {
-                dist = hit.distance - offset * 2.0f;
-            }
-            transform.Translate(dirRelativeToCamera * dist, Space.World);
+            Vector3 _velocity = (_moveHorizontal + _moveVertical).normalized;
 
-            Quaternion targetRotation = Quaternion.LookRotation(dirRelativeToCamera, Vector3.up);
-
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _rotateSpeed);
+            anim.SetBool("isRun", true);
+            transform.Translate(_velocity * dist, Space.World);
+            //TODO
         }
         else
         {
             anim.SetBool("isRun", false);
         }
-        float mouseX = Input.GetAxis("Mouse X");
-        transform.Rotate(Vector3.up * mouseX * _rotateSpeed);
+
+        float _yRotation = Input.GetAxisRaw("Mouse X");
+        Vector3 _characterRotationY = new Vector3(0f, _yRotation, 0f) * 5.0f;
+        playerRigidbody.MoveRotation(playerRigidbody.rotation * Quaternion.Euler(_characterRotationY)); // ÄõÅÍ´Ï¾ð * ÄõÅÍ´Ï¾ð
+
     }
     void PlayerJump()
     {
@@ -169,7 +197,7 @@ public class NewPlayerController : MonoBehaviour
     }
     void PlayerDodge()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isBorderDodge && !_isSwap && !_isDodge && dir != Vector3.zero && !_isJumping)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isSwap && !_isDodge && dir != Vector3.zero && !_isJumping)
         {
 
             dogeVec = dir;

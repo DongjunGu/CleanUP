@@ -11,6 +11,8 @@ TagManager:
   - JumpZone
   - CumpulsionJumpZone
   - Enemy
+  - enemy
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -27,7 +29,7 @@ TagManager:
   - Weapon
   - JumpZone
   - Dust
-  - 
+  - Obstacle
   - 
   - 
   - 

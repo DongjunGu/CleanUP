@@ -10,6 +10,7 @@ public class PlayerContoller : MonoBehaviour
     [SerializeField] public float _speed = 10.0f;
     [SerializeField] LayerMask groundLayer = 1 << 9;
     [SerializeField] LayerMask wallLayer = 1 << 6;
+    [SerializeField] LayerMask obstacleLayer = 1 << 15;
     [SerializeField] GameObject weaponImage1;
     [SerializeField] GameObject weaponImage2;
     public Camera mainCamera;
@@ -178,8 +179,8 @@ public class PlayerContoller : MonoBehaviour
                 _canDoubleJump = false;
                 anim.SetTrigger("playDoubleJump");
                 //anim.SetBool("isDoubleJumping", true);
-                playerRigidbody.AddForce(Vector3.up * 13.0f, ForceMode.Impulse);
-                
+                playerRigidbody.AddForce(Vector3.up * 14.0f, ForceMode.Impulse);
+                Invoke("FallAfterJump", 0.3f);
                 return;
             }
 
@@ -193,26 +194,31 @@ public class PlayerContoller : MonoBehaviour
                     anim.SetBool("isJumping", true);
                     anim.SetTrigger("playJump");
                     _canDoubleJump = true;
+                    Invoke("FallAfterJump", 0.3f);
                     return;
                 }
             }
             else
             {
                 playerRigidbody.velocity = Vector3.zero;
-                playerRigidbody.AddForce(Vector3.up * 10.0f, ForceMode.Impulse);
+                playerRigidbody.AddForce(Vector3.up * 13.0f, ForceMode.Impulse);
                 anim.SetBool("isJumping", true);
                 _isJumping = true;
                 anim.SetTrigger("playJump");
                 _canDoubleJump = true;
+                Invoke("FallAfterJump", 0.3f);
                 return;
             }
 
         }
     }
-
+    void FallAfterJump()
+    {
+        playerRigidbody.AddForce(Vector3.down * 5.0f, ForceMode.Impulse);
+        Debug.Log("FallAfterJump");
+    }
     void PlayFall()
     {
-        //Debug.Log("Falling");
         anim.SetTrigger("playFall");
         //_isJumping = true;
     }
@@ -423,7 +429,7 @@ public class PlayerContoller : MonoBehaviour
             Debug.Log(collision.gameObject.tag);
         }
 
-        if (((1 << collision.gameObject.layer) & wallLayer) != 0) //Layer
+        if (((1 << collision.gameObject.layer) & obstacleLayer) != 0) //Layer
         {
              
         }

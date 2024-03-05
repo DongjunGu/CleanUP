@@ -7,7 +7,6 @@ public class CameraController : MonoBehaviour
     public Vector3 offset;
     public Vector3 originalOffset;
     public Vector3 tempOffset;
-    public Vector3 groundOffset;
     private Quaternion originalRotation;
     //[Range(0.01f, 1.0f)]
     public float cameraSmooth = 0.5f;

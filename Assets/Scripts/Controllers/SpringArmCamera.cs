@@ -34,8 +34,5 @@ public class SpringArmCamera : MonoBehaviour
 
         transform.localEulerAngles = new Vector3(currentCameraRotationX, 0f, 0f);
 
-        //if (LookAtPlayer)
-        //    transform.LookAt(target, Vector3.up);
-
     }
 }

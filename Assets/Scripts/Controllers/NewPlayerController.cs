@@ -10,7 +10,7 @@ public class NewPlayerController : MonoBehaviour
     [SerializeField] LayerMask obstacleLayer = 1 << 15;
     [SerializeField] GameObject weaponImage1;
     [SerializeField] GameObject weaponImage2;
-
+    [SerializeField] Transform player;
     public Camera mainCamera;
     public GameObject[] weapons;
     public bool[] hasWeapons;
@@ -24,7 +24,7 @@ public class NewPlayerController : MonoBehaviour
     Animator anim;
     private float v = 0.0f;
     private float h = 0.0f;
-    private float _rotateSpeed = 5.0f;
+    private float _rotateSpeed = 10.0f;
 
     private Rigidbody playerRigidbody;
 
@@ -45,6 +45,7 @@ public class NewPlayerController : MonoBehaviour
 
     Vector3 dir;
     Vector3 dogeVec;
+    Vector3 _velocity;
     GameObject getItem;
     GameObject getImage;
     Weapons orginWeapon;
@@ -129,21 +130,26 @@ public class NewPlayerController : MonoBehaviour
             Vector3 _moveHorizontal = transform.right * h;
             Vector3 _moveVertical = transform.forward * v;
             float dist = _speed * Time.deltaTime;
-            Vector3 _velocity = (_moveHorizontal + _moveVertical).normalized;
+            _velocity = (_moveHorizontal + _moveVertical).normalized;
 
             anim.SetBool("isRun", true);
+            float offset = 0.8f;
+            if (Physics.Raycast(new Ray(transform.position - _velocity * offset, _velocity), out RaycastHit hit, dist + offset * 2.0f, LayerMask.GetMask("Wall")))
+            {
+                dist = hit.distance - offset * 2.0f;
+            }
             transform.Translate(_velocity * dist, Space.World);
-            //TODO
+
+            Quaternion targetRotation = Quaternion.LookRotation(new Vector3(_velocity.x, 0, _velocity.z), Vector3.up);
+            player.rotation = Quaternion.Slerp(player.rotation, targetRotation, Time.deltaTime * _rotateSpeed);
         }
         else
         {
             anim.SetBool("isRun", false);
         }
 
-        float _yRotation = Input.GetAxisRaw("Mouse X");
-        Vector3 _characterRotationY = new Vector3(0f, _yRotation, 0f) * 5.0f;
-        playerRigidbody.MoveRotation(playerRigidbody.rotation * Quaternion.Euler(_characterRotationY)); // 쿼터니언 * 쿼터니언
-
+        float mouseX = Input.GetAxis("Mouse X");
+        transform.Rotate(Vector3.up * mouseX * _rotateSpeed);
     }
     void PlayerJump()
     {
@@ -199,8 +205,6 @@ public class NewPlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift) && !_isSwap && !_isDodge && dir != Vector3.zero && !_isJumping)
         {
-
-            dogeVec = dir;
             anim.SetTrigger("playDodge");
             _isDodge = true;
             _isJumping = true;
@@ -352,9 +356,11 @@ public class NewPlayerController : MonoBehaviour
         }
         else
         {
-            transform.Translate(anim.deltaPosition, Space.World);
+            //MEMO 역행렬로 회전
+            Vector3 temp = transform.InverseTransformDirection(anim.deltaPosition);
+            transform.Translate(player.rotation * temp , Space.World);
         }
-        transform.rotation *= anim.deltaRotation;
+        player.rotation *= anim.deltaRotation;
     }
     void OnCollisionEnter(Collision collision)
     {

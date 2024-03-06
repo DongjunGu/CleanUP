@@ -80,44 +80,6 @@ public class NewPlayerController : MonoBehaviour
         _dustAttack = Input.GetButtonDown("Attack2");
 
     }
-
-    //void PlayerMove()
-    //{
-    //    dir = new Vector3(h, 0, v).normalized;
-
-    //    if (_isAttack)
-    //        dir = new Vector3(h, 0, v).normalized;
-
-    //    Vector3 cameraForward = mainCamera.transform.forward;
-    //    Vector3 cameraRight = mainCamera.transform.right;
-    //    cameraForward.y = 0f;
-    //    cameraRight.y = 0f;
-
-    //    Vector3 dirRelativeToCamera = (cameraForward * v + cameraRight * h).normalized;
-
-    //    if (!(v == 0 && h == 0))
-    //    {
-    //        anim.SetBool("isRun", true);
-    //        float offset = 0.5f;
-    //        float dist = _speed * Time.deltaTime;
-    //        if (Physics.Raycast(new Ray(transform.position - dirRelativeToCamera * offset, dirRelativeToCamera), out RaycastHit hit, dist + offset * 2.0f, LayerMask.GetMask("Wall")))
-    //        {
-    //            dist = hit.distance - offset * 2.0f;
-    //        }
-    //        transform.Translate(dirRelativeToCamera * dist, Space.World);
-
-    //        Quaternion targetRotation = Quaternion.LookRotation(new Vector3(dirRelativeToCamera.x, 0, dirRelativeToCamera.z), Vector3.up);
-    //        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _rotateSpeed);
-    //    }
-    //    else
-    //    {
-    //        anim.SetBool("isRun", false);
-    //    }
-
-    //    float mouseX = Input.GetAxis("Mouse X");
-    //    transform.Rotate(Vector3.up * mouseX * _rotateSpeed);
-    //}
-
     void PlayerMove()
     {
         dir = new Vector3(h, 0, v).normalized;

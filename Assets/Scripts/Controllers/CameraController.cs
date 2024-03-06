@@ -51,7 +51,6 @@ public class CameraController : MonoBehaviour
         if(Physics.Raycast(target.transform.position + Vector3.up * 2.0f, offset.normalized, out RaycastHit hit, offset.magnitude + 0.5f, LayerMask.GetMask("Wall")))
         {
             transform.position = hit.point - offset.normalized * 0.5f;
-
         }
         
         if(Physics.Raycast(target.transform.position, offset.normalized, out RaycastHit cameraHit, offset.magnitude + 0.5f, LayerMask.GetMask("Ground")))

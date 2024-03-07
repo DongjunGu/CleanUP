@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 485598}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pyramid_p2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 474800}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pyramid_p3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 410926}
   - component: {fileID: 3330278}
   - component: {fileID: 2311566}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 431714}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 416410}
   - component: {fileID: 3388060}
   - component: {fileID: 2306638}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,7 +267,8 @@ GameObject:
   - component: {fileID: 455952}
   - component: {fileID: 3376798}
   - component: {fileID: 2379950}
-  m_Layer: 0
+  - component: {fileID: 621666737}
+  m_Layer: 6
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,6 +338,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &621666737
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134264}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7.874178, y: 11.396508, z: 7.816766}
+  m_Center: {x: 0, y: 5.74476, z: 0}
 --- !u!1 &149556
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +360,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 477992}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -376,7 +390,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 454388}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,7 +422,7 @@ GameObject:
   - component: {fileID: 430828}
   - component: {fileID: 3336482}
   - component: {fileID: 2368548}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +501,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 486798}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -517,7 +531,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 418048}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -547,7 +561,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 417968}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pyramid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -563,7 +577,7 @@ Transform:
   m_GameObject: {fileID: 161166}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 474366}
   - {fileID: 420536}
@@ -586,7 +600,7 @@ GameObject:
   - component: {fileID: 405178}
   - component: {fileID: 3398156}
   - component: {fileID: 2359320}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -665,7 +679,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 420536}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pyramid_p6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -697,7 +711,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 472994}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -727,7 +741,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 474366}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pyramid_base2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -759,7 +773,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 457076}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pyramid_p5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -793,7 +807,7 @@ GameObject:
   - component: {fileID: 408774}
   - component: {fileID: 3394712}
   - component: {fileID: 2326970}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -874,7 +888,7 @@ GameObject:
   - component: {fileID: 456018}
   - component: {fileID: 3332194}
   - component: {fileID: 2339112}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -953,7 +967,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 462296}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pyramid_p1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -985,7 +999,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 435530}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pyramid_p4
   m_TagString: Untagged
   m_Icon: {fileID: 0}

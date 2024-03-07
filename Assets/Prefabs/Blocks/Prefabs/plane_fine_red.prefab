@@ -11,7 +11,10 @@ GameObject:
   - component: {fileID: 439348}
   - component: {fileID: 3362520}
   - component: {fileID: 2310766}
-  m_Layer: 0
+  - component: {fileID: 1816276308}
+  - component: {fileID: 1816276310}
+  - component: {fileID: 1816276314}
+  m_Layer: 6
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 179636}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -66.94, y: 0, z: 23.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 441112}
@@ -81,6 +84,45 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1816276308
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179636}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.6817505, y: 4.9585104, z: 14.481922}
+  m_Center: {x: 1.3412573, y: 4.658273, z: 0.5970952}
+--- !u!65 &1816276310
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179636}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 16.666126, y: 1.6122727, z: 6.0884323}
+  m_Center: {x: 0.000046855974, y: 6.331395, z: 4.7938504}
+--- !u!65 &1816276314
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179636}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 13.901146, y: 2.1949058, z: 12.869333}
+  m_Center: {x: 0.19025125, y: 2.6591618, z: -0.20921244}
 --- !u!1 &196610
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,9 +132,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 441112}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: plane_fine_red
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 196610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.0979395, y: 2, z: 2.4998}
   m_Children:
   - {fileID: 439348}
   m_Father: {fileID: 0}

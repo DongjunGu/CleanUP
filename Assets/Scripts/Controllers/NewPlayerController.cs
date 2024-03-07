@@ -41,6 +41,7 @@ public class NewPlayerController : MonoBehaviour
     bool _canDoubleJump = true;
     bool isJumpZone = false;
 
+    bool wasGrounded = true;
     private bool _isWipeAnimationPlaying = false;
 
     Vector3 dir;
@@ -115,10 +116,17 @@ public class NewPlayerController : MonoBehaviour
     }
     void PlayerJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !_isSwap && (!_isJumping || (_canDoubleJump && !_isDodge)) && _isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && !_isSwap && (!_isJumping || (_canDoubleJump && !_isDodge)))
         {
-
-            
+            if (_isJumping && _canDoubleJump)
+            {
+                _canDoubleJump = false;
+                anim.SetTrigger("playDoubleJump");
+                playerRigidbody.AddForce(Vector3.up * 14.0f, ForceMode.Impulse);
+                Invoke("FallAfterJump", 0.3f);
+                Debug.Log("JUMP3");
+                return;
+            }
 
             if (isJumpZone)
             {
@@ -130,8 +138,10 @@ public class NewPlayerController : MonoBehaviour
                     anim.SetBool("isJumping", true);
                     anim.SetTrigger("playJump");
                     _canDoubleJump = true;
+                    Debug.Log("JUMP2");
                     Invoke("FallAfterJump", 0.3f);
                     return;
+
                 }
             }
             else
@@ -142,17 +152,7 @@ public class NewPlayerController : MonoBehaviour
                 _isJumping = true;
                 anim.SetTrigger("playJump");
                 _canDoubleJump = true;
-                Invoke("FallAfterJump", 0.3f);
-                return;
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.Space) && !_isSwap && (!_isJumping || (_canDoubleJump && !_isDodge)))
-        {
-            if (_isJumping && _canDoubleJump)
-            {
-                _canDoubleJump = false;
-                anim.SetTrigger("playDoubleJump");
-                playerRigidbody.AddForce(Vector3.up * 14.0f, ForceMode.Impulse);
+                Debug.Log("JUMP");
                 Invoke("FallAfterJump", 0.3f);
                 return;
             }
@@ -331,8 +331,8 @@ public class NewPlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
-            anim.SetBool("isJumping", false);
-            _isJumping = false;
+            //anim.SetBool("isJumping", false);
+            //_isJumping = false;
             isJumpZone = false;
         }
         if (collision.gameObject.tag == "JumpZone")
@@ -390,27 +390,32 @@ public class NewPlayerController : MonoBehaviour
     {
         RaycastHit hit;
         float raycastDistance = 0.5f;
+
         Vector3 raycastOrigin = transform.position + Vector3.up * 0.1f;
         anim.ResetTrigger("playFall");
 
         LayerMask combinedLayers = groundLayer | wallLayer; //TODO
 
-        _isGrounded = Physics.Raycast(raycastOrigin, Vector3.down, out hit, raycastDistance, combinedLayers);
+        bool isGroundedNow = Physics.Raycast(raycastOrigin, Vector3.down, out hit, raycastDistance, combinedLayers);
 
-        Debug.DrawRay(raycastOrigin, Vector3.down * raycastDistance, _isGrounded ? Color.green : Color.red);
+        Debug.DrawRay(raycastOrigin, Vector3.down * raycastDistance, isGroundedNow ? Color.green : Color.red);
 
-        //anim.SetBool("isGrounded", true);
+        anim.SetBool("isGrounded", true);
+        
 
-        if (!_isGrounded)
+        if (!isGroundedNow)
         {
             anim.SetBool("isGrounded", false);
             PlayFall();
-        }
 
-        if (_isGrounded)
-        {
-            anim.SetBool("isGrounded", true);
         }
+        if (isGroundedNow && !wasGrounded)
+        {
+            Debug.Log("Grounded");
+            anim.SetBool("isJumping", false);
+            _isJumping = false;
+        }
+        wasGrounded = isGroundedNow;
     }
     void RotationFreeze()
     {

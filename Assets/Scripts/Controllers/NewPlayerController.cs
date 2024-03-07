@@ -95,7 +95,7 @@ public class NewPlayerController : MonoBehaviour
             _velocity = (_moveHorizontal + _moveVertical).normalized;
 
             anim.SetBool("isRun", true);
-            float offset = 0.8f;
+            float offset = 1.0f;
             if (Physics.Raycast(new Ray(transform.position - _velocity * offset, _velocity), out RaycastHit hit, dist + offset * 2.0f, LayerMask.GetMask("Wall")))
             {
                 dist = hit.distance - offset * 2.0f;
@@ -115,17 +115,10 @@ public class NewPlayerController : MonoBehaviour
     }
     void PlayerJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !_isSwap && (!_isJumping || (_canDoubleJump && !_isDodge)))
+        if (Input.GetKeyDown(KeyCode.Space) && !_isSwap && (!_isJumping || (_canDoubleJump && !_isDodge)) && _isGrounded)
         {
 
-            if (_isJumping && _canDoubleJump)
-            {
-                _canDoubleJump = false;
-                anim.SetTrigger("playDoubleJump");
-                playerRigidbody.AddForce(Vector3.up * 14.0f, ForceMode.Impulse);
-                Invoke("FallAfterJump", 0.3f);
-                return;
-            }
+            
 
             if (isJumpZone)
             {
@@ -144,7 +137,7 @@ public class NewPlayerController : MonoBehaviour
             else
             {
                 playerRigidbody.velocity = Vector3.zero;
-                playerRigidbody.AddForce(Vector3.up * 13.0f, ForceMode.Impulse);
+                playerRigidbody.AddForce(Vector3.up * 15.0f, ForceMode.Impulse);
                 anim.SetBool("isJumping", true);
                 _isJumping = true;
                 anim.SetTrigger("playJump");
@@ -152,7 +145,17 @@ public class NewPlayerController : MonoBehaviour
                 Invoke("FallAfterJump", 0.3f);
                 return;
             }
-
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && !_isSwap && (!_isJumping || (_canDoubleJump && !_isDodge)))
+        {
+            if (_isJumping && _canDoubleJump)
+            {
+                _canDoubleJump = false;
+                anim.SetTrigger("playDoubleJump");
+                playerRigidbody.AddForce(Vector3.up * 14.0f, ForceMode.Impulse);
+                Invoke("FallAfterJump", 0.3f);
+                return;
+            }
         }
     }
     void FallAfterJump()
@@ -331,7 +334,6 @@ public class NewPlayerController : MonoBehaviour
             anim.SetBool("isJumping", false);
             _isJumping = false;
             isJumpZone = false;
-            Debug.Log(collision.gameObject.tag);
         }
         if (collision.gameObject.tag == "JumpZone")
         {
@@ -351,7 +353,7 @@ public class NewPlayerController : MonoBehaviour
 
         if (((1 << collision.gameObject.layer) & obstacleLayer) != 0) //Layer
         {
-
+            //À­ºÎºÐ¸¸ ´ê¾ÒÀ»¶§
         }
 
 
@@ -390,16 +392,24 @@ public class NewPlayerController : MonoBehaviour
         float raycastDistance = 0.5f;
         Vector3 raycastOrigin = transform.position + Vector3.up * 0.1f;
         anim.ResetTrigger("playFall");
-        LayerMask combinedLayers = groundLayer | wallLayer;
+
+        LayerMask combinedLayers = groundLayer | wallLayer; //TODO
 
         _isGrounded = Physics.Raycast(raycastOrigin, Vector3.down, out hit, raycastDistance, combinedLayers);
 
         Debug.DrawRay(raycastOrigin, Vector3.down * raycastDistance, _isGrounded ? Color.green : Color.red);
-        anim.SetBool("isGrounded", true);
+
+        //anim.SetBool("isGrounded", true);
+
         if (!_isGrounded)
         {
             anim.SetBool("isGrounded", false);
             PlayFall();
+        }
+
+        if (_isGrounded)
+        {
+            anim.SetBool("isGrounded", true);
         }
     }
     void RotationFreeze()

@@ -11,6 +11,7 @@ public class NewPlayerController : MonoBehaviour
     [SerializeField] GameObject weaponImage1;
     [SerializeField] GameObject weaponImage2;
     [SerializeField] Transform player;
+    [SerializeField] public float _rotateSpeed = 5.0f;
     public Camera mainCamera;
     public GameObject[] weapons;
     public bool[] hasWeapons;
@@ -24,7 +25,7 @@ public class NewPlayerController : MonoBehaviour
     Animator anim;
     private float v = 0.0f;
     private float h = 0.0f;
-    private float _rotateSpeed = 10.0f;
+    //private float _rotateSpeed = 10.0f;
 
     private Rigidbody playerRigidbody;
 

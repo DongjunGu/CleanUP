@@ -27,8 +27,8 @@ public class Enemy : MonoBehaviour
         enemyOrgPlace = transform.position;
         rigid = GetComponent<Rigidbody>();
         boxCol = GetComponent<BoxCollider>();
-        skinned_mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
-        //normal_mat = GetComponent<MeshRenderer>().material;
+        //skinned_mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
+        normal_mat = GetComponent<MeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
     }
 
@@ -71,7 +71,8 @@ public class Enemy : MonoBehaviour
             Vector3 knockBack = transform.position - other.transform.position;
             Debug.Log(currentHp);
             StartCoroutine(DamageCooldown());
-            StartCoroutine(Damaged_Skinned(knockBack,false));
+            //StartCoroutine(Damaged_Skinned(knockBack,false));
+            StartCoroutine(Damaged(knockBack, false));
         }
     }
     IEnumerator DamageCooldown() //0.5초마다 데미지 입히기
@@ -83,29 +84,24 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Damaged(Vector3 knockBack, bool isDusted)
     {
-        skinned_mat.color = Color.red;
         normal_mat.color = Color.red;
         yield return new WaitForSeconds(0.1f);
 
         if (currentHp > 0)
         {
-            skinned_mat.color = Color.white;
             normal_mat.color = Color.white;
 
             //knockBack = knockBack.normalized;
             //knockBack += Vector3.up;
             //rigid.AddForce(knockBack * 10, ForceMode.Impulse);
         }
-        
+
         else
         {
-            skinned_mat.color = Color.black;
-            normal_mat.color = Color.black;
             gameObject.layer = 8; //DeadEnemy
 
             if (isDusted)
             {
-                skinned_mat.color = Color.red;
                 normal_mat.color = Color.red;
                 //넉백
                 knockBack = knockBack.normalized;
@@ -121,8 +117,18 @@ public class Enemy : MonoBehaviour
                 knockBack += Vector3.up;
                 rigid.AddForce(knockBack * 10, ForceMode.Impulse);
             }
+            normal_mat.color = Color.black;
+            _isDestroyed = true;
             Destroy(gameObject, 2);
+            //아이템 드랍
+
             int randomRangeInt = Random.Range(0, 2);
+            if (randomRangeInt < 1)
+            {
+                GameObject instantDust = Instantiate(dustItemObject, transform.position + Vector3.up * 2, transform.rotation);
+            }
+
+
         }
     }
     IEnumerator Damaged_Skinned(Vector3 knockBack, bool isDusted)
@@ -179,7 +185,8 @@ public class Enemy : MonoBehaviour
         currentHp -= 100;
         Vector3 knockBack = transform.position - pos;
         Debug.Log(currentHp);
-        StartCoroutine(Damaged_Skinned(knockBack,true));
+        //StartCoroutine(Damaged_Skinned(knockBack,true));
+        StartCoroutine(Damaged(knockBack, true));
 
     }
     private void FixedUpdate()

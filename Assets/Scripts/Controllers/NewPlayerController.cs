@@ -243,21 +243,21 @@ public class NewPlayerController : MonoBehaviour
 
 
 
-                Vector3 nextVec = hit.point - transform.position;
-                nextVec.y = 10;
+                Vector3 nextVec = hit.point - player.transform.position;
+                nextVec.y = 15;
 
-                Vector3 lookAtPos = Input.mousePosition;
-                float lookAngle = Vector3.Angle(transform.forward, nextVec.normalized); // 사이각구하기
+                float lookAngle = Vector3.Angle(player.transform.forward, nextVec.normalized); // 사이각구하기
 
-                if (Vector3.Dot(transform.right, nextVec.normalized) < 0) // 내적을 계산해서 0 : 직각, 음수 : 반시계
+                if (Vector3.Dot(player.transform.right, nextVec.normalized) < 0) // 내적을 계산해서 0 : 직각, 음수 : 반시계
                 {
-                    transform.Rotate(Vector3.up * -lookAngle); //반시계
+                    player.transform.Rotate(Vector3.up * -lookAngle); //반시계
                 }
                 else
                 {
-                    transform.Rotate(Vector3.up * lookAngle); //시계
+                    player.transform.Rotate(Vector3.up * lookAngle); //시계
                 }
-                GameObject instantDust = Instantiate(dustObject, transform.position, transform.rotation);
+
+                GameObject instantDust = Instantiate(dustObject, player.transform.position, player.transform.rotation);
                 Rigidbody rigidDust = instantDust.GetComponent<Rigidbody>();
                 rigidDust.AddForce(nextVec, ForceMode.Impulse);
                 rigidDust.AddTorque(Vector3.back * 10, ForceMode.Impulse); //회전
@@ -303,6 +303,7 @@ public class NewPlayerController : MonoBehaviour
                 if (getItem.name == "Broom")
                 {
                     weaponImage1.SetActive(true);
+
                 }
                 else if (getItem.name == "Hammer")
                 {

@@ -96,6 +96,7 @@
     <Compile Include="Assets\Scripts\Controllers\PlayerContoller.cs" />
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow1.cs" />
     <Compile Include="Assets\Prefabs\Apartment\Apartment Kit\Scenes\Quitgame.cs" />
+    <Compile Include="Assets\Scripts\LinkedObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Prefabs\Particle\Materials\UnlitVertexColour_Alpha.shader" />

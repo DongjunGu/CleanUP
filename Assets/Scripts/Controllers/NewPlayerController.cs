@@ -39,19 +39,22 @@ public class NewPlayerController : MonoBehaviour
     bool _isGrounded;
     bool _canDoubleJump = true;
     bool isJumpZone = false;
-
+    
     bool wasGrounded = true;
     private bool _isWipeAnimationPlaying = false;
 
     Vector3 dir;
     Vector3 dogeVec;
-    Vector3 _velocity;
+    Vector3 playerDirection;
     GameObject getItem;
     GameObject getImage;
     Weapons orginWeapon;
 
     int orginWeaponIndex = -1;
     float _attackDelay;
+    float maxSlopeAngle = 80.0f;
+
+    RaycastHit slopeHit;
     void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
@@ -82,27 +85,33 @@ public class NewPlayerController : MonoBehaviour
     }
     void PlayerMove()
     {
+        bool isOnSlope = IsOnSlope();
+
         dir = new Vector3(h, 0, v).normalized;
 
         if (_isAttack)
             dir = new Vector3(h, 0, v).normalized;
-
+        
         if (!(v == 0 && h == 0))
         {
             Vector3 _moveHorizontal = transform.right * h;
             Vector3 _moveVertical = transform.forward * v;
             float dist = _speed * Time.deltaTime;
-            _velocity = (_moveHorizontal + _moveVertical).normalized;
-
             anim.SetBool("isRun", true);
+
+            playerDirection = (_moveHorizontal + _moveVertical).normalized;
+
+            Vector3 slopeVelocity = AdjustDirectionToSlope(playerDirection);
+
+            
             float offset = 1.0f;
-            if (Physics.Raycast(new Ray(transform.position - _velocity * offset, _velocity), out RaycastHit hit, dist + offset * 2.0f, LayerMask.GetMask("Wall")))
+            if (Physics.Raycast(new Ray(transform.position - slopeVelocity * offset, slopeVelocity), out RaycastHit hit, dist + offset * 2.0f, LayerMask.GetMask("Wall")))
             {
                 dist = hit.distance - offset * 2.0f;
             }
-            transform.Translate(_velocity * dist, Space.World);
+            transform.Translate(slopeVelocity * dist, Space.World);
 
-            Quaternion targetRotation = Quaternion.LookRotation(new Vector3(_velocity.x, 0, _velocity.z), Vector3.up);
+            Quaternion targetRotation = Quaternion.LookRotation(new Vector3(slopeVelocity.x, 0, slopeVelocity.z), Vector3.up);
             player.rotation = Quaternion.Slerp(player.rotation, targetRotation, Time.deltaTime * _rotateSpeed);
         }
         else
@@ -223,7 +232,6 @@ public class NewPlayerController : MonoBehaviour
             StartCoroutine(PlayWipeAnimation());
         }
     }
-
     void Dust()
     {
         if (hasDust == 0)
@@ -353,7 +361,7 @@ public class NewPlayerController : MonoBehaviour
 
         if (((1 << collision.gameObject.layer) & obstacleLayer) != 0) //Layer
         {
-            //À­ºÎºÐ¸¸ ´ê¾ÒÀ»¶§
+            
         }
 
 
@@ -394,7 +402,7 @@ public class NewPlayerController : MonoBehaviour
         Vector3 raycastOrigin = transform.position + Vector3.up * 0.1f;
         anim.ResetTrigger("playFall");
 
-        LayerMask combinedLayers = groundLayer | wallLayer; //TODO
+        LayerMask combinedLayers = groundLayer | wallLayer  | obstacleLayer; //TODO
 
         bool isGroundedNow = Physics.Raycast(raycastOrigin, Vector3.down, out hit, raycastDistance, combinedLayers);
 
@@ -430,5 +438,20 @@ public class NewPlayerController : MonoBehaviour
         PlayerMove();
         RotationFreeze();
         //StopBeforeObject();
+    }
+
+    public bool IsOnSlope()
+    {
+        Ray ray = new Ray(transform.position, Vector3.down);
+        if (Physics.Raycast(ray, out slopeHit, 2.0f, obstacleLayer))
+        {
+            var angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return angle != 0f && angle < maxSlopeAngle;
+        }
+        return false;
+    }
+    Vector3 AdjustDirectionToSlope(Vector3 direction)
+    {
+        return Vector3.ProjectOnPlane(direction, slopeHit.normal);
     }
 }

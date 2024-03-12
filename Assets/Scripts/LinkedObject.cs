@@ -8,7 +8,6 @@ public class LinkedObject : MonoBehaviour
     public LayerMask mask;
     public UnityEvent obtainAct;
 
-    bool _obtainKey;
 
     // Update is called once per frame
     void Update()

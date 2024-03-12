@@ -45,22 +45,10 @@ public class SpringArmCamera : MonoBehaviour
         float tempDist = dist;
         if (Physics.Raycast(transform.position, -transform.forward, out hit, dist + offset + 0.1f, LayerMask.GetMask("Wall")))
         {
-            tempDist = hit.distance - offset;
+            tempDist = hit.distance - offset - 0.5f;
             
         }
 
         mainCamera.transform.localPosition = new Vector3(0, 0, -tempDist);
-
-        //if (Physics.Raycast(mainCamera.transform.position, target.position - mainCamera.transform.position, out hit, dist, LayerMask.GetMask("Wall")))
-        //{
-        //    mainCamera.transform.position = hit.point;
-        //    Debug.Log("WALL!!");
-        //}
-        //else
-        //{
-        //    mainCamera.transform.localPosition = Vector3.zero;
-        //    mainCamera.transform.Translate(_delta);
-        //    Debug.Log("ORIGIN");
-        //}
     }
 }

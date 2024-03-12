@@ -108,5 +108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dc83fb454b722145944b0604a7e8c2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  weaponImage: {fileID: 0}
+  type: 3
   value: 1

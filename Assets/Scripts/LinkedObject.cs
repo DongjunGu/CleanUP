@@ -7,23 +7,33 @@ public class LinkedObject : MonoBehaviour
 {
     public LayerMask mask;
     public UnityEvent obtainAct;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
+    bool _obtainKey;
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if ((1 << other.gameObject.layer & mask) != 0)
+    //    {
+    //        Debug.Log("GOTIT??");
+    //        obtainAct?.Invoke();
+    //    }
+    //}
+    void OnTriggerStay(Collider other)
     {
-        if((1 << other.gameObject.layer & mask) != 0)
+        if ((1 << other.gameObject.layer & mask) != 0)
         {
-            obtainAct?.Invoke();
+            Debug.Log("GOTIT??");
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                Debug.Log("KeyPressed");
+                obtainAct?.Invoke();
+            }
         }
     }
 }

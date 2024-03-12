@@ -8,8 +8,6 @@ public class NewPlayerController : MonoBehaviour
     [SerializeField] LayerMask groundLayer = 1 << 9;
     [SerializeField] LayerMask wallLayer = 1 << 6;
     [SerializeField] LayerMask obstacleLayer = 1 << 15;
-    [SerializeField] GameObject weaponImage1;
-    [SerializeField] GameObject weaponImage2;
     [SerializeField] Transform player;
     [SerializeField] public float _rotateSpeed = 5.0f;
     public Camera mainCamera;
@@ -134,7 +132,7 @@ public class NewPlayerController : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     playerRigidbody.velocity = Vector3.zero;
-                    playerRigidbody.AddForce(Vector3.up * 20.0f, ForceMode.Impulse);
+                    playerRigidbody.AddForce(Vector3.up * 15.0f, ForceMode.Impulse);
                     _isJumping = true;
                     anim.SetBool("isJumping", true);
                     anim.SetTrigger("playJump");
@@ -298,17 +296,17 @@ public class NewPlayerController : MonoBehaviour
                 Items item = getItem.GetComponent<Items>();
                 int weaponIndex = item.value;
                 hasWeapons[weaponIndex] = true;
-                Destroy(getItem);
+                //Destroy(getItem);
 
-                if (getItem.name == "Broom")
-                {
-                    weaponImage1.SetActive(true);
+                //if (getItem.name == "Broom")
+                //{
+                //    weaponImage1.SetActive(true);
 
-                }
-                else if (getItem.name == "Hammer")
-                {
-                    weaponImage2.SetActive(true);
-                }
+                //}
+                //else if (getItem.name == "Hammer")
+                //{
+                //    weaponImage2.SetActive(true);
+                //}
 
             }
         }

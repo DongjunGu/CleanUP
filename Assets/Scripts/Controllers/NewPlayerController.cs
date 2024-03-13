@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class NewPlayerController : MonoBehaviour
 {
@@ -8,8 +9,10 @@ public class NewPlayerController : MonoBehaviour
     [SerializeField] LayerMask groundLayer = 1 << 9;
     [SerializeField] LayerMask wallLayer = 1 << 6;
     [SerializeField] LayerMask obstacleLayer = 1 << 15;
+    [SerializeField] LayerMask pushableLayer = 1 << 15;
     [SerializeField] Transform player;
     [SerializeField] public float _rotateSpeed = 5.0f;
+    [SerializeField] private float _pushForce = 5.0f;
     public Camera mainCamera;
     public GameObject[] weapons;
     public bool[] hasWeapons;
@@ -108,6 +111,16 @@ public class NewPlayerController : MonoBehaviour
             if (Physics.Raycast(new Ray(transform.position - slopeVelocity * offset, slopeVelocity), out RaycastHit hit, dist + offset * 2.0f, LayerMask.GetMask("Wall")))
             {
                 dist = hit.distance - offset * 2.0f;
+            }
+
+            if (Physics.Raycast(new Ray(transform.position - slopeVelocity * offset, slopeVelocity), out RaycastHit pushhit, dist + offset * 1.0f, LayerMask.GetMask("Pushable")))
+            {
+                anim.SetTrigger("playPush");
+                dist = pushhit.distance - offset * 1.0f;
+            }
+            else
+            {
+                anim.SetBool("isPush", false);
             }
             transform.Translate(slopeVelocity * dist, Space.World);
 
@@ -354,6 +367,8 @@ public class NewPlayerController : MonoBehaviour
         if (collision.gameObject.tag == "CumpulsionJumpZone")
         {
             playerRigidbody.velocity = Vector3.zero;
+            anim.SetBool("isJumping", true);
+            _isJumping = true;
             playerRigidbody.AddForce(Vector3.up * 30.0f, ForceMode.Impulse);
             Debug.Log("CumpulsionJump");
             Debug.Log(collision.gameObject.tag);
@@ -370,6 +385,19 @@ public class NewPlayerController : MonoBehaviour
     {
         if (other.tag == "Weapon")
             getItem = other.gameObject;
+        if(other.tag == "pushable")
+        {
+            float distance = Vector3.Distance(player.transform.position , other.transform.position);
+            
+            if (distance < 0.1f)
+            {
+                Rigidbody box = other.GetComponent<Rigidbody>();
+                if (box != null)
+                {
+                    box.isKinematic = true;
+                }
+            }
+        }
     }
     void OnTriggerExit(Collider other)
     {
@@ -453,5 +481,18 @@ public class NewPlayerController : MonoBehaviour
     Vector3 AdjustDirectionToSlope(Vector3 direction)
     {
         return Vector3.ProjectOnPlane(direction, slopeHit.normal);
+    }
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(hit.transform.tag == "pushable")
+        {
+            Rigidbody box = hit.collider.GetComponent<Rigidbody>();
+
+            if(box != null)
+            {
+                Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, 0);
+                box.velocity = pushDir * _pushForce;
+            }
+        }
     }
 }

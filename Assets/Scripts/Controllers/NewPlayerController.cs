@@ -115,13 +115,12 @@ public class NewPlayerController : MonoBehaviour
 
             if (Physics.Raycast(new Ray(transform.position - slopeVelocity * offset, slopeVelocity), out RaycastHit pushhit, dist + offset * 1.0f, LayerMask.GetMask("Pushable")))
             {
-                anim.SetTrigger("playPush");
                 dist = pushhit.distance - offset * 1.0f;
             }
-            else
-            {
-                anim.SetBool("isPush", false);
-            }
+            //else
+            //{
+            //    anim.SetBool("isPush", false);
+            //}
             transform.Translate(slopeVelocity * dist, Space.World);
 
             Quaternion targetRotation = Quaternion.LookRotation(new Vector3(slopeVelocity.x, 0, slopeVelocity.z), Vector3.up);
@@ -385,18 +384,31 @@ public class NewPlayerController : MonoBehaviour
     {
         if (other.tag == "Weapon")
             getItem = other.gameObject;
+
         if(other.tag == "pushable")
         {
+            Vector3 cubeAngle = other.transform.forward;
+            Vector3 playerAngle = player.position - other.transform.position;
+            playerAngle.y = 0;
+            playerAngle.Normalize();
+            float angle = Vector3.Angle(cubeAngle, playerAngle);
+            float dotProduct = Vector3.Dot(cubeAngle, playerAngle);
+            Debug.Log(dotProduct);
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if(angle <= 45)
+                {
+                    StartCoroutine(MovingToPos(other.transform.position + Vector3.forward * 8.0f));
+                    
+                }
+                    
+                else if (angle > 45 &&  angle < 135)
+                    StartCoroutine(MovingToPos(other.transform.position + Vector3.right * 8.0f));
+            }
+            
             float distance = Vector3.Distance(player.transform.position , other.transform.position);
             
-            if (distance < 0.1f)
-            {
-                Rigidbody box = other.GetComponent<Rigidbody>();
-                if (box != null)
-                {
-                    box.isKinematic = true;
-                }
-            }
+            
         }
     }
     void OnTriggerExit(Collider other)
@@ -482,17 +494,37 @@ public class NewPlayerController : MonoBehaviour
     {
         return Vector3.ProjectOnPlane(direction, slopeHit.normal);
     }
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if(hit.transform.tag == "pushable")
-        {
-            Rigidbody box = hit.collider.GetComponent<Rigidbody>();
+    //private void OnControllerColliderHit(ControllerColliderHit hit)
+    //{
+    //    if(hit.transform.tag == "pushable")
+    //    {
+    //        Rigidbody box = hit.collider.GetComponent<Rigidbody>();
 
-            if(box != null)
+    //        if(box != null)
+    //        {
+    //            Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, 0);
+    //            box.velocity = pushDir * _pushForce;
+    //        }
+    //    }
+    //}
+    IEnumerator MovingToPos(Vector3 pos)
+    {
+        Vector3 dir = pos - transform.position;
+        
+        float dist = dir.magnitude;
+        dir.Normalize();
+        while (dist > 0.0f)
+        {
+            float delta = Time.deltaTime * 5.0f;
+            if (dist < delta)
             {
-                Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, 0);
-                box.velocity = pushDir * _pushForce;
+                delta = dist;
             }
+            dist -= delta;
+            anim.SetBool("isRun", true);
+            transform.Translate(dir * delta, Space.World);
+            yield return null;
         }
+        anim.SetBool("isRun", false);
     }
 }

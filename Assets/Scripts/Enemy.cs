@@ -89,7 +89,7 @@ public class Enemy : MonoBehaviour
 
         if (currentHp > 0)
         {
-            normal_mat.color = Color.white;
+            //normal_mat.color = Color.white;
 
             //knockBack = knockBack.normalized;
             //knockBack += Vector3.up;

@@ -12,7 +12,7 @@ public class NewPlayerController : MonoBehaviour
     [SerializeField] LayerMask pushableLayer = 1 << 15;
     [SerializeField] Transform player;
     [SerializeField] public float _rotateSpeed = 5.0f;
-    [SerializeField] private float _pushForce = 5.0f;
+    
     public Camera mainCamera;
     public GameObject[] weapons;
     public bool[] hasWeapons;
@@ -387,27 +387,58 @@ public class NewPlayerController : MonoBehaviour
 
         if(other.tag == "pushable")
         {
+            Vector3 dire = (other.transform.position - player.position).normalized;
+            Debug.DrawRay(player.position, player.transform.forward * 10f, Color.red);
+            Debug.DrawRay(player.position, dire * 10f, Color.green);
             Vector3 cubeAngle = other.transform.forward;
             Vector3 playerAngle = player.position - other.transform.position;
+            Vector3 center = other.GetComponent<Renderer>().bounds.center;
             playerAngle.y = 0;
             playerAngle.Normalize();
+
+            float crossProduct = Vector3.Cross(cubeAngle, playerAngle).y;
             float angle = Vector3.Angle(cubeAngle, playerAngle);
-            float dotProduct = Vector3.Dot(cubeAngle, playerAngle);
-            Debug.Log(dotProduct);
+
+            if (crossProduct < 0)
+                angle *= -1;
+
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if(angle <= 45)
+                StopAllCoroutines();
+                if (angle > -45.0f && angle <= 45.0f)
                 {
-                    StartCoroutine(MovingToPos(other.transform.position + Vector3.forward * 8.0f));
-                    
+                    StartCoroutine(MovingToPos(other.gameObject, other.transform.position + Vector3.forward * 6.0f));
+                    Debug.Log(angle);
+
                 }
                     
-                else if (angle > 45 &&  angle < 135)
-                    StartCoroutine(MovingToPos(other.transform.position + Vector3.right * 8.0f));
+                if (angle > 45 &&  angle <= 135)
+                {
+                    StartCoroutine(MovingToPos(other.gameObject, other.transform.position + Vector3.right * 6.0f));
+                    Debug.Log(angle);
+                }
+                    
+
+                if ((angle > 135 && angle <= 180) || (angle <= -135 && angle > -180))
+                {
+                    StartCoroutine(MovingToPos(other.gameObject, other.transform.position + Vector3.back * 6.0f));
+                    Debug.Log(angle);
+                }
+                    
+
+                if (angle <= -45 && angle > -135)
+                {
+                    StartCoroutine(MovingToPos(other.gameObject, other.transform.position + Vector3.left * 6.0f));
+                    Debug.Log(angle);
+                }
+
+                
+
+
+                GetComponent<NewPlayerController>().enabled = false;
+                transform.SetParent(other.transform);
             }
-            
-            float distance = Vector3.Distance(player.transform.position , other.transform.position);
-            
+
             
         }
     }
@@ -507,10 +538,9 @@ public class NewPlayerController : MonoBehaviour
     //        }
     //    }
     //}
-    IEnumerator MovingToPos(Vector3 pos)
+    IEnumerator MovingToPos(GameObject otherObject, Vector3 pos)
     {
         Vector3 dir = pos - transform.position;
-        
         float dist = dir.magnitude;
         dir.Normalize();
         while (dist > 0.0f)
@@ -526,5 +556,19 @@ public class NewPlayerController : MonoBehaviour
             yield return null;
         }
         anim.SetBool("isRun", false);
+        Vector3 tempDir = otherObject.transform.position - player.transform.position;
+        float rotateAngle = Vector3.Angle(player.transform.forward, tempDir.normalized);
+        Debug.Log(rotateAngle);
+        if(Vector3.Dot(player.transform.right, tempDir.normalized) < 0)
+        {
+            player.transform.Rotate(Vector3.up * -rotateAngle);
+            //transform.Rotate(Vector3.up * -rotateAngle);
+        }
+        else
+        {
+            player.transform.Rotate(Vector3.up * rotateAngle);
+            //transform.Rotate(Vector3.up * rotateAngle);
+        }
+        
     }
 }

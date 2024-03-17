@@ -8,6 +8,8 @@ public class Pushable : MonoBehaviour
     public GameObject textMeshPro;
     public GameObject player;
     public GameObject remy;
+    public Transform destination;
+    public float distanceThreshold = 0.1f;
     private bool isPlayerChild = false;
     private Animator anim;
     bool stopPush;
@@ -17,6 +19,12 @@ public class Pushable : MonoBehaviour
     }
     void Update()
     {
+        float distance = Vector3.Distance(transform.position, destination.position);
+        Debug.Log(distance);
+        if (distance <= distanceThreshold)
+        {
+            Debug.Log("Arrived!");
+        }
         distachPlayer();
     }
     void distachPlayer()

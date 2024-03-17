@@ -388,8 +388,8 @@ public class NewPlayerController : MonoBehaviour
         if(other.tag == "pushable")
         {
             Vector3 dire = (other.transform.position - player.position).normalized;
-            Debug.DrawRay(player.position, player.transform.forward * 10f, Color.red);
-            Debug.DrawRay(player.position, dire * 10f, Color.green);
+            //Debug.DrawRay(player.position, player.transform.forward * 10f, Color.red);
+            //Debug.DrawRay(player.position, dire * 10f, Color.green);
             Vector3 cubeAngle = other.transform.forward;
             Vector3 playerAngle = player.position - other.transform.position;
             Vector3 center = other.GetComponent<Renderer>().bounds.center;
@@ -398,7 +398,7 @@ public class NewPlayerController : MonoBehaviour
 
             float crossProduct = Vector3.Cross(cubeAngle, playerAngle).y;
             float angle = Vector3.Angle(cubeAngle, playerAngle);
-
+            
             if (crossProduct < 0)
                 angle *= -1;
 
@@ -408,21 +408,21 @@ public class NewPlayerController : MonoBehaviour
                 if (angle > -45.0f && angle <= 45.0f)
                 {
                     StartCoroutine(MovingToPos(other.gameObject, other.transform.position + Vector3.forward * 6.0f));
-                    Debug.Log(angle);
+                    
 
                 }
                     
                 if (angle > 45 &&  angle <= 135)
                 {
                     StartCoroutine(MovingToPos(other.gameObject, other.transform.position + Vector3.right * 6.0f));
-                    Debug.Log(angle);
+                    
                 }
                     
 
                 if ((angle > 135 && angle <= 180) || (angle <= -135 && angle > -180))
                 {
                     StartCoroutine(MovingToPos(other.gameObject, other.transform.position + Vector3.back * 6.0f));
-                    Debug.Log(angle);
+                    
                 }
                     
 
@@ -558,7 +558,7 @@ public class NewPlayerController : MonoBehaviour
         anim.SetBool("isRun", false);
         Vector3 tempDir = otherObject.transform.position - player.transform.position;
         float rotateAngle = Vector3.Angle(player.transform.forward, tempDir.normalized);
-        Debug.Log(rotateAngle);
+        
         if(Vector3.Dot(player.transform.right, tempDir.normalized) < 0)
         {
             player.transform.Rotate(Vector3.up * -rotateAngle);

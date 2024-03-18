@@ -843,3 +843,5 @@ MonoBehaviour:
   textMeshPro: {fileID: 2321799987239349574}
   player: {fileID: 0}
   remy: {fileID: 0}
+  destination: {fileID: 0}
+  distanceThreshold: 0.1

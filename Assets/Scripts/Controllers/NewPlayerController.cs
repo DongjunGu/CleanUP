@@ -58,6 +58,14 @@ public class NewPlayerController : MonoBehaviour
     float maxSlopeAngle = 80.0f;
 
     RaycastHit slopeHit;
+
+    public enum State
+    {
+        Normal, TriggerBox
+    }
+
+    State myState = State.Normal;
+
     void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
@@ -380,6 +388,7 @@ public class NewPlayerController : MonoBehaviour
 
 
     }
+    Coroutine checkInput;
     void OnTriggerStay(Collider other)
     {
         if (other.tag == "Weapon")
@@ -392,7 +401,6 @@ public class NewPlayerController : MonoBehaviour
             //Debug.DrawRay(player.position, dire * 10f, Color.green);
             Vector3 cubeAngle = other.transform.forward;
             Vector3 playerAngle = player.position - other.transform.position;
-            Vector3 center = other.GetComponent<Renderer>().bounds.center;
             playerAngle.y = 0;
             playerAngle.Normalize();
 
@@ -402,50 +410,59 @@ public class NewPlayerController : MonoBehaviour
             if (crossProduct < 0)
                 angle *= -1;
 
+            myState = State.TriggerBox;
+            if(checkInput != null) StopCoroutine(checkInput);
+            checkInput = StartCoroutine(CheckingInput(angle, other));
+
+            
+        }
+    }
+
+    IEnumerator CheckingInput(float angle, Collider other)
+    {
+        while(true) 
+        {
             if (Input.GetKeyDown(KeyCode.E))
             {
                 StopAllCoroutines();
                 if (angle > -45.0f && angle <= 45.0f)
                 {
                     StartCoroutine(MovingToPos(other.gameObject, other.transform.position + Vector3.forward * 6.0f));
-                    
-
                 }
-                    
-                if (angle > 45 &&  angle <= 135)
+
+                if (angle > 45 && angle <= 135)
                 {
                     StartCoroutine(MovingToPos(other.gameObject, other.transform.position + Vector3.right * 6.0f));
-                    
                 }
-                    
+
 
                 if ((angle > 135 && angle <= 180) || (angle <= -135 && angle > -180))
                 {
                     StartCoroutine(MovingToPos(other.gameObject, other.transform.position + Vector3.back * 6.0f));
-                    
                 }
-                    
+
 
                 if (angle <= -45 && angle > -135)
                 {
                     StartCoroutine(MovingToPos(other.gameObject, other.transform.position + Vector3.left * 6.0f));
-                    Debug.Log(angle);
                 }
-
-                
-
 
                 GetComponent<NewPlayerController>().enabled = false;
                 transform.SetParent(other.transform);
             }
-
-            
+            yield return null;
         }
     }
     void OnTriggerExit(Collider other)
     {
         if (other.tag == "Weapon")
             getItem = null;
+
+        if (other.tag == "pushable")
+        {
+            if(checkInput != null) 
+                StopCoroutine(checkInput);
+        }
 
     }
 
@@ -569,6 +586,13 @@ public class NewPlayerController : MonoBehaviour
             player.transform.Rotate(Vector3.up * rotateAngle);
             //transform.Rotate(Vector3.up * rotateAngle);
         }
-        
+    }
+
+    public void StopChecking()
+    {
+        if(checkInput !=  null)
+        {
+            StopCoroutine(checkInput);
+        }
     }
 }

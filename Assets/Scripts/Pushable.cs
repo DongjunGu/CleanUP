@@ -20,7 +20,6 @@ public class Pushable : MonoBehaviour
     void Update()
     {
         float distance = Vector3.Distance(transform.position, destination.position);
-        Debug.Log(distance);
         if (distance <= distanceThreshold)
         {
             Debug.Log("Arrived!");
@@ -39,6 +38,7 @@ public class Pushable : MonoBehaviour
             {
                 player.transform.parent = null;
                 newPlayerController.enabled = true;
+                newPlayerController.StopChecking();
             } 
         }
     }

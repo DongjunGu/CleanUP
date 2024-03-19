@@ -96,7 +96,7 @@ public class NewPlayerController : MonoBehaviour
     }
     void PlayerMove()
     {
-        //if (CameraMode.IsGamePause) return;
+        if (CameraMode.IsGamePause) return;
         bool isOnSlope = IsOnSlope();
 
         dir = new Vector3(h, 0, v).normalized;
@@ -140,8 +140,12 @@ public class NewPlayerController : MonoBehaviour
             anim.SetBool("isRun", false);
         }
 
-        float mouseX = Input.GetAxis("Mouse X");
-        transform.Rotate(Vector3.up * mouseX * _rotateSpeed);
+        if (!(CameraMode.isTableView))
+        {
+            float mouseX = Input.GetAxis("Mouse X");
+            transform.Rotate(Vector3.up * mouseX * _rotateSpeed);
+        }
+        
     }
     void PlayerJump()
     {

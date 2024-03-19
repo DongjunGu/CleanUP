@@ -5,10 +5,12 @@ using UnityEngine;
 public class CameraMode : MonoBehaviour
 {
     public static bool IsGamePause = false;
+    public static bool isTableView = false;
     public Camera mainCamera;
     public GameObject springArm;
     public GameObject tableView;
     public GameObject player;
+    public GameObject playerDestination;
 
     private Vector3 targetPosition;
     private float transitionSpeed = 1.0f;
@@ -27,17 +29,21 @@ public class CameraMode : MonoBehaviour
     }
     void SwitchToTableView()
     {
+        isTableView = true;
         springArm.GetComponent<SpringArmCamera>().enabled = false;
+        player.transform.localRotation = Quaternion.identity;
+
         targetPosition = tableView.transform.position;
         mainCamera.transform.parent = tableView.transform;
         StartCoroutine(MoveCamera());
-        //MainCamera Projection Orthographic size 21
+        player.transform.position = playerDestination.transform.position;
         mainCamera.orthographic = true;
-        mainCamera.orthographicSize = 21;
+        mainCamera.orthographicSize = 30;
     }
 
     void ReturnToOriginalPlace()
     {
+        isTableView = false;
         springArm.GetComponent<SpringArmCamera>().enabled = true;
         mainCamera.orthographic = false;
         targetPosition = springArm.transform.position;
@@ -48,7 +54,7 @@ public class CameraMode : MonoBehaviour
     IEnumerator MoveCamera()
     {
         IsGamePause = true;
-        while (Vector3.Distance(mainCamera.transform.position, targetPosition) > 0.01f)
+        while (Vector3.Distance(mainCamera.transform.position, targetPosition) > 1.5f)
         {
             mainCamera.transform.localPosition = Vector3.Lerp(mainCamera.transform.localPosition, Vector3.zero, transitionSpeed * Time.deltaTime);
             mainCamera.transform.localRotation = Quaternion.Lerp(mainCamera.transform.localRotation, Quaternion.identity, transitionSpeed * Time.deltaTime);

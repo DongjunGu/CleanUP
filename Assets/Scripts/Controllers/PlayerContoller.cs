@@ -48,7 +48,6 @@ public class PlayerContoller : MonoBehaviour
     bool _dustAttack;
     bool _isGrounded;
     bool _isBorder; //충돌감지
-    bool _isBorderDodge;
     bool _canDoubleJump = true;
     bool isJumpZone = false;
     private bool _isWipeAnimationPlaying = false;
@@ -225,7 +224,7 @@ public class PlayerContoller : MonoBehaviour
 
     void PlayerDodge()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isBorderDodge && !_isSwap && !_isDodge && dir != Vector3.zero && !_isJumping)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isSwap && !_isDodge && dir != Vector3.zero && !_isJumping)
         {
               
             dogeVec = dir;

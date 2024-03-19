@@ -96,6 +96,7 @@ public class NewPlayerController : MonoBehaviour
     }
     void PlayerMove()
     {
+        //if (CameraMode.IsGamePause) return;
         bool isOnSlope = IsOnSlope();
 
         dir = new Vector3(h, 0, v).normalized;

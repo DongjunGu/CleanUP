@@ -4,60 +4,56 @@ using UnityEngine;
 
 public class CameraMode : MonoBehaviour
 {
+    public static bool IsGamePause = false;
+    public Camera mainCamera;
     public GameObject springArm;
     public GameObject tableView;
-    public GameObject originalPlace;
-    private bool switchToTableView = false;
+    public GameObject player;
 
     private Vector3 targetPosition;
-    private float transitionSpeed = 2.0f;
+    private float transitionSpeed = 1.0f;
 
-    private Vector3 originalOffset = new Vector3(0f, 4f, 0f);
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            if (!switchToTableView)
-            {
-                SwitchToTableView();
-            }
-            else
-            {
-                ReturnToOriginalPlace();
-            }
+            SwitchToTableView();
         }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+            ReturnToOriginalPlace();
     }
     void SwitchToTableView()
     {
-        //springArm.transform.parent = tableView.transform;
-        //springArm.transform.localPosition = Vector3.zero;
-        //springArm.transform.localRotation = Quaternion.identity;
+        springArm.GetComponent<SpringArmCamera>().enabled = false;
         targetPosition = tableView.transform.position;
+        mainCamera.transform.parent = tableView.transform;
         StartCoroutine(MoveCamera());
-        springArm.transform.parent = tableView.transform;
-        switchToTableView = true;
+        //MainCamera Projection Orthographic size 21
+        mainCamera.orthographic = true;
+        mainCamera.orthographicSize = 21;
     }
 
     void ReturnToOriginalPlace()
     {
-        //springArm.transform.parent = originalPlace.transform;
-        //springArm.transform.localPosition = new Vector3(0, 0, -8);
-        //springArm.transform.localRotation = Quaternion.identity;
-
-        targetPosition = originalPlace.transform.position + originalOffset;
+        springArm.GetComponent<SpringArmCamera>().enabled = true;
+        mainCamera.orthographic = false;
+        targetPosition = springArm.transform.position;
+        mainCamera.transform.parent = springArm.transform;
         StartCoroutine(MoveCamera());
-        springArm.transform.parent = originalPlace.transform;
-        springArm.transform.localPosition = originalOffset;
-        //springArm.transform.localRotation = Quaternion.identity;
-        switchToTableView = false;
     }
 
     IEnumerator MoveCamera()
     {
-        while (Vector3.Distance(springArm.transform.position, targetPosition) > 0.01f)
+        IsGamePause = true;
+        while (Vector3.Distance(mainCamera.transform.position, targetPosition) > 0.01f)
         {
-            springArm.transform.position = Vector3.Lerp(springArm.transform.position, targetPosition, transitionSpeed * Time.deltaTime);
+            mainCamera.transform.localPosition = Vector3.Lerp(mainCamera.transform.localPosition, Vector3.zero, transitionSpeed * Time.deltaTime);
+            mainCamera.transform.localRotation = Quaternion.Lerp(mainCamera.transform.localRotation, Quaternion.identity, transitionSpeed * Time.deltaTime);
             yield return null;
         }
+        IsGamePause = false;
     }
 }

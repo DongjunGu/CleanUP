@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class Destination : MonoBehaviour
 {
-    public GameObject pushableCube;
+    public GameObject correctObject;
+    public GameObject effect;
+    
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "pushable" && other.name == pushableCube.name)
+        if (other.tag == "pushable" && other.name == correctObject.name)
         {
-            Debug.Log(pushableCube.name + " Completed" );
+            Debug.Log(correctObject.name + " Completed" );
+            effect.SetActive(true);
+        }
+        if(other.tag == "Player" && other.name == correctObject.name)
+        {
+            effect.SetActive(true);
         }
     }
 }

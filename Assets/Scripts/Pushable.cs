@@ -42,7 +42,7 @@ public class Pushable : MonoBehaviour
     {
         if(other.tag == "pushable")
         {
-            Debug.Log("충돌");
+            //Debug.Log("충돌");
             //stopPush = true;
         }
     }

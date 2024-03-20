@@ -38,7 +38,7 @@ public class CameraMode : MonoBehaviour
         StartCoroutine(MoveCamera());
         player.transform.position = playerDestination.transform.position;
         mainCamera.orthographic = true;
-        mainCamera.orthographicSize = 30;
+        mainCamera.orthographicSize = 35;
     }
 
     void ReturnToOriginalPlace()

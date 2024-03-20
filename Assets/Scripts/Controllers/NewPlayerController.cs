@@ -96,7 +96,7 @@ public class NewPlayerController : MonoBehaviour
     }
     void PlayerMove()
     {
-        if (CameraMode.IsGamePause) return;
+        //if (CameraMode.IsGamePause) return;
         bool isOnSlope = IsOnSlope();
 
         dir = new Vector3(h, 0, v).normalized;
@@ -117,12 +117,13 @@ public class NewPlayerController : MonoBehaviour
 
             
             float offset = 1.0f;
-            if (Physics.Raycast(new Ray(transform.position - slopeVelocity * offset, slopeVelocity), out RaycastHit hit, dist + offset * 2.0f, LayerMask.GetMask("Wall")))
+            Vector3 raycastOrigin = transform.position + Vector3.up * 0.5f;
+            if (Physics.Raycast(new Ray(raycastOrigin - slopeVelocity * offset, slopeVelocity), out RaycastHit hit, dist + offset * 2.0f, LayerMask.GetMask("Wall")))
             {
                 dist = hit.distance - offset * 2.0f;
             }
 
-            if (Physics.Raycast(new Ray(transform.position - slopeVelocity * offset, slopeVelocity), out RaycastHit pushhit, dist + offset * 1.0f, LayerMask.GetMask("Pushable")))
+            if (Physics.Raycast(new Ray(raycastOrigin - slopeVelocity * offset, slopeVelocity), out RaycastHit pushhit, dist + offset * 1.0f, LayerMask.GetMask("Pushable")))
             {
                 dist = pushhit.distance - offset * 1.0f;
             }

@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 303972295}
   - component: {fileID: 303972297}
   - component: {fileID: 303972296}
+  - component: {fileID: 303972298}
   m_Layer: 6
   m_Name: PushCube_U_Model
-  m_TagString: Ground
+  m_TagString: pushable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,6 +82,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &303972298
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303972294}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.8692136, y: 5.869212, z: 5.8692136}
+  m_Center: {x: 0.00000062584877, y: 2.9802399, z: 0}
 --- !u!1 &507422674
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,9 +106,10 @@ GameObject:
   - component: {fileID: 507422675}
   - component: {fileID: 507422677}
   - component: {fileID: 507422676}
+  - component: {fileID: 5019451219419103734}
   m_Layer: 6
   m_Name: PushCube_P_Model
-  m_TagString: Ground
+  m_TagString: pushable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -162,6 +177,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5019451219419103734
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507422674}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.8692136, y: 5.869212, z: 5.8692136}
+  m_Center: {x: 0.00000047683716, y: 2.980238, z: 0}
 --- !u!1 &554803834
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,7 +202,7 @@ GameObject:
   - component: {fileID: 554803838}
   - component: {fileID: 554803837}
   - component: {fileID: 554803836}
-  m_Layer: 17
+  m_Layer: 0
   m_Name: PushCube_U
   m_TagString: pushable
   m_Icon: {fileID: 0}
@@ -189,7 +217,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 554803834}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 51.23, y: 42, z: -11.85}
+  m_LocalPosition: {x: 63.8, y: 42, z: -7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 303972295}
@@ -207,8 +235,8 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -228,7 +256,7 @@ MonoBehaviour:
   player: {fileID: 0}
   remy: {fileID: 0}
   destination: {fileID: 0}
-  distanceThreshold: 0.1
+  orignalPosition: {x: 0, y: 0, z: 0}
 --- !u!65 &554803836
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -254,7 +282,7 @@ GameObject:
   - component: {fileID: 1635630214}
   - component: {fileID: 1635630213}
   - component: {fileID: 1635630212}
-  m_Layer: 17
+  m_Layer: 0
   m_Name: PushCube_P
   m_TagString: pushable
   m_Icon: {fileID: 0}
@@ -269,7 +297,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635630211}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 66, y: 42, z: -11.85}
+  m_LocalPosition: {x: 13.1, y: 42, z: -14.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 507422675}
@@ -287,8 +315,8 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -308,7 +336,7 @@ MonoBehaviour:
   player: {fileID: 0}
   remy: {fileID: 0}
   destination: {fileID: 0}
-  distanceThreshold: 0.1
+  orignalPosition: {x: 0, y: 0, z: 0}
 --- !u!65 &1635630212
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -333,9 +361,10 @@ GameObject:
   - component: {fileID: 76866939564324563}
   - component: {fileID: 76866939564324561}
   - component: {fileID: 76866939564324562}
+  - component: {fileID: 629762897}
   m_Layer: 6
   m_Name: PushCube_A_Model
-  m_TagString: Ground
+  m_TagString: pushable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -403,6 +432,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &629762897
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76866939564324564}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.869212, y: 5.869212, z: 5.869212}
+  m_Center: {x: -0.0000019073486, y: 2.980236, z: 0.00000071525574}
 --- !u!1 &76866940526374310
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,7 +457,7 @@ GameObject:
   - component: {fileID: 76866940526374307}
   - component: {fileID: 76866940526374308}
   - component: {fileID: 76866940526374309}
-  m_Layer: 17
+  m_Layer: 0
   m_Name: PushCube_E
   m_TagString: pushable
   m_Icon: {fileID: 0}
@@ -430,7 +472,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76866940526374310}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25.76, y: 42, z: 32}
+  m_LocalPosition: {x: 42.6, y: 42, z: 15.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2723692108465128800}
@@ -448,8 +490,8 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -469,7 +511,7 @@ MonoBehaviour:
   player: {fileID: 0}
   remy: {fileID: 0}
   destination: {fileID: 0}
-  distanceThreshold: 0.1
+  orignalPosition: {x: 0, y: 0, z: 0}
 --- !u!65 &76866940526374309
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -495,7 +537,7 @@ GameObject:
   - component: {fileID: 76866940761274488}
   - component: {fileID: 76866940761274489}
   - component: {fileID: 76866940761274490}
-  m_Layer: 17
+  m_Layer: 0
   m_Name: PushCube_N
   m_TagString: pushable
   m_Icon: {fileID: 0}
@@ -510,7 +552,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76866940761274491}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 40.2, y: 42, z: 2.8}
+  m_LocalPosition: {x: 59.5, y: 42, z: 15.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2176868595267009257}
@@ -528,8 +570,8 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -549,7 +591,7 @@ MonoBehaviour:
   player: {fileID: 0}
   remy: {fileID: 0}
   destination: {fileID: 0}
-  distanceThreshold: 0.1
+  orignalPosition: {x: 0, y: 0, z: 0}
 --- !u!65 &76866940761274490
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -612,7 +654,7 @@ GameObject:
   - component: {fileID: 76866941201509252}
   - component: {fileID: 76866941201509250}
   - component: {fileID: 76866941201509251}
-  m_Layer: 17
+  m_Layer: 0
   m_Name: PushCube_C
   m_TagString: pushable
   m_Icon: {fileID: 0}
@@ -627,7 +669,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76866941201509254}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.3, y: 42.6, z: 8.8}
+  m_LocalPosition: {x: 7.01, y: 42.6, z: 14.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3654349931413820885}
@@ -650,7 +692,7 @@ MonoBehaviour:
   player: {fileID: 0}
   remy: {fileID: 0}
   destination: {fileID: 0}
-  distanceThreshold: 0.1
+  orignalPosition: {x: 0, y: 0, z: 0}
 --- !u!65 &76866941201509250
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -675,8 +717,8 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -692,7 +734,7 @@ GameObject:
   - component: {fileID: 76866941240173693}
   - component: {fileID: 76866941240173694}
   - component: {fileID: 76866941240173695}
-  m_Layer: 17
+  m_Layer: 0
   m_Name: PushCube_A
   m_TagString: pushable
   m_Icon: {fileID: 0}
@@ -707,7 +749,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76866941240173680}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 28.4, y: 42, z: -7.2}
+  m_LocalPosition: {x: 23.4, y: 42, z: 12.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 76866939564324563}
@@ -725,8 +767,8 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -746,7 +788,7 @@ MonoBehaviour:
   player: {fileID: 0}
   remy: {fileID: 0}
   destination: {fileID: 0}
-  distanceThreshold: 0.1
+  orignalPosition: {x: 0, y: 0, z: 0}
 --- !u!65 &76866941240173695
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -772,7 +814,7 @@ GameObject:
   - component: {fileID: 76866941307976037}
   - component: {fileID: 76866941307976038}
   - component: {fileID: 76866941307976039}
-  m_Layer: 17
+  m_Layer: 0
   m_Name: PushCube_L
   m_TagString: pushable
   m_Icon: {fileID: 0}
@@ -787,7 +829,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76866941307976025}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 47.1, y: 42.47, z: 33.6}
+  m_LocalPosition: {x: 29, y: 42.47, z: -3.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2389624533332727788}
@@ -818,7 +860,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
@@ -839,7 +881,7 @@ MonoBehaviour:
   player: {fileID: 0}
   remy: {fileID: 0}
   destination: {fileID: 0}
-  distanceThreshold: 0.1
+  orignalPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &2176868595266651443
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,9 +893,10 @@ GameObject:
   - component: {fileID: 2176868595267009257}
   - component: {fileID: 2176868595267761853}
   - component: {fileID: 2176868595268807237}
+  - component: {fileID: 2042365485}
   m_Layer: 6
   m_Name: PushCube_N_Model
-  m_TagString: Ground
+  m_TagString: pushable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -921,6 +964,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2042365485
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2176868595266651443}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.869215, y: 5.869215, z: 5.869215}
+  m_Center: {x: 0, y: 2.9802406, z: -0.0000007105446}
 --- !u!1 &2389624533332727798
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,7 +988,8 @@ GameObject:
   - component: {fileID: 2389624533332727788}
   - component: {fileID: 2389624533332727795}
   - component: {fileID: 2389624533332727794}
-  m_Layer: 17
+  - component: {fileID: 1750209468}
+  m_Layer: 6
   m_Name: PushCube_L_Model
   m_TagString: pushable
   m_Icon: {fileID: 0}
@@ -1002,6 +1059,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1750209468
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2389624533332727798}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.869212, y: 5.869212, z: 5.869212}
+  m_Center: {x: 0, y: 2.9802399, z: -0.00000071525574}
 --- !u!1 &2723692108465424336
 GameObject:
   m_ObjectHideFlags: 0
@@ -1013,9 +1083,10 @@ GameObject:
   - component: {fileID: 2723692108465128800}
   - component: {fileID: 2723692108466418934}
   - component: {fileID: 2723692108467463342}
+  - component: {fileID: 79224248}
   m_Layer: 6
   m_Name: PushCube_E_Model
-  m_TagString: Ground
+  m_TagString: pushable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1083,6 +1154,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &79224248
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2723692108465424336}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.869215, y: 5.8692155, z: 5.869215}
+  m_Center: {x: 0.0000009536743, y: 2.9802415, z: 0.0000009536743}
 --- !u!1 &3654349931413820879
 GameObject:
   m_ObjectHideFlags: 0
@@ -1094,7 +1178,8 @@ GameObject:
   - component: {fileID: 3654349931413820885}
   - component: {fileID: 3654349931413820874}
   - component: {fileID: 3654349931413820875}
-  m_Layer: 17
+  - component: {fileID: 433035637}
+  m_Layer: 6
   m_Name: PushCube_C_Model
   m_TagString: pushable
   m_Icon: {fileID: 0}
@@ -1109,7 +1194,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3654349931413820879}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 4.43, z: -4.49}
+  m_LocalPosition: {x: 0, y: 4.43, z: -4.5}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children: []
   m_Father: {fileID: 76866941201509253}
@@ -1164,3 +1249,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &433035637
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3654349931413820879}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.869212, y: 5.8692136, z: 5.8692136}
+  m_Center: {x: -0.0000009536743, y: 2.9802415, z: -0.0000019073486}

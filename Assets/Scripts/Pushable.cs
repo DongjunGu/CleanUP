@@ -9,41 +9,59 @@ public class Pushable : MonoBehaviour
     public GameObject player;
     public GameObject remy;
     public Transform destination;
-    public float distanceThreshold = 5f;
+    private float distanceThreshold = 1.0f;
     private bool isPlayerChild = false;
     private Animator anim;
-    //bool stopPush = false;
+    public Vector3 orignalPosition;
     void Start()
     {
         anim = player.GetComponent<Animator>();
+        orignalPosition = transform.position;
+        
     }
     void Update()
     {
         distachPlayer();
+        ArrivedDestination();
+    }
 
+    void ArrivedDestination()
+    {
+        float distance = Vector3.Distance(transform.position, destination.position);
+        if (distance < distanceThreshold)
+        {
+            distachPlayerFromParent();
+            gameObject.GetComponent<Collider>().enabled = false;
+            gameObject.GetComponent<Pushable>().enabled = false;
+        }
     }
     void distachPlayer()
     {
         if (isPlayerChild && Input.GetKeyDown(KeyCode.E))
         {
-            anim.SetBool("playPush", false);
-            isPlayerChild = false;
-            NewPlayerController newPlayerController = player.GetComponent<NewPlayerController>();
+            distachPlayerFromParent();
+        }
+    }
+    
+    void distachPlayerFromParent()
+    {
+        anim.SetBool("playPush", false);
+        isPlayerChild = false;
+        NewPlayerController newPlayerController = player.GetComponent<NewPlayerController>();
 
-            if (newPlayerController != null)
-            {
-                player.transform.parent = null;
-                newPlayerController.enabled = true;
-                newPlayerController.StopChecking();
-            } 
+        if (newPlayerController != null)
+        {
+            player.transform.parent = null;
+            newPlayerController.enabled = true;
+            newPlayerController.StopChecking();
         }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "pushable")
+        if(other.tag == "Respawn")
         {
-            //Debug.Log("Ãæµ¹");
-            //stopPush = true;
+            distachPlayerFromParent();
+            transform.position = orignalPosition;
         }
     }
     private void OnTriggerStay(Collider other)

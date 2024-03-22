@@ -6,7 +6,6 @@ public class Destination : MonoBehaviour
 {
     public GameObject correctObject;
     public GameObject effect;
-    public static int destination_count = 0;
 
     private void Update()
     {
@@ -14,18 +13,20 @@ public class Destination : MonoBehaviour
         if(distance < 1.0f)
         {
             effect.SetActive(true);
-            destination_count++;
         }
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        //if (other.tag == "pushable" && other.name == correctObject.name)
-        //{
-           
-        //}
         if(other.tag == "Player" && other.name == correctObject.name)
         {
             effect.SetActive(true);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player" && other.name == correctObject.name)
+        {
+            effect.SetActive(false);
         }
     }
 }

@@ -13,16 +13,23 @@ public class Pushable : MonoBehaviour
     private bool isPlayerChild = false;
     private Animator anim;
     public Vector3 orignalPosition;
+    public static int count;
+    public static bool allBlockSet = false;
     void Start()
     {
         anim = player.GetComponent<Animator>();
         orignalPosition = transform.position;
-        
     }
     void Update()
     {
         distachPlayer();
         ArrivedDestination();
+        AllBlockSet();
+    }
+    void AllBlockSet()
+    {
+        if (count == 3)
+            allBlockSet = true;
     }
 
     void ArrivedDestination()
@@ -33,6 +40,8 @@ public class Pushable : MonoBehaviour
             distachPlayerFromParent();
             gameObject.GetComponent<Collider>().enabled = false;
             gameObject.GetComponent<Pushable>().enabled = false;
+            count++;
+            Debug.Log(count);
         }
     }
     void distachPlayer()
@@ -43,7 +52,7 @@ public class Pushable : MonoBehaviour
         }
     }
     
-    void distachPlayerFromParent()
+    public void distachPlayerFromParent()
     {
         anim.SetBool("playPush", false);
         isPlayerChild = false;

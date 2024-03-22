@@ -11,7 +11,7 @@ public class CameraMode : MonoBehaviour
     public GameObject tableView;
     public GameObject player;
     public GameObject playerDestination;
-
+    public GameObject respawnZone;
     private Vector3 targetPosition;
     private float transitionSpeed = 1.0f;
 
@@ -36,6 +36,7 @@ public class CameraMode : MonoBehaviour
         targetPosition = tableView.transform.position;
         mainCamera.transform.parent = tableView.transform;
         StartCoroutine(MoveCamera());
+        respawnZone.SetActive(true);
         player.transform.position = playerDestination.transform.position;
         mainCamera.orthographic = true;
         mainCamera.orthographicSize = 35;
@@ -46,6 +47,7 @@ public class CameraMode : MonoBehaviour
         isTableView = false;
         springArm.GetComponent<SpringArmCamera>().enabled = true;
         mainCamera.orthographic = false;
+        respawnZone.SetActive(false);
         targetPosition = springArm.transform.position;
         mainCamera.transform.parent = springArm.transform;
         StartCoroutine(MoveCamera());

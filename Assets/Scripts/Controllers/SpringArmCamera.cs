@@ -14,6 +14,7 @@ public class SpringArmCamera : MonoBehaviour
 
     [SerializeField]
     private float lookSensitivity;
+    public Transform cameraSocket;
     public Camera mainCamera;
     public GameObject cameraObject;
     Vector3 _delta = new Vector3(0.0f, 0.0f, -12.0f);
@@ -21,7 +22,7 @@ public class SpringArmCamera : MonoBehaviour
     float dist = 0.0f;  
     void Start()
     {
-        dist = Mathf.Abs(mainCamera.transform.localPosition.z);
+        dist = Mathf.Abs(cameraSocket.localPosition.z);
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
 
@@ -49,6 +50,11 @@ public class SpringArmCamera : MonoBehaviour
             
         }
 
-        mainCamera.transform.localPosition = new Vector3(0, 0, -tempDist);
+        if(!CameraMode.IsGamePause) cameraSocket.localPosition = new Vector3(0, 0, -tempDist);
+    }
+
+    public void AttachCamera(Transform cam)
+    {
+        cam.SetParent(cameraSocket);
     }
 }

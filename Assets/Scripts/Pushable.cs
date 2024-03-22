@@ -65,6 +65,13 @@ public class Pushable : MonoBehaviour
             newPlayerController.StopChecking();
         }
     }
+
+    bool isCrash = false;
+    public void OnCrash(bool v)
+    {
+        isCrash = v;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Respawn")
@@ -87,7 +94,7 @@ public class Pushable : MonoBehaviour
             if (playerTransform != null)
             {
                 anim.SetBool("playPush", true);
-                if (Input.GetKey(KeyCode.W))
+                if (isCrash == false && Input.GetKey(KeyCode.W))
                 {
                     anim.SetBool("isPush", true);
                     Vector3 moveDirection = remy.transform.forward.normalized;

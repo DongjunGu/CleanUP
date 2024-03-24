@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class PushableBlock : MonoBehaviour
 {
     public UnityEvent<bool> crashAct;
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("pushable"))

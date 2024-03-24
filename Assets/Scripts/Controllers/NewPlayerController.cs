@@ -199,7 +199,7 @@ public class NewPlayerController : MonoBehaviour
     }
     void FallAfterJump()
     {
-        playerRigidbody.AddForce(Vector3.down * 5.0f, ForceMode.Impulse);
+        playerRigidbody.AddForce(Vector3.down * 3.0f, ForceMode.Impulse);
     }
     void PlayFall()
     {

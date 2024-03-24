@@ -19,6 +19,7 @@ public class Pushable : MonoBehaviour
     {
         anim = player.GetComponent<Animator>();
         orignalPosition = transform.position;
+        
     }
     void Update()
     {
@@ -98,7 +99,18 @@ public class Pushable : MonoBehaviour
                 {
                     anim.SetBool("isPush", true);
                     Vector3 moveDirection = remy.transform.forward.normalized;
-                    transform.Translate(moveDirection * 3.0f * Time.deltaTime);
+                    float offset = 1.0f;
+                    float dist = 3.0f * Time.deltaTime;
+                    GameObject childObject = gameObject.transform.GetChild(0).gameObject;
+                    Vector3 raycastOrigin = transform.position + Vector3.up * 0.5f;
+                    Debug.DrawRay(raycastOrigin, moveDirection * 5f, Color.red);
+                    if (Physics.Raycast(raycastOrigin, moveDirection, out RaycastHit hit, 5f, LayerMask.GetMask("Wall")))
+                    {
+                        
+                        Debug.Log("Wall 레이어와 충돌했습니다. 충돌 지점: " + hit.point);
+                    }
+                    transform.Translate(moveDirection * dist);
+                    
                 }
                 else
                 {

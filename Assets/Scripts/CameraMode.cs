@@ -63,7 +63,7 @@ public class CameraMode : MonoBehaviour
     {
         IsGamePause = true;
         while (Vector3.Distance(mainCamera.transform.localPosition, Vector3.zero) > 1.5f ||
-            Vector3.Angle(mainCamera.transform.forward, targetForward) > 0.5f
+            Vector3.Angle(mainCamera.transform.forward, targetForward) > 0.1f
             )
         {
             mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, targetPosition.position, transitionSpeed * Time.deltaTime);

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Pushable : MonoBehaviour
 {
@@ -102,15 +103,41 @@ public class Pushable : MonoBehaviour
                     float offset = 1.0f;
                     float dist = 3.0f * Time.deltaTime;
                     GameObject childObject = gameObject.transform.GetChild(0).gameObject;
-                    Vector3 raycastOrigin = transform.position + Vector3.up * 0.5f;
-                    Debug.DrawRay(raycastOrigin, moveDirection * 5f, Color.red);
-                    if (Physics.Raycast(raycastOrigin, moveDirection, out RaycastHit hit, 5f, LayerMask.GetMask("Wall")))
-                    {
-                        
-                        Debug.Log("Wall 레이어와 충돌했습니다. 충돌 지점: " + hit.point);
-                    }
-                    transform.Translate(moveDirection * dist);
+                    float halfSize = childObject.GetComponent<BoxCollider>().size.x * 0.75f;
+
                     
+                    Vector3 rightDir = Quaternion.Euler(0, 90, 0) * moveDirection;
+                    Vector3 leftDir = Quaternion.Euler(0, -90, 0) * moveDirection;
+                    Vector3 raycastOrigin = transform.position + Vector3.up * halfSize;
+                    Vector3 raycastOrigin1 = raycastOrigin + rightDir * halfSize;
+                    Vector3 raycastOrigin2 = raycastOrigin + leftDir * halfSize;
+                    Debug.DrawRay(raycastOrigin, moveDirection * 5f, Color.red);
+                    Debug.DrawRay(raycastOrigin1, moveDirection * 5f, Color.green);
+                    Debug.DrawRay(raycastOrigin2, moveDirection * 5f, Color.blue);
+
+                    RaycastHit[] hits = Physics.RaycastAll(raycastOrigin, moveDirection, halfSize + dist, LayerMask.GetMask("Wall"));
+
+                    if(hits.Length == 0)
+                    {
+                        transform.Translate(moveDirection * dist);
+                    }
+                    else
+                    {
+                        foreach (RaycastHit hit in hits)
+                        {
+                            if (hit.transform != transform)
+                            {
+                                //transform.position += moveDirection * (hit.distance - halfSize);
+                                //break;
+                                Debug.Log(hit.transform.gameObject.name);
+                            }
+                        }
+                    }
+
+
+                   
+                    
+
                 }
                 else
                 {

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
 
-    [SerializeField] float _scanRange = 10;
+    [SerializeField] public float _scanRange;
 
     public int maxHP;
     public int currentHp;
@@ -28,7 +28,8 @@ public class Enemy : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         boxCol = GetComponent<BoxCollider>();
         //skinned_mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
-        normal_mat = GetComponent<MeshRenderer>().material;
+        
+        //normal_mat = GetComponent<MeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
     }
 
@@ -84,7 +85,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Damaged(Vector3 knockBack, bool isDusted)
     {
-        normal_mat.color = Color.red;
+        //normal_mat.color = Color.red;
         yield return new WaitForSeconds(0.1f);
 
         if (currentHp > 0)
@@ -102,7 +103,7 @@ public class Enemy : MonoBehaviour
 
             if (isDusted)
             {
-                normal_mat.color = Color.red;
+                //normal_mat.color = Color.red;
                 //넉백
                 knockBack = knockBack.normalized;
                 knockBack += Vector3.up * 50;
@@ -117,7 +118,7 @@ public class Enemy : MonoBehaviour
                 knockBack += Vector3.up;
                 rigid.AddForce(knockBack * 10, ForceMode.Impulse);
             }
-            normal_mat.color = Color.black;
+            //normal_mat.color = Color.black;
             _isDestroyed = true;
             Destroy(gameObject, 2);
             //아이템 드랍

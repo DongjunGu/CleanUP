@@ -16,11 +16,12 @@ public class Pushable : MonoBehaviour
     public Vector3 orignalPosition;
     public static int count;
     public static bool allBlockSet = false;
+
+   
     void Start()
     {
         anim = player.GetComponent<Animator>();
         orignalPosition = transform.position;
-        
     }
     void Update()
     {
@@ -103,40 +104,33 @@ public class Pushable : MonoBehaviour
                     float offset = 1.0f;
                     float dist = 3.0f * Time.deltaTime;
                     GameObject childObject = gameObject.transform.GetChild(0).gameObject;
-                    float halfSize = childObject.GetComponent<BoxCollider>().size.x * 0.75f;
+                    float halfSize = childObject.GetComponent<BoxCollider>().size.x * 0.8f;
 
                     
                     Vector3 rightDir = Quaternion.Euler(0, 90, 0) * moveDirection;
                     Vector3 leftDir = Quaternion.Euler(0, -90, 0) * moveDirection;
-                    Vector3 raycastOrigin = transform.position + Vector3.up * halfSize;
-                    Vector3 raycastOrigin1 = raycastOrigin + rightDir * halfSize;
-                    Vector3 raycastOrigin2 = raycastOrigin + leftDir * halfSize;
-                    Debug.DrawRay(raycastOrigin, moveDirection * 5f, Color.red);
-                    Debug.DrawRay(raycastOrigin1, moveDirection * 5f, Color.green);
-                    Debug.DrawRay(raycastOrigin2, moveDirection * 5f, Color.blue);
+                    Vector3[] raycastOrigin = new Vector3[3];
+                    raycastOrigin[0] = transform.position + Vector3.up * halfSize;
+                    raycastOrigin[1] = raycastOrigin[0] + rightDir * halfSize;
+                    raycastOrigin[2] = raycastOrigin[0] + leftDir * halfSize;
 
-                    RaycastHit[] hits = Physics.RaycastAll(raycastOrigin, moveDirection, halfSize + dist, LayerMask.GetMask("Wall"));
 
-                    if(hits.Length == 0)
+                    bool check = false;
+                    for(int i = 0; i < 3; ++i)
                     {
-                        transform.Translate(moveDirection * dist);
-                    }
-                    else
-                    {
-                        foreach (RaycastHit hit in hits)
-                        {
-                            if (hit.transform != transform)
-                            {
-                                //transform.position += moveDirection * (hit.distance - halfSize);
-                                //break;
-                                Debug.Log(hit.transform.gameObject.name);
-                            }
+                        RaycastHit[] hits = Physics.RaycastAll(raycastOrigin[i], moveDirection, halfSize + dist, LayerMask.GetMask("Wall"));
+                        if(hits.Length > 0) 
+                        { 
+                            check = true;
+                            break;
                         }
                     }
 
+                    if(check == false)
+                    {
+                        transform.Translate(moveDirection * dist);
+                    }
 
-                   
-                    
 
                 }
                 else

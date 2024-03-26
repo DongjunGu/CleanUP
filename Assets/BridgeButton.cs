@@ -8,6 +8,7 @@ public class BridgeButton : MonoBehaviour
     private bool bridgeActivated = false;
     public Animator animator;
     public GameObject bridgeBlock;
+    
     bool isActive = false;
     void Start()
     {
@@ -49,9 +50,9 @@ public class BridgeButton : MonoBehaviour
             isActive = true;
         }
     }
-    void OnTriggerExit(Collider other)
-    {
-        Debug.Log("Exit");
-        animator.SetBool("playerIn", false);
-    }
+    //void OnTriggerExit(Collider other)
+    //{
+    //    Debug.Log("Exit");
+    //    animator.SetBool("playerIn", false);
+    //}
 }

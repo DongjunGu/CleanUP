@@ -9,41 +9,29 @@ public class Distach : MonoBehaviour
 
     private void Start()
     {
-        parent = transform.parent;
+        
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!detached)
         {
-            StartCoroutine(DetachForDuration(3f));
+            StartCoroutine(DetachForDuration(1f));
         }
-        //else
-        //{
-        //    StartCoroutine(DetachForDuration(2f));
-        //}
     }
 
     IEnumerator DetachForDuration(float duration)
     {
-        transform.parent = null;
+        transform.parent = parent;
+        transform.localPosition = Vector3.zero;
         detached = true;
+        yield return new WaitForSeconds(7.0f); //7초후에 distach
 
-        yield return new WaitForSeconds(duration);
-
-        transform.parent = parent;
-        transform.localPosition = Vector3.zero;
-        detached = false;
-
-    }
-    IEnumerator AttachToParent(float duration)
-    {
-        transform.parent = parent;
-        transform.localPosition = Vector3.zero;
-        detached = false;
-
-        yield return new WaitForSeconds(duration);
+        transform.parent = null; // distach후
         
+
+        yield return new WaitForSeconds(duration); //1초뒤 다시 attach
+        detached = false;
 
     }
 }

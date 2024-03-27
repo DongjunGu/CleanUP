@@ -101,7 +101,6 @@ public class Pushable : MonoBehaviour
                 {
                     anim.SetBool("isPush", true);
                     Vector3 moveDirection = remy.transform.forward.normalized;
-                    float offset = 1.0f;
                     float dist = 3.0f * Time.deltaTime;
                     GameObject childObject = gameObject.transform.GetChild(0).gameObject;
                     float halfSize = childObject.GetComponent<BoxCollider>().size.x * 0.8f;

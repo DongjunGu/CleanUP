@@ -42,6 +42,7 @@ public class NewPlayerController : MonoBehaviour
     bool _isGrounded;
     bool _canDoubleJump = true;
     bool isJumpZone = false;
+    bool canDodge;
     
     bool wasGrounded = true;
     private bool _isWipeAnimationPlaying = false;
@@ -207,12 +208,14 @@ public class NewPlayerController : MonoBehaviour
     }
     void PlayerDodge()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isSwap && !_isDodge && dir != Vector3.zero && !_isJumping)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !_isSwap && !_isDodge && dir != Vector3.zero && !_isJumping && !canDodge)
         {
             anim.SetTrigger("playDodge");
             _isDodge = true;
             _isJumping = true;
+            canDodge = false;
             Invoke("FinishDodge", 0.8f);
+
         }
     }
     void FinishDodge()
@@ -514,13 +517,14 @@ public class NewPlayerController : MonoBehaviour
         {
             anim.SetBool("isGrounded", false);
             PlayFall();
-
+            canDodge = true;
         }
         if (isGroundedNow && !wasGrounded)
         {
             Debug.Log("Grounded");
             anim.SetBool("isJumping", false);
             _isJumping = false;
+            canDodge = false;
         }
         wasGrounded = isGroundedNow;
     }

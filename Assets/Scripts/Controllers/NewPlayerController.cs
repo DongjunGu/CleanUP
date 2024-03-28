@@ -35,6 +35,7 @@ public class NewPlayerController : MonoBehaviour
     bool _obtainItem;
     bool _swapItem1;
     bool _swapItem2;
+    bool _swapItem3;
     bool _isSwap;
     bool _attackKey;
     bool _isAttack;
@@ -91,6 +92,7 @@ public class NewPlayerController : MonoBehaviour
         _obtainItem = Input.GetButtonDown("Grab");
         _swapItem1 = Input.GetButtonDown("SwapItem1");
         _swapItem2 = Input.GetButtonDown("SwapItem2");
+        _swapItem3 = Input.GetButtonDown("SwapItem3"); 
         _attackKey = Input.GetButtonDown("Attack1");
         _dustAttack = Input.GetButtonDown("Attack2");
 
@@ -229,11 +231,14 @@ public class NewPlayerController : MonoBehaviour
             return;
         if (_swapItem2 && (!hasWeapons[1] || orginWeaponIndex == 1))
             return;
+        if (_swapItem3 && (!hasWeapons[2] || orginWeaponIndex == 2))
+            return;
         int weaponIndex = -1;
         if (_swapItem1) weaponIndex = 0;
         if (_swapItem2) weaponIndex = 1;
+        if (_swapItem3) weaponIndex = 2;
 
-        if ((_swapItem1 || _swapItem2) && !_isJumping && !_isDodge)
+        if ((_swapItem1 || _swapItem2 || _swapItem3) && !_isJumping && !_isDodge)
         {
             if (orginWeapon != null)
                 orginWeapon.gameObject.SetActive(false);
@@ -338,7 +343,7 @@ public class NewPlayerController : MonoBehaviour
                 Items item = getItem.GetComponent<Items>();
                 int weaponIndex = item.value;
                 hasWeapons[weaponIndex] = true;
-                //Destroy(getItem);
+                Destroy(getItem);
 
                 //if (getItem.name == "Broom")
                 //{

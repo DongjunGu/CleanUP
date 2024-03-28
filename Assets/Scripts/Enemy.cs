@@ -19,14 +19,18 @@ public class Enemy : MonoBehaviour
     Rigidbody rigid;
     BoxCollider boxCol;
     Material skinned_mat;
-    Material normal_mat;
+    Material original_mat;
+    Color original_color;
     NavMeshAgent nav;
     Vector3 enemyOrgPlace;
+
     void Awake()
     {
         enemyOrgPlace = transform.position;
         rigid = GetComponent<Rigidbody>();
         boxCol = GetComponent<BoxCollider>();
+        original_mat = GetComponent<MeshRenderer>().material;
+        original_color = GetComponent<MeshRenderer>().material.color;
         //skinned_mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         
         //normal_mat = GetComponent<MeshRenderer>().material;
@@ -69,11 +73,14 @@ public class Enemy : MonoBehaviour
         {
             Weapons weapons = other.GetComponent<Weapons>();
             currentHp -= weapons.damage;
+            StartCoroutine(ChnageColor());
+            StartCoroutine(StopChasing());
+            weapons.hitEffect.SetActive(true);
             Vector3 knockBack = transform.position - other.transform.position;
             Debug.Log(currentHp);
             StartCoroutine(DamageCooldown());
-            //StartCoroutine(Damaged_Skinned(knockBack,false));
             StartCoroutine(Damaged(knockBack, false));
+           // weapons.hitEffect.SetActive(false);
         }
     }
     IEnumerator DamageCooldown() //0.5초마다 데미지 입히기
@@ -85,39 +92,17 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Damaged(Vector3 knockBack, bool isDusted)
     {
-        //normal_mat.color = Color.red;
         yield return new WaitForSeconds(0.1f);
 
         if (currentHp > 0)
         {
-            //normal_mat.color = Color.white;
-
-            //knockBack = knockBack.normalized;
-            //knockBack += Vector3.up;
-            //rigid.AddForce(knockBack * 10, ForceMode.Impulse);
+            
         }
 
         else
         {
             gameObject.layer = 8; //DeadEnemy
 
-            if (isDusted)
-            {
-                //normal_mat.color = Color.red;
-                //넉백
-                knockBack = knockBack.normalized;
-                knockBack += Vector3.up * 50;
-
-                rigid.freezeRotation = false;
-                rigid.AddForce(knockBack * 20, ForceMode.Impulse);
-                rigid.AddTorque(knockBack * 15, ForceMode.Impulse);
-            }
-            else
-            {
-                knockBack = knockBack.normalized;
-                knockBack += Vector3.up;
-                rigid.AddForce(knockBack * 10, ForceMode.Impulse);
-            }
             //normal_mat.color = Color.black;
             _isDestroyed = true;
             Destroy(gameObject, 2);
@@ -131,6 +116,19 @@ public class Enemy : MonoBehaviour
 
 
         }
+    }
+    IEnumerator ChnageColor()
+    {
+        original_mat.color = Color.red;
+        yield return new WaitForSeconds(0.5f);
+        original_mat.color = original_color;
+
+    }
+    IEnumerator StopChasing()
+    {
+        nav.enabled = false;
+        yield return new WaitForSeconds(1.0f);
+        nav.enabled = true;
     }
     IEnumerator Damaged_Skinned(Vector3 knockBack, bool isDusted)
     {

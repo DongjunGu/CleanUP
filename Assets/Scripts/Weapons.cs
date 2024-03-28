@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Weapons : MonoBehaviour
 {
-    public enum Type { basicAttack, shootAttack };
+    public enum Type { basicAttack };
     public Type type;
     public int damage;
     public float attackSpeed;
     public BoxCollider basicAttack_Range;
     public TrailRenderer trailEffect;
+    public GameObject hitEffect;
 
     public void Attack()
     {

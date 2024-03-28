@@ -25,7 +25,7 @@ public class Items : MonoBehaviour
     }
     public void RotateBat()
     {
-
+        transform.Rotate(Vector3.up, 25.0f * Time.deltaTime);
     }
 
     public void RotateHammer()

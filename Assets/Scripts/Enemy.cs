@@ -54,12 +54,12 @@ public class Enemy : MonoBehaviour
                 nav.SetDestination(target.position);
             }
 
-            if (_isDetected && (distance < 30.0f)) //Chase
+            if (_isDetected && (distance < 50.0f)) //Chase
             {
                 nav.SetDestination(target.position);
             }
 
-            if (distance > 30.0f) //Go Back
+            if (distance >= 50.0f) //Go Back
             {
                 
                 nav.SetDestination(enemyOrgPlace);
@@ -75,12 +75,17 @@ public class Enemy : MonoBehaviour
             currentHp -= weapons.damage;
             StartCoroutine(ChnageColor());
             StartCoroutine(StopChasing());
-            weapons.hitEffect.SetActive(true);
+            //weapons.hitEffect.SetActive(true);
             Vector3 knockBack = transform.position - other.transform.position;
             Debug.Log(currentHp);
             StartCoroutine(DamageCooldown());
             StartCoroutine(Damaged(knockBack, false));
-           // weapons.hitEffect.SetActive(false);
+            // weapons.hitEffect.SetActive(false);
+            HealthBar healthBar = GetComponentInChildren<HealthBar>();
+            if(healthBar != null)
+            {
+                healthBar.takeDamage(weapons.damage);
+            }
         }
     }
     IEnumerator DamageCooldown() //0.5초마다 데미지 입히기
@@ -126,9 +131,9 @@ public class Enemy : MonoBehaviour
     }
     IEnumerator StopChasing()
     {
-        nav.enabled = false;
+        nav.isStopped = true;
         yield return new WaitForSeconds(1.0f);
-        nav.enabled = true;
+        nav.isStopped = false;
     }
     IEnumerator Damaged_Skinned(Vector3 knockBack, bool isDusted)
     {
@@ -184,7 +189,8 @@ public class Enemy : MonoBehaviour
         currentHp -= 100;
         Vector3 knockBack = transform.position - pos;
         Debug.Log(currentHp);
-        //StartCoroutine(Damaged_Skinned(knockBack,true));
+        StartCoroutine(ChnageColor());
+        StartCoroutine(StopChasing());
         StartCoroutine(Damaged(knockBack, true));
 
     }

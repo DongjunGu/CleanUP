@@ -6,7 +6,6 @@ public class Dust : MonoBehaviour
 {
     public GameObject meshObject;
     public GameObject effectObject;
-    public GameObject effectSubObject;
     public Rigidbody rigid;
     public Collider dustCollider;
 
@@ -36,9 +35,8 @@ public class Dust : MonoBehaviour
     {
         rigid.velocity = Vector3.zero;
         rigid.angularVelocity = Vector3.zero;
-        meshObject.SetActive(false);
         effectObject.SetActive(true);
-        effectSubObject.SetActive(true);
+        meshObject.SetActive(false);
 
         RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, 15, Vector3.up, 0f, LayerMask.GetMask("Enemy"));
         foreach (RaycastHit hitObject in rayHits)

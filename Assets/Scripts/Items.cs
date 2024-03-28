@@ -14,7 +14,8 @@ public class Items : MonoBehaviour
         if (type == Type.Broom)
             RotateBroom();
         if (type == Type.Bat)
-            RotateBat();
+            //StartCoroutine(BatMovement());
+
         if (type == Type.Hammer)
             RotateHammer();
     }
@@ -23,11 +24,16 @@ public class Items : MonoBehaviour
     {
         transform.Rotate(Vector3.up, 25.0f * Time.deltaTime);
     }
-    public void RotateBat()
+    IEnumerator BatMovement()
     {
-        transform.Rotate(Vector3.up, 25.0f * Time.deltaTime);
-    }
+        transform.position += Vector3.up * 1.0f * Time.deltaTime;
+        Debug.Log("UP");
+        yield return new WaitForSeconds(2.0f);
 
+        transform.position += Vector3.down * 1.0f * Time.deltaTime;
+        Debug.Log("Down");
+        yield return new WaitForSeconds(2.0f);
+    }
     public void RotateHammer()
     {
         transform.Rotate(Vector3.right, 25.0f * Time.deltaTime);

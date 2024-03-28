@@ -286,8 +286,6 @@ public class NewPlayerController : MonoBehaviour
             {
                 anim.SetTrigger("playThrow");
 
-
-
                 Vector3 nextVec = hit.point - player.transform.position;
                 nextVec.y = 15;
 

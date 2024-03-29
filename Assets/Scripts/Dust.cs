@@ -41,7 +41,7 @@ public class Dust : MonoBehaviour
         RaycastHit[] rayHits = Physics.SphereCastAll(transform.position, 15, Vector3.up, 0f, LayerMask.GetMask("Enemy"));
         foreach (RaycastHit hitObject in rayHits)
         {
-            hitObject.transform.GetComponent<Enemy>().HitByDust(transform.position);
+            hitObject.transform.GetComponent<Enemy>().HitByDust();
         }
 
         Destroy(gameObject, 3);

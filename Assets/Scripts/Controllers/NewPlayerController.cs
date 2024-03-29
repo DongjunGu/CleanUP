@@ -300,7 +300,7 @@ public class NewPlayerController : MonoBehaviour
                     player.transform.Rotate(Vector3.up * lookAngle); //시계
                 }
 
-                GameObject instantDust = Instantiate(dustObject, player.transform.position, player.transform.rotation);
+                GameObject instantDust = Instantiate(dustObject, player.transform.position + Vector3.up * 2.0f, player.transform.rotation);
                 Rigidbody rigidDust = instantDust.GetComponent<Rigidbody>();
                 rigidDust.AddForce(nextVec, ForceMode.Impulse);
                 rigidDust.AddTorque(Vector3.back * 10, ForceMode.Impulse); //회전

@@ -188,6 +188,7 @@ MonoBehaviour:
   effectObject: {fileID: 2285124960513392030}
   rigid: {fileID: 4333623994689382366}
   dustCollider: {fileID: 0}
+  dustDamage: 100
 --- !u!1 &4663888762199980384
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,7 +22,8 @@ public class NewPlayerController : MonoBehaviour
 
     public int maxDust;
     public GameObject dustObject;
-
+    public int maxHP;
+    public int currentHp;
     Animator anim;
     private float v = 0.0f;
     private float h = 0.0f;
@@ -44,7 +45,7 @@ public class NewPlayerController : MonoBehaviour
     bool _canDoubleJump = true;
     bool isJumpZone = false;
     bool canDodge;
-    
+    bool _isDamaged;
     bool wasGrounded = true;
     private bool _isWipeAnimationPlaying = false;
 
@@ -54,6 +55,9 @@ public class NewPlayerController : MonoBehaviour
     GameObject getItem;
     GameObject getImage;
     Weapons orginWeapon;
+    GameObject prefab;
+    GameObject hpPrefab;
+    HpBarUI hpUI;
 
     int orginWeaponIndex = -1;
     float _attackDelay;
@@ -73,6 +77,17 @@ public class NewPlayerController : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         mainCamera = GetComponentInChildren<Camera>();
+
+    }
+    void Start()
+    {
+        prefab = Resources.Load("PlayerHpBar") as GameObject;
+        hpPrefab = MonoBehaviour.Instantiate(prefab, HpBarCanvas.Root) as GameObject;
+        hpUI = hpPrefab.GetComponent<HpBarUI>();
+        hpUI.target = transform.Find("HpPos");
+        hpUI.hp = currentHp;
+        hpUI.maxHP = maxHP;
+        //hpPrefab.SetActive(false);
     }
     void Update()
     {
@@ -414,8 +429,6 @@ public class NewPlayerController : MonoBehaviour
         if(other.tag == "pushable")
         {
             Vector3 dire = (other.transform.position - player.position).normalized;
-            //Debug.DrawRay(player.position, player.transform.forward * 10f, Color.red);
-            //Debug.DrawRay(player.position, dire * 10f, Color.green);
             Vector3 cubeAngle = other.transform.forward;
             Vector3 playerAngle = player.position - other.transform.position;
             playerAngle.y = 0;
@@ -483,10 +496,11 @@ public class NewPlayerController : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Item")
         {
+            Debug.Log(other.gameObject.name);
             Items item = other.GetComponent<Items>();
             switch (item.type)
             {
@@ -498,6 +512,27 @@ public class NewPlayerController : MonoBehaviour
             }
             Destroy(other.gameObject);
         }
+        if(other.tag == "Enemy")
+        {
+            Debug.Log(gameObject.name);
+            if (hpUI != null)
+            {
+                if (!_isDamaged)
+                {
+                    Enemy enemy = other.GetComponent<Enemy>();
+                    currentHp -= enemy.damage;
+                    hpUI.takeDamage(enemy.damage);
+                    StartCoroutine(OnDamage());
+                }
+            }
+               
+        }
+    }
+    IEnumerator OnDamage()
+    {
+        _isDamaged = true;
+        yield return new WaitForSeconds(1.0f);
+        _isDamaged = false;
     }
     void CheckGrounded()
     {
@@ -535,15 +570,10 @@ public class NewPlayerController : MonoBehaviour
     {
         playerRigidbody.angularVelocity = Vector3.zero;
     }
-    //void StopBeforeObject() //충돌전 확인
-    //{
-    //    _isBorder = Physics.Raycast(transform.position + Vector3.up, transform.forward, 2, LayerMask.GetMask("Wall"));
-    //}
     private void FixedUpdate()
     {
         PlayerMove();
         RotationFreeze();
-        //StopBeforeObject();
     }
 
     public bool IsOnSlope()
@@ -560,19 +590,6 @@ public class NewPlayerController : MonoBehaviour
     {
         return Vector3.ProjectOnPlane(direction, slopeHit.normal);
     }
-    //private void OnControllerColliderHit(ControllerColliderHit hit)
-    //{
-    //    if(hit.transform.tag == "pushable")
-    //    {
-    //        Rigidbody box = hit.collider.GetComponent<Rigidbody>();
-
-    //        if(box != null)
-    //        {
-    //            Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, 0);
-    //            box.velocity = pushDir * _pushForce;
-    //        }
-    //    }
-    //}
     IEnumerator MovingToPos(GameObject otherObject, Vector3 pos)
     {
         Vector3 dir = pos - transform.position;

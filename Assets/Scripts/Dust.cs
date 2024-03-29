@@ -8,7 +8,7 @@ public class Dust : MonoBehaviour
     public GameObject effectObject;
     public Rigidbody rigid;
     public Collider dustCollider;
-
+    public int dustDamage = 100;
     void Start()
     {
         StartCoroutine(Explosion());

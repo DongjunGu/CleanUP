@@ -53,7 +53,7 @@
     <UnityVersion>2020.3.48f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\PlayerMovement.cs" />
@@ -65,6 +65,7 @@
     <Compile Include="Assets\HealthBar.cs" />
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\Drawer\X Axis\Drawer_Pull_X.cs" />
     <Compile Include="Assets\Scripts\Items.cs" />
+    <Compile Include="Assets\r.cs" />
     <Compile Include="Assets\PushableBlock.cs" />
     <Compile Include="Assets\Scripts\Controllers\NewPlayerController.cs" />
     <Compile Include="Assets\Prefabs\Apartment\Apartment Kit\Common\Scripts &amp; Animation\Slide\opencloseSlide.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\Doors\opencloseStallDoor.cs" />
     <Compile Include="Assets\Jump_State.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
+    <Compile Include="Assets\HpBarCanvas.cs" />
     <Compile Include="Assets\CustomMesh.cs" />
     <Compile Include="Assets\Andtech\Star Pack\Samples\Star Pack Demo\Scripts\Spin.cs" />
     <Compile Include="Assets\Scripts\Controllers\SpringArmCamera.cs" />
@@ -105,7 +107,6 @@
     <Compile Include="Assets\ColorChange.cs" />
     <Compile Include="Assets\Destination.cs" />
     <Compile Include="Assets\BridgeButton.cs" />
-    <Compile Include="Assets\_Creepy_Cat\3D Games Effects Pack Free\Example_02\InstanceExample.cs" />
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\Doors\opencloseDoor1.cs" />
     <Compile Include="Assets\RobotSphere\Assets\Scripts\RobotFreeAnim.cs" />
     <Compile Include="Assets\Prefabs\Apartment\Apartment Kit\Common\Scripts &amp; Animation\Windows\opencloseWindowApt.cs" />
@@ -114,10 +115,8 @@
     <Compile Include="Assets\Prefabs\Apartment\Apartment Kit\Common\Scripts &amp; Animation\TableFlip\TableFlipL.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlayerContoller.cs" />
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow1.cs" />
-    <Compile Include="Assets\push.cs" />
     <Compile Include="Assets\HpBarUI.cs" />
-    <Compile Include="Assets\r.cs" />
-    <Compile Include="Assets\HpBarCanvas.cs" />
+    <Compile Include="Assets\push.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
 
     public int maxHP;
     public int currentHp;
+    public int damage;
     public Transform target;
     public GameObject dustItemObject;
     private bool canTakeDamage = true;
@@ -48,6 +49,7 @@ public class Enemy : MonoBehaviour
         hpUI.target = transform.Find("BarPos");
         hpUI.hp = currentHp;
         hpUI.maxHP = maxHP;
+        hpPrefab.SetActive(false);
     }
 
     void Update()
@@ -63,7 +65,13 @@ public class Enemy : MonoBehaviour
         {
             if (distance <= _scanRange) //Detect
             {
-                
+                hpPrefab.SetActive(true);
+                //GameObject playerHpBar = GameObject.Find("PlayerHpbar(Clone)");
+                //if (playerHpBar != null)
+                //    if (!playerHpBar.activeSelf)
+                //        playerHpBar.SetActive(true);
+                //    else
+                //        return;
                 _isDetected = true;
                 nav.SetDestination(target.position);
             }
@@ -89,10 +97,9 @@ public class Enemy : MonoBehaviour
             currentHp -= weapons.damage;
            
             //weapons.hitEffect.SetActive(true);
-            Vector3 knockBack = transform.position - other.transform.position;
             Debug.Log(currentHp);
             StartCoroutine(DamageCooldown());
-            StartCoroutine(Damaged(false));
+            StartCoroutine(Damaged());
             // weapons.hitEffect.SetActive(false);
 
             
@@ -109,7 +116,7 @@ public class Enemy : MonoBehaviour
         canTakeDamage = true;
     }
 
-    IEnumerator Damaged(bool isDusted)
+    IEnumerator Damaged()
     {
         yield return new WaitForSeconds(0.1f);
 
@@ -121,11 +128,11 @@ public class Enemy : MonoBehaviour
 
         else
         {
-            original_mat.color = Color.red;
-            nav.isStopped = true;
-            yield return new WaitForSeconds(0.2f);
+            //yield return new WaitForSeconds(0.2f);
             original_mat.color = Color.gray;
+            nav.isStopped = true;
             gameObject.layer = 8;
+
             _isDestroyed = true;
             Destroy(gameObject, 2);
             Destroy(hpPrefab, 2);
@@ -153,9 +160,13 @@ public class Enemy : MonoBehaviour
     
     public void HitByDust()
     {
+        hpPrefab.SetActive(true);
         currentHp -= 100;
-        Debug.Log(currentHp);
-        StartCoroutine(Damaged(true));
+        if (hpUI != null)
+        {
+            hpUI.takeDamage(100);
+        }
+        StartCoroutine(Damaged());
 
     }
     private void FixedUpdate()

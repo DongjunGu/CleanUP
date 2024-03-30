@@ -73,6 +73,7 @@ public class Enemy : MonoBehaviour
                 //    else
                 //        return;
                 _isDetected = true;
+                
                 nav.SetDestination(target.position);
             }
 
@@ -83,7 +84,7 @@ public class Enemy : MonoBehaviour
 
             if (distance >= 50.0f) //Go Back
             {
-                
+                hpPrefab.SetActive(false);
                 nav.SetDestination(enemyOrgPlace);
             }
         }

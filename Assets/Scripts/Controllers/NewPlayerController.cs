@@ -391,8 +391,6 @@ public class NewPlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
-            //anim.SetBool("isJumping", false);
-            //_isJumping = false;
             isJumpZone = false;
         }
         if (collision.gameObject.tag == "JumpZone")
@@ -406,11 +404,11 @@ public class NewPlayerController : MonoBehaviour
         if (collision.gameObject.tag == "CumpulsionJumpZone")
         {
             playerRigidbody.velocity = Vector3.zero;
-            anim.SetBool("isJumping", true);
-            _isJumping = true;
+            //anim.SetBool("isJumping", true);
+            _isJumping = false;
+            _canDoubleJump = false;
             playerRigidbody.AddForce(Vector3.up * 30.0f, ForceMode.Impulse);
             Debug.Log("CumpulsionJump");
-            Debug.Log(collision.gameObject.tag);
         }
 
         if (((1 << collision.gameObject.layer) & obstacleLayer) != 0) //Layer

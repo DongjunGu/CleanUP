@@ -29,7 +29,10 @@ public class BridgeButton : MonoBehaviour
 
         if (Pushable.allBlockSet)
         {
+            BoxCollider boxcoll = GetComponent<BoxCollider>();
+            boxcoll.enabled = true;
             bridgeButton.SetActive(true);
+            
             bridgeActivated = true;
         }
     }

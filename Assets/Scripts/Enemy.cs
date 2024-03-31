@@ -31,15 +31,33 @@ public class Enemy : MonoBehaviour
 
     void Awake()
     {
+
         enemyOrgPlace = transform.position;
         rigid = GetComponent<Rigidbody>();
         boxCol = GetComponent<BoxCollider>();
-        original_mat = GetComponent<MeshRenderer>().material;
-        original_color = GetComponent<MeshRenderer>().material.color;
+
+        //original_color = GetComponent<MeshRenderer>().material.color;
         //skinned_mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
-        
+
         //normal_mat = GetComponent<MeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
+
+        MeshRenderer renderer = GetComponent<MeshRenderer>();
+
+        if (renderer != null)
+        {
+            original_mat = renderer.material;
+            original_color = renderer.material.color;
+        }
+        else
+        {
+            renderer = GetComponentInChildren<MeshRenderer>();
+            if (renderer != null)
+            {
+                original_mat = renderer.material;
+                original_color = renderer.material.color;
+            }
+        }
     }
     void Start()
     {
@@ -74,7 +92,8 @@ public class Enemy : MonoBehaviour
                 //        return;
                 _isDetected = true;
                 
-                nav.SetDestination(target.position);
+                if(!gameObject.name.Contains("Robot"))
+                    nav.SetDestination(target.position);
             }
 
             if (_isDetected && (distance < 50.0f)) //Chase
@@ -85,7 +104,8 @@ public class Enemy : MonoBehaviour
             if (distance >= 50.0f) //Go Back
             {
                 hpPrefab.SetActive(false);
-                nav.SetDestination(enemyOrgPlace);
+                if (!gameObject.name.Contains("Robot"))
+                    nav.SetDestination(enemyOrgPlace);
             }
         }
         

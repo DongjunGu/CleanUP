@@ -512,18 +512,31 @@ public class NewPlayerController : MonoBehaviour
         }
         if(other.tag == "Enemy")
         {
-            Debug.Log(gameObject.name);
             if (hpUI != null)
             {
                 if (!_isDamaged)
                 {
                     Enemy enemy = other.GetComponent<Enemy>();
+                    
                     currentHp -= enemy.damage;
                     hpUI.takeDamage(enemy.damage);
                     StartCoroutine(OnDamage());
                 }
             }
                
+        }
+        if(other.tag == "RobotEnemy")
+        {
+            if (hpUI != null)
+            {
+                if (!_isDamaged)
+                {
+                    RobotEnemy robotEmemy = other.GetComponent<RobotEnemy>();
+                    currentHp -= robotEmemy.damage;
+                    hpUI.takeDamage(robotEmemy.damage);
+                    StartCoroutine(OnDamage());
+                }
+            }
         }
     }
     IEnumerator OnDamage()

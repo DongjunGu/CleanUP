@@ -50,13 +50,19 @@ public class LaserController : MonoBehaviour
         {
             lineRenderer.SetPosition(0, startPos);
             lineRenderer.SetPosition(1, hit.point);
-
+            NewPlayerController player = hit.transform.GetComponent<NewPlayerController>();
+            if (player != null)
+            {
+                player.currentHp -= 50;
+                player.hpUI.takeDamage(50);
+            }
         }
         else
         {
             Vector3 endPos = startPos + destination.normalized * distance;
             lineRenderer.SetPosition(0, startPos);
             lineRenderer.SetPosition(1, endPos);
+           
         }
     }
 

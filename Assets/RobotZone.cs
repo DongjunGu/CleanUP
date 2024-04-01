@@ -6,7 +6,9 @@ using UnityEngine.AI;
 public class RobotZone : MonoBehaviour
 {
     public GameObject Robot;
+    
     public List<GameObject> RobotEnemy;
+    public List<GameObject> Lazer;
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
@@ -23,6 +25,7 @@ public class RobotZone : MonoBehaviour
         for(int i = 0; i < RobotEnemy.Count; i++)
         {
             RobotEnemy[i].SetActive(true);
+            
             RobotEnemy[i].GetComponent<Animator>().enabled = true;
         }
         
@@ -33,7 +36,13 @@ public class RobotZone : MonoBehaviour
             RobotEnemy[i].GetComponent<NavMeshAgent>().enabled = true;
             RobotEnemy[i].GetComponent<Enemy>().enabled = true;
         }
-            
-        
+        for (int i = 0; i < Lazer.Count; i++)
+        {
+            Lazer[i].SetActive(true);
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        GetComponent<BoxCollider>().enabled = false;
     }
 }

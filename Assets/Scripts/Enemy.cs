@@ -35,11 +35,6 @@ public class Enemy : MonoBehaviour
         enemyOrgPlace = transform.position;
         rigid = GetComponent<Rigidbody>();
         boxCol = GetComponent<BoxCollider>();
-
-        //original_color = GetComponent<MeshRenderer>().material.color;
-        //skinned_mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
-
-        //normal_mat = GetComponent<MeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
 
         MeshRenderer renderer = GetComponent<MeshRenderer>();

@@ -59,6 +59,7 @@
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Dust.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\RobotEnemy.cs" />
     <Compile Include="Assets\Scripts\Controllers\Test\TestController.cs" />
     <Compile Include="Assets\Scripts\CameraMode.cs" />
     <Compile Include="Assets\Prefabs\Apartment\Apartment Kit\Common\Scripts &amp; Animation\Z Axis -1\Drawer_Pull_Zopp.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\Doors\opencloseDoor.cs" />
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\MouseLook.cs" />
     <Compile Include="Assets\Scripts\Controllers\Test\Test2Controller.cs" />
+    <Compile Include="Assets\RobotZone.cs" />
     <Compile Include="Assets\Scripts\Controllers\LaserController.cs" />
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow.cs" />
     <Compile Include="Assets\QuarterView 3D Action BE5\ReadMe\Scripts\ReadmeBE5.cs" />
@@ -117,8 +119,6 @@
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow1.cs" />
     <Compile Include="Assets\HpBarUI.cs" />
     <Compile Include="Assets\push.cs" />
-    <Compile Include="Assets\Scripts\RobotEnemy.cs" />
-    <Compile Include="Assets\RobotZone.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

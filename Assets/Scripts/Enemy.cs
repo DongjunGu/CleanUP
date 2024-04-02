@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     public Transform target;
     public GameObject dustItemObject;
     private bool canTakeDamage = true;
-
+    public Vector3 enemyOrgPlace;
     bool _isDestroyed;
     bool _isDetected;
     Rigidbody rigid;
@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
     Material original_mat;
     Color original_color;
     NavMeshAgent nav;
-    Vector3 enemyOrgPlace;
+    
     GameObject prefab;
     GameObject hpPrefab;
 
@@ -104,6 +104,10 @@ public class Enemy : MonoBehaviour
             }
         }
         
+    }
+    public void ResetPosition()
+    {
+        transform.position = enemyOrgPlace;
     }
     void OnTriggerEnter(Collider other)
     {

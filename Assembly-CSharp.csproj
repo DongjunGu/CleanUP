@@ -119,6 +119,7 @@
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\Windows\opencloseWindow1.cs" />
     <Compile Include="Assets\HpBarUI.cs" />
     <Compile Include="Assets\push.cs" />
+    <Compile Include="Assets\Scripts\RespawnEnemy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class NewPlayerController : MonoBehaviour
 {
+    static public int stage;
     [SerializeField] public float _speed = 10.0f;
     [SerializeField] LayerMask groundLayer = 1 << 9;
     [SerializeField] LayerMask wallLayer = 1 << 6;
@@ -12,11 +14,13 @@ public class NewPlayerController : MonoBehaviour
     [SerializeField] LayerMask pushableLayer = 1 << 15;
     [SerializeField] Transform player;
     [SerializeField] public float _rotateSpeed = 5.0f;
-    
+
+    public Image RespawnImage;
     public Camera mainCamera;
     public GameObject[] weapons;
     public bool[] hasWeapons;
-
+    public Transform respawn1;
+    public GameObject remy;
     public GameObject[] dusts;
     public int hasDust;
 
@@ -99,6 +103,7 @@ public class NewPlayerController : MonoBehaviour
         Attack();
         Dust();
         CheckGrounded();
+        StartCoroutine(Respawn());
     }
     void GetInput()
     {
@@ -626,6 +631,31 @@ public class NewPlayerController : MonoBehaviour
         if(checkInput !=  null)
         {
             StopCoroutine(checkInput);
+        }
+    }
+
+    IEnumerator Respawn()
+    {
+        //TODO Where player should be respwan
+        if(currentHp <= 0)
+        {
+            
+            remy.SetActive(false);
+            RespawnImage.GetComponent<Image>().enabled = true;
+            RespawnImage.GetComponent<Animator>().enabled = true;
+            hpPrefab.SetActive(false);
+            yield return new WaitForSeconds(1.0f);
+
+           
+            transform.position = respawn1.position;
+
+            remy.SetActive(true);
+            currentHp = 200;
+            hpUI.hp = currentHp;
+            yield return new WaitForSeconds(2.0f);
+            RespawnImage.GetComponent<Image>().enabled = false;
+            RespawnImage.GetComponent<Animator>().enabled = false;
+            hpPrefab.SetActive(true);
         }
     }
 }

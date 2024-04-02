@@ -8,7 +8,6 @@ public class LaserController : MonoBehaviour
     public GameObject target;
 
     private LineRenderer lineRenderer;
-    private bool laserActive = true;
 
     void Start()
     {

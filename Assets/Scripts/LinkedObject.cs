@@ -17,19 +17,19 @@ public class LinkedObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if ((1 << other.gameObject.layer & mask) != 0)
-        {
-            
-        }
+
     }
     void OnTriggerStay(Collider other)
     {
         if ((1 << other.gameObject.layer & mask) != 0)
         {
-            if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.Y))
+            Debug.Log(other.name);
+            if (Input.GetKeyDown(KeyCode.F))
             {
                 Debug.Log("KeyPressed");
                 obtainAct?.Invoke();
+
+                NewPlayerController.stage++;
             }
         }
     }

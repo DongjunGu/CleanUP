@@ -69,7 +69,11 @@ public class Enemy : MonoBehaviour
     {
         DetectPlayer();
     }
-
+    void OnDestroy()
+    {
+        if (hpPrefab != null)
+            Destroy(hpPrefab);  
+    }
     void DetectPlayer()
     {
         float distance = (target.transform.position - transform.position).magnitude;

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class NewPlayerController : MonoBehaviour
 {
-    static public int stage;
+    public static int stage = 1;
     [SerializeField] public float _speed = 10.0f;
     [SerializeField] LayerMask groundLayer = 1 << 9;
     [SerializeField] LayerMask wallLayer = 1 << 6;
@@ -34,6 +34,7 @@ public class NewPlayerController : MonoBehaviour
     //private float _rotateSpeed = 10.0f;
 
     private Rigidbody playerRigidbody;
+
 
     bool _isJumping;
     bool _isDodge;
@@ -68,7 +69,7 @@ public class NewPlayerController : MonoBehaviour
     float maxSlopeAngle = 80.0f;
 
     RaycastHit slopeHit;
-
+    //public ChessController chessController;
     public enum State
     {
         Normal, TriggerBox
@@ -103,7 +104,10 @@ public class NewPlayerController : MonoBehaviour
         Attack();
         Dust();
         CheckGrounded();
-        StartCoroutine(Respawn());
+        if (currentHp <= 0)
+        {
+            StartCoroutine(Respawn());
+        }
     }
     void GetInput()
     {
@@ -112,7 +116,7 @@ public class NewPlayerController : MonoBehaviour
         _obtainItem = Input.GetButtonDown("Grab");
         _swapItem1 = Input.GetButtonDown("SwapItem1");
         _swapItem2 = Input.GetButtonDown("SwapItem2");
-        _swapItem3 = Input.GetButtonDown("SwapItem3"); 
+        _swapItem3 = Input.GetButtonDown("SwapItem3");
         _attackKey = Input.GetButtonDown("Attack1");
         _dustAttack = Input.GetButtonDown("Attack2");
 
@@ -131,7 +135,7 @@ public class NewPlayerController : MonoBehaviour
 
         if (_isAttack)
             dir = new Vector3(h, 0, v).normalized;
-        
+
         if (!(v == 0 && h == 0))
         {
             Vector3 _moveHorizontal = transform.right * h;
@@ -143,7 +147,7 @@ public class NewPlayerController : MonoBehaviour
 
             Vector3 slopeVelocity = AdjustDirectionToSlope(playerDirection);
 
-            
+
             float offset = 1.0f;
             Vector3 raycastOrigin = transform.position + Vector3.up * 0.5f;
             if (Physics.Raycast(new Ray(raycastOrigin - slopeVelocity * offset, slopeVelocity), out RaycastHit hit, dist + offset * 2.0f, LayerMask.GetMask("Wall")))
@@ -174,7 +178,7 @@ public class NewPlayerController : MonoBehaviour
             float mouseX = Input.GetAxis("Mouse X");
             transform.Rotate(Vector3.up * mouseX * _rotateSpeed);
         }
-        
+
     }
     void PlayerJump()
     {
@@ -388,7 +392,7 @@ public class NewPlayerController : MonoBehaviour
         {
             //MEMO 역행렬로 회전
             Vector3 temp = transform.InverseTransformDirection(anim.deltaPosition);
-            transform.Translate(player.rotation * temp , Space.World);
+            transform.Translate(player.rotation * temp, Space.World);
         }
         player.rotation *= anim.deltaRotation;
     }
@@ -418,7 +422,7 @@ public class NewPlayerController : MonoBehaviour
 
         if (((1 << collision.gameObject.layer) & obstacleLayer) != 0) //Layer
         {
-            
+
         }
 
 
@@ -429,7 +433,7 @@ public class NewPlayerController : MonoBehaviour
         if (other.tag == "Weapon")
             getItem = other.gameObject;
 
-        if(other.tag == "pushable")
+        if (other.tag == "pushable")
         {
             Vector3 dire = (other.transform.position - player.position).normalized;
             Vector3 cubeAngle = other.transform.forward;
@@ -439,21 +443,21 @@ public class NewPlayerController : MonoBehaviour
 
             float crossProduct = Vector3.Cross(cubeAngle, playerAngle).y;
             float angle = Vector3.Angle(cubeAngle, playerAngle);
-            
+
             if (crossProduct < 0)
                 angle *= -1;
 
             myState = State.TriggerBox;
-            if(checkInput != null) StopCoroutine(checkInput);
+            if (checkInput != null) StopCoroutine(checkInput);
             checkInput = StartCoroutine(CheckingInput(angle, other));
 
-            
+
         }
     }
 
     IEnumerator CheckingInput(float angle, Collider other)
     {
-        while(true) 
+        while (true)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -493,7 +497,7 @@ public class NewPlayerController : MonoBehaviour
 
         if (other.tag == "pushable")
         {
-            if(checkInput != null) 
+            if (checkInput != null)
                 StopCoroutine(checkInput);
         }
 
@@ -515,7 +519,7 @@ public class NewPlayerController : MonoBehaviour
             }
             Destroy(other.gameObject);
         }
-        if(other.tag == "Enemy")
+        if (other.tag == "Enemy")
         {
             if (hpUI != null)
             {
@@ -528,7 +532,7 @@ public class NewPlayerController : MonoBehaviour
                     StartCoroutine(OnDamage());
                 }
             }
-               
+
         }
     }
     IEnumerator OnDamage()
@@ -545,14 +549,14 @@ public class NewPlayerController : MonoBehaviour
         Vector3 raycastOrigin = transform.position + Vector3.up * 0.1f;
         anim.ResetTrigger("playFall");
 
-        LayerMask combinedLayers = groundLayer | wallLayer  | obstacleLayer; //TODO
+        LayerMask combinedLayers = groundLayer | wallLayer | obstacleLayer; //TODO
 
         bool isGroundedNow = Physics.Raycast(raycastOrigin, Vector3.down, out hit, raycastDistance, combinedLayers);
 
         Debug.DrawRay(raycastOrigin, Vector3.down * raycastDistance, isGroundedNow ? Color.green : Color.red);
 
         anim.SetBool("isGrounded", true);
-        
+
 
         if (!isGroundedNow)
         {
@@ -613,8 +617,8 @@ public class NewPlayerController : MonoBehaviour
         anim.SetBool("isRun", false);
         Vector3 tempDir = otherObject.transform.position - player.transform.position;
         float rotateAngle = Vector3.Angle(player.transform.forward, tempDir.normalized);
-        
-        if(Vector3.Dot(player.transform.right, tempDir.normalized) < 0)
+
+        if (Vector3.Dot(player.transform.right, tempDir.normalized) < 0)
         {
             player.transform.Rotate(Vector3.up * -rotateAngle);
             //transform.Rotate(Vector3.up * -rotateAngle);
@@ -628,7 +632,7 @@ public class NewPlayerController : MonoBehaviour
 
     public void StopChecking()
     {
-        if(checkInput !=  null)
+        if (checkInput != null)
         {
             StopCoroutine(checkInput);
         }
@@ -636,26 +640,48 @@ public class NewPlayerController : MonoBehaviour
 
     IEnumerator Respawn()
     {
-        //TODO Where player should be respwan
-        if(currentHp <= 0)
+        if(stage == 2) //Chess
         {
-            
+            bool wasPlayerMoveEnabled = enabled;
+            enabled = false;
+
+            GameObject[] enemyDusts = GameObject.FindGameObjectsWithTag("Item");
+            if (enemyDusts != null)
+            {
+                foreach (GameObject enemyDust in enemyDusts)
+                {
+                    if (enemyDust.name == "item_dust(Clone)")
+                        Destroy(enemyDust);
+                }
+            }
+
+            anim.SetBool("isRun", false);
             remy.SetActive(false);
             RespawnImage.GetComponent<Image>().enabled = true;
             RespawnImage.GetComponent<Animator>().enabled = true;
             hpPrefab.SetActive(false);
-            yield return new WaitForSeconds(1.0f);
 
-           
+            yield return new WaitForSeconds(1.0f);
+            ChessController.DestroyEnemy();
+            remy.SetActive(true);
+            ChessController.SpawnEnemy();
+
             transform.position = respawn1.position;
 
-            remy.SetActive(true);
+
             currentHp = 200;
             hpUI.hp = currentHp;
+
             yield return new WaitForSeconds(2.0f);
+
             RespawnImage.GetComponent<Image>().enabled = false;
             RespawnImage.GetComponent<Animator>().enabled = false;
             hpPrefab.SetActive(true);
+            enabled = wasPlayerMoveEnabled;
+        }
+        if(stage == 3)
+        {
+
         }
     }
 }

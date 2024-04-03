@@ -9,12 +9,17 @@ public class ChessController : MonoBehaviour
     GameObject WhiteBishopEnemy;
     public GameObject Drawer;
     public Transform target;
-
+    public GameObject player;
     public List<GameObject> chessEnemy;
     public List<Transform> spawnTargets;
     private static ChessController instance;
     private List<GameObject> instantiatedObjects = new List<GameObject>();
-
+    public Camera mainCamera;
+    public Transform cameraPos;
+    public Transform socket;
+    public float moveSpeed = 1.0f;
+    public float rotationSpeed = 1.0f;
+    bool hasClearedChess = false;
     void Awake()
     {
         if (instance == null)
@@ -39,18 +44,28 @@ public class ChessController : MonoBehaviour
     void Start()
     {
         SpawnEnemy();
+
+
     }
 
     void Update()
     {
-        if (ChessPawn.Count == 0)
+        if (ChessPawn.Count == 9 && !hasClearedChess)
+        {
             ChessClear();
+            StartCoroutine(CameraMove());
+            hasClearedChess = true;
+        }
+
     }
 
     void ChessClear()
     {
-        Drawer.GetComponent<Animator>().enabled = true;
-        Error //피회복
+
+        player.GetComponent<NewPlayerController>().currentHp = 200;
+        player.GetComponent<NewPlayerController>().hpUI.hp = player.GetComponent<NewPlayerController>().currentHp;
+        Debug.Log("실행");
+
     }
 
     public static void SpawnEnemy()
@@ -74,24 +89,29 @@ public class ChessController : MonoBehaviour
         instance.instantiatedObjects.Clear();
 
     }
-    //public void SpawnEnemy()
-    //{
-    //    GameObject remy = GameObject.Find("Remy");
 
-    //    for (int i = 0; i < chessEnemy.Count; i++)
-    //    {
-    //        GameObject instantiatedObject = Instantiate(chessEnemy[i], spawnTargets[i]);
-    //        instantiatedObjects.Add(instantiatedObject);
-    //    }
-    //    //WhiteBishopEnemy.GetComponent<Enemy>().target = remy.transform;
-    //}
-    //public void DestroyEnemy()
-    //{
-    //    foreach (GameObject obj in instantiatedObjects)
-    //    {
-    //        Destroy(obj);
-    //    }
-    //    instantiatedObjects.Clear();
+    IEnumerator CameraMove()
+    {
+        CameraMode.IsGamePause = true;
+        yield return new WaitForSeconds(1.0f);
 
-    //}
+        mainCamera.transform.SetParent(cameraPos);
+        while (Vector3.Distance(mainCamera.transform.localPosition, Vector3.zero) > 1.5f)
+        {
+            mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, cameraPos.position, moveSpeed * Time.deltaTime);
+            mainCamera.transform.rotation = Quaternion.Lerp(mainCamera.transform.rotation, cameraPos.rotation, rotationSpeed * Time.deltaTime);
+            yield return null;
+        }
+        //yield return new WaitForSeconds(1.0f);
+
+        Drawer.GetComponent<Animator>().enabled = true;
+
+        yield return new WaitForSeconds(4.0f);
+        mainCamera.transform.SetParent(socket);
+        mainCamera.transform.localPosition = Vector3.zero;
+        mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+
+        
+        CameraMode.IsGamePause = false;
+    }
 }

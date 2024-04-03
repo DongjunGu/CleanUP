@@ -16,6 +16,7 @@ public class RobotZone : MonoBehaviour
             Debug.Log(NewPlayerController.stage);
             Robot.GetComponent<Animator>().enabled = true;
             NewPlayerController.stage++;
+            GetComponent<BoxCollider>().enabled = false;
             Debug.Log(NewPlayerController.stage);
             StartCoroutine(RobotFall());
 
@@ -44,8 +45,6 @@ public class RobotZone : MonoBehaviour
             Lazer[i].SetActive(true);
         }
 
-        yield return new WaitForSeconds(0.1f);
-
-        GetComponent<BoxCollider>().enabled = false;
+        
     }
 }

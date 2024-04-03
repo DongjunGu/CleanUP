@@ -16,7 +16,7 @@ public class CameraMode : MonoBehaviour
     private Transform targetPosition;
     private Vector3 targetForward;
     private float transitionSpeed = 1.0f;
-
+    bool allSet = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -29,12 +29,30 @@ public class CameraMode : MonoBehaviour
         if (other.tag == "Player")
             ReturnToOriginalPlace();
     }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Player" && !allSet)
+        {
+            if (Pushable.allBlockSet)
+            {
+                isTableView = false;
+                springArm.enabled = true;
+                
+                respawnZone.SetActive(false);
+                respawnWall.SetActive(false);
+                GetComponent<Collider>().enabled = false;
+                allSet = true;
+            }
+        }
+            
+    }
     void SwitchToTableView()
     {
         isTableView = true;
         springArm.enabled = false;
         player.transform.localRotation = Quaternion.identity;
-
+        HpBarUI hpBar = player.GetComponent<NewPlayerController>().hpUI;
+        hpBar.gameObject.SetActive(false);
         targetPosition = tableView.transform;
         targetForward = tableView.transform.forward;
         mainCamera.transform.parent = tableView.transform;
@@ -51,6 +69,8 @@ public class CameraMode : MonoBehaviour
         isTableView = false;
         springArm.enabled = true;
         mainCamera.orthographic = false;
+        HpBarUI hpBar = player.GetComponent<NewPlayerController>().hpUI;
+        hpBar.gameObject.SetActive(true);
         respawnZone.SetActive(false);
         respawnWall.SetActive(false);
         targetPosition = springArm.cameraSocket;
@@ -61,7 +81,7 @@ public class CameraMode : MonoBehaviour
 
     IEnumerator MoveCamera()
     {
-        IsGamePause = true;
+        //IsGamePause = true;
         while (Vector3.Distance(mainCamera.transform.localPosition, Vector3.zero) > 1.5f ||
             Vector3.Angle(mainCamera.transform.forward, targetForward) > 0.1f
             )
@@ -70,6 +90,6 @@ public class CameraMode : MonoBehaviour
             mainCamera.transform.localRotation = Quaternion.Lerp(mainCamera.transform.localRotation, Quaternion.identity, transitionSpeed * Time.deltaTime);
             yield return null;
         }
-        IsGamePause = false;
+        //IsGamePause = false;
     }
 }

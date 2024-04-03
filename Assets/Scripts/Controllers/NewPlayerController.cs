@@ -667,7 +667,7 @@ public class NewPlayerController : MonoBehaviour
             ChessController.SpawnEnemy();
 
             transform.position = respawn1.position;
-
+            Debug.Log("½ÇÇà");
 
             currentHp = 200;
             hpUI.hp = currentHp;

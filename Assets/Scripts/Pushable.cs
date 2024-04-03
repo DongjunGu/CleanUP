@@ -31,7 +31,7 @@ public class Pushable : MonoBehaviour
     }
     void AllBlockSet()
     {
-        if (count == 3)
+        if (count == 1)
             allBlockSet = true;
     }
 

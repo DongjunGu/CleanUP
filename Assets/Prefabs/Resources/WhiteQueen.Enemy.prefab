@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 2611713861305863020}
   - component: {fileID: 2611713861305863022}
   - component: {fileID: 2611713861305863021}
+  - component: {fileID: 3220775359727875325}
   m_Layer: 7
-  m_Name: WhiteQueen
+  m_Name: WhiteQueen.Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,6 +158,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &3220775359727875325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3323205244244200283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe4ba68f9263d64c8e51cb2869322b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6350945933938193992
 GameObject:
   m_ObjectHideFlags: 0

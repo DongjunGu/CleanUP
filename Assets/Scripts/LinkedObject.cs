@@ -23,13 +23,12 @@ public class LinkedObject : MonoBehaviour
     {
         if ((1 << other.gameObject.layer & mask) != 0)
         {
-            Debug.Log(other.name);
             if (Input.GetKeyDown(KeyCode.F))
             {
                 Debug.Log("KeyPressed");
                 obtainAct?.Invoke();
 
-                NewPlayerController.stage++;
+               
             }
         }
     }

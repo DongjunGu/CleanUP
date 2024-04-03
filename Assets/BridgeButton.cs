@@ -32,8 +32,8 @@ public class BridgeButton : MonoBehaviour
             BoxCollider boxcoll = GetComponent<BoxCollider>();
             boxcoll.enabled = true;
             bridgeButton.SetActive(true);
-            
             bridgeActivated = true;
+           
         }
     }
     void StartAnimation()

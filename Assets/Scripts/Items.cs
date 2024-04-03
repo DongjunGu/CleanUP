@@ -9,34 +9,52 @@ public class Items : MonoBehaviour
     public enum Type { Broom, Bat, Hammer, Dust};
     public Type type;
     public int value;
+    private void Start()
+    {
+        if (type == Type.Bat)
+            StartCoroutine(BatMovement());
+    }
     private void Update()
     {
         if (type == Type.Broom)
             RotateBroom();
-        if (type == Type.Bat)
-            //StartCoroutine(BatMovement());
+        
 
         if (type == Type.Hammer)
             RotateHammer();
     }
-    
+    public void OnDestroy()
+    {
+        if(type == Type.Broom)
+        {
+            GameObject Greendoor = GameObject.Find("green_door");
+            NewPlayerController.stage++;
+            Destroy(Greendoor);
+        }
+    }
+
     public void RotateBroom()
     {
         transform.Rotate(Vector3.up, 25.0f * Time.deltaTime);
     }
     IEnumerator BatMovement()
     {
-        transform.position += Vector3.up * 1.0f * Time.deltaTime;
-        Debug.Log("UP");
-        yield return new WaitForSeconds(2.0f);
-
-        transform.position += Vector3.down * 1.0f * Time.deltaTime;
-        Debug.Log("Down");
-        yield return new WaitForSeconds(2.0f);
+        Vector3 dir = Vector3.up;
+        float playTime = 0.0f;
+        while (true) 
+        {
+            playTime += Time.deltaTime;
+            if(playTime >= 2.0f)
+            {
+                playTime = 0.0f;
+                dir = -dir;
+            }
+            transform.position += dir * 1.0f * Time.deltaTime;
+            yield return null;
+        }
     }
     public void RotateHammer()
     {
         transform.Rotate(Vector3.right, 25.0f * Time.deltaTime);
-
     }
 }

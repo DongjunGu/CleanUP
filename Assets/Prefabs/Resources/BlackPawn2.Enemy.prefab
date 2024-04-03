@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 1058928828478136832}
   - component: {fileID: 1058928828478136837}
   - component: {fileID: 1058928828478136834}
+  - component: {fileID: 1114696400381270452}
   m_Layer: 7
-  m_Name: BlackPawn2
+  m_Name: BlackPawn2.Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,6 +158,18 @@ MonoBehaviour:
   dustItemObject: {fileID: 1833970410474985166, guid: 5c771900069038340aac7d9f82f7daf5,
     type: 3}
   enemyOrgPlace: {x: 0, y: 0, z: 0}
+--- !u!114 &1114696400381270452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2804741942006852381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe4ba68f9263d64c8e51cb2869322b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8264015629774475844
 GameObject:
   m_ObjectHideFlags: 0

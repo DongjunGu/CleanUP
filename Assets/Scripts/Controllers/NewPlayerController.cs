@@ -640,7 +640,7 @@ public class NewPlayerController : MonoBehaviour
 
     IEnumerator Respawn()
     {
-        if(stage == 2) //Chess
+        if (stage == 1) //Chess
         {
             bool wasPlayerMoveEnabled = enabled;
             enabled = false;

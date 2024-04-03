@@ -45,8 +45,9 @@ GameObject:
   - component: {fileID: 7304659109718334604}
   - component: {fileID: 7304659109718334595}
   - component: {fileID: 7304659109718334594}
+  - component: {fileID: -1597531967503050200}
   m_Layer: 7
-  m_Name: BlackBishop
+  m_Name: BlackBishop.Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,3 +188,15 @@ MonoBehaviour:
   dustItemObject: {fileID: 1833970410474985166, guid: 5c771900069038340aac7d9f82f7daf5,
     type: 3}
   enemyOrgPlace: {x: 0, y: 0, z: 0}
+--- !u!114 &-1597531967503050200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7304659109718334592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe4ba68f9263d64c8e51cb2869322b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

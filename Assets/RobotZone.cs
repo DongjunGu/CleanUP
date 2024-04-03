@@ -13,9 +13,12 @@ public class RobotZone : MonoBehaviour
     {
         if(other.tag == "Player")
         {
+            Debug.Log(NewPlayerController.stage);
             Robot.GetComponent<Animator>().enabled = true;
-            
+            NewPlayerController.stage++;
+            Debug.Log(NewPlayerController.stage);
             StartCoroutine(RobotFall());
+
         }
     }
 

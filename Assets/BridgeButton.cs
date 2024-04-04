@@ -78,7 +78,7 @@ public class BridgeButton : MonoBehaviour
             yield return null;
         }
        
-        yield return new WaitForSeconds(1.0f);
+        //yield return new WaitForSeconds(1.0f);
         bridgeButton.SetActive(true);
         bridgeActivated = true;
 

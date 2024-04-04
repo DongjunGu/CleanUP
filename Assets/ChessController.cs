@@ -78,7 +78,6 @@ public class ChessController : MonoBehaviour
             instantiatedObject.GetComponent<Enemy>().target = remy.transform;
             instance.instantiatedObjects.Add(instantiatedObject);
         }
-        //WhiteBishopEnemy.GetComponent<Enemy>().target = remy.transform;
     }
     public static void DestroyEnemy()
     {
@@ -96,10 +95,11 @@ public class ChessController : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
 
         mainCamera.transform.SetParent(cameraPos);
+
         while (Vector3.Distance(mainCamera.transform.localPosition, Vector3.zero) > 1.5f)
         {
             mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, cameraPos.position, moveSpeed * Time.deltaTime);
-            mainCamera.transform.rotation = Quaternion.Lerp(mainCamera.transform.rotation, cameraPos.rotation, rotationSpeed * Time.deltaTime);
+            mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, cameraPos.rotation, rotationSpeed * Time.deltaTime);
             yield return null;
         }
         //yield return new WaitForSeconds(1.0f);

@@ -52,7 +52,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Charge
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -403,7 +403,7 @@ AnimatorStateMachine:
     m_Position: {x: 40, y: 200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 666501164879142363}
-    m_Position: {x: 91.023865, y: 279.26407, z: 0}
+    m_Position: {x: 90, y: 270, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

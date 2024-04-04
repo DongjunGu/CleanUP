@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 
 public class Pushable : MonoBehaviour
 {
-    public GameObject textMeshPro;
     public GameObject player;
     public GameObject remy;
     public Transform destination;
@@ -87,10 +86,6 @@ public class Pushable : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            if (textMeshPro != null)
-            {
-                textMeshPro.gameObject.SetActive(true);
-            }
 
             Transform playerTransform = transform.Find("player");
 
@@ -144,10 +139,7 @@ public class Pushable : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (textMeshPro != null)
-        {
-            textMeshPro.gameObject.SetActive(false);
-        }
+
     }
 
 }

@@ -23,7 +23,7 @@ public class Distach : MonoBehaviour
     IEnumerator DetachForDuration(float duration)
     {
         transform.parent = parent;
-        transform.localPosition = Vector3.zero;
+        transform.localPosition = new Vector3(0f,-0.3f,0f);
         detached = true;
         yield return new WaitForSeconds(7.0f); //7√ »ƒø° distach
 

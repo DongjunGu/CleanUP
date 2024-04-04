@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class NewPlayerController : MonoBehaviour
 {
     public static int stage = 1;
+    public static int direction;
     [SerializeField] public float _speed = 10.0f;
     [SerializeField] LayerMask groundLayer = 1 << 9;
     [SerializeField] LayerMask wallLayer = 1 << 6;
@@ -20,6 +21,7 @@ public class NewPlayerController : MonoBehaviour
     public GameObject[] weapons;
     public bool[] hasWeapons;
     public Transform respawn1;
+    public Transform respawn2;
     public GameObject remy;
     public GameObject[] dusts;
     public int hasDust;
@@ -447,6 +449,30 @@ public class NewPlayerController : MonoBehaviour
             if (crossProduct < 0)
                 angle *= -1;
 
+            if (angle > -45.0f && angle <= 45.0f)
+            {
+                direction = 1; //12시
+            }
+
+            if (angle > 45 && angle <= 135)
+            {
+                direction = 2; //3시
+            }
+
+
+            if ((angle > 135 && angle <= 180) || (angle <= -135 && angle > -180))
+            {
+                direction = 3; //6시
+            }
+
+
+            if (angle <= -45 && angle > -135)
+            {
+                direction = 4; //9시
+            }
+
+
+
             myState = State.TriggerBox;
             if (checkInput != null) StopCoroutine(checkInput);
             checkInput = StartCoroutine(CheckingInput(angle, other));
@@ -679,9 +705,29 @@ public class NewPlayerController : MonoBehaviour
             hpPrefab.SetActive(true);
             enabled = wasPlayerMoveEnabled;
         }
-        if(stage == 3)
+        if(stage == 2)
         {
+            bool wasPlayerMoveEnabled = enabled;
+            enabled = false;
+            anim.SetBool("isRun", false);
+            remy.SetActive(false);
+            RespawnImage.GetComponent<Image>().enabled = true;
+            RespawnImage.GetComponent<Animator>().enabled = true;
+            hpPrefab.SetActive(false);
 
+            yield return new WaitForSeconds(1.0f);
+
+            remy.SetActive(true);
+            transform.position = respawn2.position;
+            currentHp = 200;
+            hpUI.hp = currentHp;
+
+            yield return new WaitForSeconds(2.0f);
+
+            RespawnImage.GetComponent<Image>().enabled = false;
+            RespawnImage.GetComponent<Animator>().enabled = false;
+            hpPrefab.SetActive(true);
+            enabled = wasPlayerMoveEnabled;
         }
     }
 }

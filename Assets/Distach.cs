@@ -9,14 +9,16 @@ public class Distach : MonoBehaviour
 
     private void Start()
     {
-        
+        detached = false;
     }
 
     private void FixedUpdate()
     {
+        Debug.Log(detached);
         if (!detached)
         {
             StartCoroutine(DetachForDuration(1f));
+
         }
     }
 
@@ -28,7 +30,7 @@ public class Distach : MonoBehaviour
         yield return new WaitForSeconds(7.0f); //7초후에 distach
 
         transform.parent = null; // distach후
-        
+       
 
         yield return new WaitForSeconds(duration); //1초뒤 다시 attach
         detached = false;

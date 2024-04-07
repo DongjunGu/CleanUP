@@ -6,7 +6,6 @@ public class LaserController : MonoBehaviour
 {
     public LayerMask layerMask; // 레이저가 충돌을 감지할 레이어
     public GameObject target;
-
     private LineRenderer lineRenderer;
 
     void Start()
@@ -39,6 +38,9 @@ public class LaserController : MonoBehaviour
         lineRenderer.endWidth = 0.8f;
         lineRenderer.positionCount = 2;
         lineRenderer.material.color = Color.red;
+
+        GameObject laserDest = GameObject.Find("LaserDest");
+        target = laserDest;
 
         Vector3 startPos = transform.position;
         Vector3 destination = (target.transform.position + Vector3.up * 1.0f) - startPos;

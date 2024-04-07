@@ -71,7 +71,7 @@ public class NewPlayerController : MonoBehaviour
     float maxSlopeAngle = 80.0f;
 
     RaycastHit slopeHit;
-    //public ChessController chessController;
+    
     public enum State
     {
         Normal, TriggerBox
@@ -716,7 +716,7 @@ public class NewPlayerController : MonoBehaviour
             hpPrefab.SetActive(false);
 
             yield return new WaitForSeconds(1.0f);
-
+            RobotZone.Instance.DestroyEnemy();
             remy.SetActive(true);
             transform.position = respawn2.position;
             currentHp = 200;

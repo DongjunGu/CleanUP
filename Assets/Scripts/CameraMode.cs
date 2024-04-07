@@ -15,7 +15,7 @@ public class CameraMode : MonoBehaviour
     public GameObject respawnWall;
     private Transform targetPosition;
     private Vector3 targetForward;
-    private float transitionSpeed = 1.0f;
+    private float transitionSpeed = 2.0f;
     bool allSet = false;
     private void OnTriggerEnter(Collider other)
     {

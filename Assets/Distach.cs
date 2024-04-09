@@ -9,12 +9,15 @@ public class Distach : MonoBehaviour
 
     private void Start()
     {
-        detached = false;
+        
     }
 
+    private void OnEnable()
+    {
+        detached = false;
+    }
     private void FixedUpdate()
     {
-        Debug.Log(detached);
         if (!detached)
         {
             StartCoroutine(DetachForDuration(1f));
@@ -25,7 +28,7 @@ public class Distach : MonoBehaviour
     IEnumerator DetachForDuration(float duration)
     {
         transform.parent = parent;
-        transform.localPosition = new Vector3(0f,-0.3f,0f);
+        transform.localPosition = new Vector3(0f,-0.2f,0f);
         detached = true;
         yield return new WaitForSeconds(7.0f); //7√ »ƒø° distach
 

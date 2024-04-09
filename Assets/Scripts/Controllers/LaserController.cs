@@ -11,24 +11,14 @@ public class LaserController : MonoBehaviour
     float interval = 8f;
     void Start()
     {
-        lineRenderer = GetComponent<LineRenderer>();
-
-        //StartCoroutine(ShootLaserRepeatedly());
        
     }
-
-    void Update()
+    private void OnEnable()
     {
-        timer += Time.deltaTime;
+        lineRenderer = GetComponent<LineRenderer>();
 
-        if (timer >= interval)
-        {
-            StartCoroutine(ShootLaserRepeatedly());
-            timer = 0f;
-            Debug.Log("LASER!!!!!!");
-        }
+        StartCoroutine(ShootLaserRepeatedly());
     }
-
     IEnumerator ShootLaserRepeatedly()
     {
         while (true)

@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class ColorChange : MonoBehaviour
 {
@@ -11,10 +13,15 @@ public class ColorChange : MonoBehaviour
 
     void Start()
     {
+        
+    }
+
+    private void OnEnable()
+    {
         colorRenderer = GetComponent<Renderer>();
         startColor = colorRenderer.material.color;
 
-       
+
         StartCoroutine(ChangeColor());
     }
 

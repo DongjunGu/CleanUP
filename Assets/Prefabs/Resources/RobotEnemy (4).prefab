@@ -988,6 +988,7 @@ GameObject:
   - component: {fileID: 5750058712544096497}
   - component: {fileID: 5750058712544096502}
   - component: {fileID: 5750058712544096499}
+  - component: {fileID: 2030188696489529377}
   m_Layer: 7
   m_Name: RobotEnemy (4)
   m_TagString: Enemy
@@ -1103,6 +1104,19 @@ MonoBehaviour:
   dustItemObject: {fileID: 1833970410474985166, guid: 5c771900069038340aac7d9f82f7daf5,
     type: 3}
   enemyOrgPlace: {x: 0, y: 0, z: 0}
+--- !u!114 &2030188696489529377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5750058712544096503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c7e82aed8d2f04cab2584528016d80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotCount: 0
 --- !u!1 &5750058712634050228
 GameObject:
   m_ObjectHideFlags: 0

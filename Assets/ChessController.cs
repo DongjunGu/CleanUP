@@ -64,7 +64,6 @@ public class ChessController : MonoBehaviour
 
         player.GetComponent<NewPlayerController>().currentHp = 200;
         player.GetComponent<NewPlayerController>().hpUI.hp = player.GetComponent<NewPlayerController>().currentHp;
-        Debug.Log("½ÇÇà");
 
     }
 

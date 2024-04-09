@@ -16,6 +16,7 @@ public class NewPlayerController : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] public float _rotateSpeed = 5.0f;
 
+    public TextManager textManager;
     public Image RespawnImage;
     public Camera mainCamera;
     public GameObject[] weapons;
@@ -368,6 +369,7 @@ public class NewPlayerController : MonoBehaviour
                 int weaponIndex = item.value;
                 hasWeapons[weaponIndex] = true;
                 Destroy(getItem);
+                
 
                 //if (getItem.name == "Broom")
                 //{

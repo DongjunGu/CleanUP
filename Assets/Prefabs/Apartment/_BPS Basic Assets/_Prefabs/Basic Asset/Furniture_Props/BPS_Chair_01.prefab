@@ -174,7 +174,6 @@ GameObject:
   - component: {fileID: 2735506995880913378}
   - component: {fileID: 1322266687052768839}
   - component: {fileID: 3872345547361489549}
-  - component: {fileID: 8000914895558861388}
   m_Layer: 0
   m_Name: BPS_Chair_01
   m_TagString: Untagged
@@ -251,19 +250,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8000914895558861388
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3368034678457217880}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.81186324, y: 0.044600576, z: 0.7751738}
-  m_Center: {x: 0, y: 0.100420676, z: 0.036681935}
 --- !u!1 &3406735559265394894
 GameObject:
   m_ObjectHideFlags: 0

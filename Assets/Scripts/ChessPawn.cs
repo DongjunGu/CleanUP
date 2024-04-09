@@ -6,7 +6,7 @@ public class ChessPawn : MonoBehaviour
 {
     public int curCount;
     public static int Count;
-    // Start is called before the first frame update
+    
     void Start()
     {
         Count++;
@@ -17,7 +17,7 @@ public class ChessPawn : MonoBehaviour
         Count--;
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         curCount = Count;

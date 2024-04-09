@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.SceneView;
 
 public class RobotZone : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class RobotZone : MonoBehaviour
     public GameObject player;
     GameObject mainRobot;
     GameObject Robotenemies;
+    bool hasClearedRobot = false;
     void Awake()
     {
         if (instance == null)
@@ -37,6 +39,11 @@ public class RobotZone : MonoBehaviour
         mainRobot = Instantiate(instance.Robot);
         mainRobot.GetComponent<Animator>().enabled = false;
 
+    }
+
+    void Update()
+    {
+        ClearRobotStage();
     }
    
     public static RobotZone Instance
@@ -78,6 +85,7 @@ public class RobotZone : MonoBehaviour
             Robotenemies.GetComponent<Enemy>().target = remy.transform;
             Robotenemies.GetComponent<Enemy>().enabled = false;
             Robotenemies.GetComponent<Animator>().enabled = false;
+
             Robotenemies.GetComponent<NavMeshAgent>().enabled = false;
             
             Debug.Log(Robotenemies.name);
@@ -87,28 +95,20 @@ public class RobotZone : MonoBehaviour
 
         for (int i = 0; i < instantiatedObjects.Count; i++)
         {
-            instantiatedObjects[i].GetComponent<Enemy>().enabled = true;
             instantiatedObjects[i].GetComponent<Animator>().enabled = true;
+        }
+
+        yield return new WaitForSeconds(3.0f);
+
+        for (int i = 0; i < instantiatedObjects.Count; i++)
+        {
+            instantiatedObjects[i].GetComponent<Enemy>().enabled = true;
             instantiatedObjects[i].GetComponent<NavMeshAgent>().enabled = true;
         }
     }
     public IEnumerator RobotFall()
     {
-        yield return new WaitForSeconds(8f);
-        //for(int i = 0; i < RobotEnemy.Count; i++)
-        //{
-        //    RobotEnemy[i].SetActive(true);
-            
-        //    RobotEnemy[i].GetComponent<Animator>().enabled = true;
-        //}
-        
-
-        yield return new WaitForSeconds(4f);
-        //for (int i = 0; i < RobotEnemy.Count; i++)
-        //{
-        //    RobotEnemy[i].GetComponent<NavMeshAgent>().enabled = true;
-        //    RobotEnemy[i].GetComponent<Enemy>().enabled = true;
-        //}
+        yield return new WaitForSeconds(12f);
         for (int i = 0; i < Laser.Count; i++)
         {
             Laser[i].SetActive(true);
@@ -153,4 +153,28 @@ public class RobotZone : MonoBehaviour
         instantiatedObjects.Clear();
         StartRobot();
     }
+
+    public void ClearRobotStage()
+    {
+        if (RobotCount.Count == 6 && !hasClearedRobot)
+        {
+            RobotClear();
+            hasClearedRobot = true;
+            for (int i = 0; i < Laser.Count; i++)
+            {
+                Laser[i].SetActive(false);
+            }
+            Animator robotAnim = mainRobot.GetComponent<Animator>();
+            robotAnim.SetBool("Clear", true);
+            Debug.Log("CLEAR STAGE");
+        }
+    }
+
+    void RobotClear()
+    {
+        player.GetComponent<NewPlayerController>().currentHp = 200;
+        player.GetComponent<NewPlayerController>().hpUI.hp = player.GetComponent<NewPlayerController>().currentHp;
+
+    }
+
 }

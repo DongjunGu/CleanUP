@@ -9,6 +9,7 @@ public class Items : MonoBehaviour
     public enum Type { Broom, Bat, Hammer, Dust};
     public Type type;
     public int value;
+    public static bool isObtain = false;
     private void Start()
     {
         if (type == Type.Bat)
@@ -27,9 +28,10 @@ public class Items : MonoBehaviour
     {
         if(type == Type.Broom)
         {
-            GameObject Greendoor = GameObject.Find("green_door");
-            NewPlayerController.stage++;
-            Destroy(Greendoor);
+            isObtain = true;
+            //GameObject Greendoor = GameObject.Find("green_door");
+            //NewPlayerController.stage++;
+            //Destroy(Greendoor);
         }
     }
 

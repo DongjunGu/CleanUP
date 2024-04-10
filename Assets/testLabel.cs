@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class testLabel : MonoBehaviour
 {
+    public GameObject TMPImage;
+    public GameObject TMPObj;
     public TMPro.TMP_Text myLabel;
     public string text;
     private TalkManager talkManager;
-    int language = 0;
+    public int language;
     void Awake()
     {
         //text = talkManager.mainText;
@@ -27,15 +30,17 @@ public class testLabel : MonoBehaviour
     {
         if(other.tag == "Player")
         {
+            TMPImage.SetActive(true);
             text = TalkManager.table.datas[0].Text[language];
             StartCoroutine(Showing());
-            
         }
     }
-    public void PopText()
+    private void OnTriggerExit(Collider other)
     {
+        TMPObj.GetComponent<TextMeshProUGUI>().text = "";
+        TMPImage.SetActive(false);
+        GetComponent<Collider>().enabled = false;
         
-        Debug.Log(text);
     }
     IEnumerator Showing()
     {
@@ -43,7 +48,7 @@ public class testLabel : MonoBehaviour
         while(cur < text.Length)
         {
             myLabel.text += text[cur++];
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
         }
     }
 }

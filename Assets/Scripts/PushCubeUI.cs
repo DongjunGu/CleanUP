@@ -9,12 +9,6 @@ public class PushCubeUI : MonoBehaviour
     public Transform remy;
     GameObject prefab;
     GameObject EPrefab;
-    bool keyPressed = false;
-    void Start()
-    {
-
-    }
-
     private void Update()
     {
 

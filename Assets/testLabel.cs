@@ -30,8 +30,7 @@ public class testLabel : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            TMPImage.SetActive(true);
-            text = TalkManager.table.datas[0].Text[language];
+            
             StartCoroutine(Showing());
         }
     }
@@ -44,11 +43,16 @@ public class testLabel : MonoBehaviour
     }
     IEnumerator Showing()
     {
+        CameraMode.IsGamePause = true;
+        TMPImage.SetActive(true);
+        text = TalkManager.table.datas[0].Text[language];
         int cur = 0;
         while(cur < text.Length)
         {
             myLabel.text += text[cur++];
             yield return new WaitForSeconds(0.05f);
         }
+        yield return new WaitForSeconds(1.5f);
+        CameraMode.IsGamePause = false;
     }
 }

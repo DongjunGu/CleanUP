@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEditor.SceneView;
@@ -13,6 +14,11 @@ public class RobotZone : MonoBehaviour
     private static RobotZone instance;
     private List<GameObject> instantiatedObjects = new List<GameObject>();
 
+    public TMPro.TMP_Text myLabel;
+    public GameObject TMPImage;
+    public string text;
+    public int language; 
+    public GameObject TMPObj;
     public List<GameObject> Laser = new List<GameObject>();
     public Camera mainCamera;
     public Transform cameraPos;
@@ -23,6 +29,7 @@ public class RobotZone : MonoBehaviour
     GameObject mainRobot;
     GameObject Robotenemies;
     bool hasClearedRobot = false;
+    
     void Awake()
     {
         if (instance == null)
@@ -64,7 +71,7 @@ public class RobotZone : MonoBehaviour
             GetComponent<BoxCollider>().enabled = false;
             Debug.Log(NewPlayerController.stage);
             StartCoroutine(CameraMove());
-            StartCoroutine(RobotFall());
+            StartCoroutine(LaserActive());
 
         }
     }
@@ -106,9 +113,9 @@ public class RobotZone : MonoBehaviour
             instantiatedObjects[i].GetComponent<NavMeshAgent>().enabled = true;
         }
     }
-    public IEnumerator RobotFall()
+    public IEnumerator LaserActive()
     {
-        yield return new WaitForSeconds(12f);
+        yield return new WaitForSeconds(17f); //TODO Time Change
         for (int i = 0; i < Laser.Count; i++)
         {
             Laser[i].SetActive(true);
@@ -127,8 +134,14 @@ public class RobotZone : MonoBehaviour
             mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, cameraPos.rotation, rotationSpeed * Time.deltaTime);
             yield return null;
         }
-        yield return new WaitForSeconds(7.0f);
+        yield return new WaitForSeconds(2.0f);
+        StartCoroutine(Showing());
+        yield return new WaitForSeconds(6.0f);
+        TMPImage.SetActive(false);
+        TMPObj.GetComponent<TextMeshProUGUI>().text = "";
+        yield return new WaitForSeconds(3.0f);
         StartCoroutine(SpawnEnemy());
+       
 
         yield return new WaitForSeconds(3.0f);
         mainCamera.transform.SetParent(socket);
@@ -176,5 +189,18 @@ public class RobotZone : MonoBehaviour
         player.GetComponent<NewPlayerController>().hpUI.hp = player.GetComponent<NewPlayerController>().currentHp;
 
     }
+    IEnumerator Showing()
+    {
+        TMPImage.SetActive(true);
+        text = TalkManager.table.datas[1].Text[language];
+        //text1,text2
+        int cur = 0;
 
+        while (cur < text.Length)
+        {
+            myLabel.text += text[cur++];
+            yield return new WaitForSeconds(0.02f);
+        }
+        yield return new WaitForSeconds(1.5f);
+    }
 }

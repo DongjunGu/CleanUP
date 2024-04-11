@@ -7,8 +7,6 @@ public class LaserController : MonoBehaviour
     public LayerMask layerMask; // 레이저가 충돌을 감지할 레이어
     public GameObject target;
     private LineRenderer lineRenderer;
-    float timer = 0f;
-    float interval = 8f;
     void Start()
     {
        

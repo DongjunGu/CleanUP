@@ -20,10 +20,8 @@ public struct TALKTABLE
 
 public class TalkManager : MonoBehaviour
 {
-    int language = 0;
     //Dictionary<int, string[]> talkdata;
     public static TALKTABLE table;
-    public string mainText;
     void Awake()
     {
         //talkdata = new Dictionary<int, string[]>();

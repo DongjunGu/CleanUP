@@ -25,7 +25,6 @@ public class GreenDoor : MonoBehaviour
     {
         CameraMode.IsGamePause = true;
         yield return new WaitForSeconds(1.0f);
-        mainCamera.orthographic = false;
 
         mainCamera.transform.SetParent(DoorCameraPos);
         while (Vector3.Distance(mainCamera.transform.localPosition, Vector3.zero) > 0.5f)

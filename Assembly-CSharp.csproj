@@ -87,6 +87,7 @@
     <Compile Include="Assets\Prefabs\Apartment\Apartment Kit\Scenes\Quitgame.cs" />
     <Compile Include="Assets\Scripts\TalkManager.cs" />
     <Compile Include="Assets\Scripts\Billboard.cs" />
+    <Compile Include="Assets\GreenDoor.cs" />
     <Compile Include="Assets\Scripts\RespawnZone.cs" />
     <Compile Include="Assets\Scripts\JumpZone.cs" />
     <Compile Include="Assets\testLabel.cs" />
@@ -125,7 +126,7 @@
     <Compile Include="Assets\Scripts\PushCubeUI.cs" />
     <Compile Include="Assets\HpBarUI.cs" />
     <Compile Include="Assets\push.cs" />
-    <Compile Include="Assets\GreenDoor.cs" />
+    <Compile Include="Assets\PushCubeHint.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

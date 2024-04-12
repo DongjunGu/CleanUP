@@ -23,7 +23,7 @@ public class Weapons : MonoBehaviour
 
     IEnumerator Wipe()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         basicAttack_Range.enabled = true;
         trailEffect.enabled = true;
 

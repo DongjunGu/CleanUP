@@ -58,7 +58,7 @@ public class LaserShoot : MonoBehaviour
 
         lineRenderer.startWidth = 1f;
         lineRenderer.endWidth = 1f;
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(0.5f);
         lineRenderer.enabled = false;
     }
 }

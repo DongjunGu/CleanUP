@@ -11,6 +11,7 @@ public class RobotZone : MonoBehaviour
 
     public List<GameObject> RobotEnemy;
     public List<Transform> RobotEnemySpawnPos;
+    public GameObject Calendar;
     private static RobotZone instance;
     private List<GameObject> instantiatedObjects = new List<GameObject>();
 
@@ -29,6 +30,7 @@ public class RobotZone : MonoBehaviour
     public GameObject laser3;
     GameObject mainRobot;
     GameObject Robotenemies;
+    
     bool hasClearedRobot = false;
     
     void Awake()
@@ -169,14 +171,14 @@ public class RobotZone : MonoBehaviour
             mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, cameraPos.rotation, rotationSpeed * Time.deltaTime);
             yield return null;
         }
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         StartCoroutine(Text2());
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(3.0f);
         StartCoroutine(RobotPointing());
         TMPImage.SetActive(false);
         TMPObj.GetComponent<TextMeshProUGUI>().text = "";
         yield return new WaitForSeconds(3.0f);
-        
+        Calendar.GetComponent<Animator>().enabled = true;
         yield return new WaitForSeconds(4.0f);
         mainCamera.transform.SetParent(socket);
         mainCamera.transform.localPosition = Vector3.zero;

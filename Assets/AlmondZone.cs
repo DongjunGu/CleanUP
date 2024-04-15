@@ -8,20 +8,23 @@ public class AlmondZone : MonoBehaviour
     public GameObject SpawnPoint;
     public GameObject Almond;
     private Coroutine spawnCoroutine;
-    void Start()
+    private void OnEnable()
     {
         StartCoroutine(SpawnAndDestroyLoop());
+    }
+    void Start()
+    {
+        //StartCoroutine(SpawnAndDestroyLoop());
     }
     IEnumerator SpawnAndDestroyLoop()
     {
         while (true)
         {
-            // 10번의 Instantiate 실행
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 15; i++)
             {
                 StartCoroutine(SpawnPos());
             }
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(6f);
             DestroySpawnedObjects();
 
             yield return new WaitForSeconds(3f);
@@ -38,8 +41,9 @@ public class AlmondZone : MonoBehaviour
         Vector3 spawnPosition = new Vector3(randomX, minPoint.y, randomZ);
 
         Instantiate(SpawnPoint, spawnPosition + Vector3.up * 1.5f, Quaternion.identity);
+
+        yield return new WaitForSeconds(1.0f);
         DropAlmond(spawnPosition);
-        yield return null;
     }
     void DropAlmond(Vector3 spawnPosition)
     {

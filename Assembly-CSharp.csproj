@@ -53,7 +53,7 @@
     <UnityVersion>2020.3.48f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\First Person Player\PlayerMovement.cs" />
@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Test\TestCamera.cs" />
     <Compile Include="Assets\Prefabs\Apartment\_BPS Basic Assets\Common\Scripts and Animations\Doors\opencloseStallDoor.cs" />
+    <Compile Include="Assets\MonitorNoise.cs" />
     <Compile Include="Assets\Jump_State.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\HpBarCanvas.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Assets\Scripts\TalkManager.cs" />
     <Compile Include="Assets\Scripts\Billboard.cs" />
     <Compile Include="Assets\GreenDoor.cs" />
+    <Compile Include="Assets\AlmondZone.cs" />
     <Compile Include="Assets\Scripts\RespawnZone.cs" />
     <Compile Include="Assets\Scripts\JumpZone.cs" />
     <Compile Include="Assets\testLabel.cs" />
@@ -129,8 +131,8 @@
     <Compile Include="Assets\HpBarUI.cs" />
     <Compile Include="Assets\PushCubeHint.cs" />
     <Compile Include="Assets\push.cs" />
-    <Compile Include="Assets\MonitorNoise.cs" />
-    <Compile Include="Assets\AlmondZone.cs" />
+    <Compile Include="Assets\LaserPattern.cs" />
+    <Compile Include="Assets\MonitorController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

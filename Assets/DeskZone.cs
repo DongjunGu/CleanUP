@@ -14,6 +14,7 @@ public class DeskZone : MonoBehaviour
     public float rotationSpeed = 1.0f;
     public GameObject player;
     public GameObject monitorNoise;
+    public GameObject Almondzone;
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
@@ -46,5 +47,7 @@ public class DeskZone : MonoBehaviour
         mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         
         player.GetComponent<NewPlayerController>().enabled = true;
+        yield return new WaitForSeconds(2.0f);
+        Almondzone.SetActive(true);
     }
 }

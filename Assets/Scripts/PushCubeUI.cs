@@ -7,8 +7,6 @@ public class PushCubeUI : MonoBehaviour
 {
     public Image Eimage;
     public Transform remy;
-    GameObject prefab;
-    GameObject EPrefab;
     private void Update()
     {
 

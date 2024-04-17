@@ -24,7 +24,7 @@ public class AlmondZone : MonoBehaviour
             {
                 StartCoroutine(SpawnPos());
             }
-            yield return new WaitForSeconds(6f);
+            yield return new WaitForSeconds(3f);
             DestroySpawnedObjects();
 
             yield return new WaitForSeconds(3f);
@@ -48,7 +48,7 @@ public class AlmondZone : MonoBehaviour
     void DropAlmond(Vector3 spawnPosition)
     {
         Quaternion randomRotation = Random.rotation;
-        Instantiate(Almond, spawnPosition + Vector3.up * 50f, randomRotation).GetComponent<Rigidbody>().velocity = Vector3.down * 50f;
+        Instantiate(Almond, spawnPosition + Vector3.up * 50f, randomRotation).GetComponent<Rigidbody>().velocity = Vector3.down * 80f;
 
     }
     void DestroySpawnedObjects()

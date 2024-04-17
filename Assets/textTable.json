@@ -11,14 +11,14 @@
       "Key": 1,
       "Text": [
         "Blah Blah Blah, Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,",
-        "어지럽힌 이 곳을 봐! 어쩌고 저쩌고 더러워서 살 수가 없어. 너도 한번 느껴봐 ㅋ"
+        "어지럽힌 이 곳을 봐! 어쩌고 저쩌고 더러워서 살 수가 없어. 너도 한번 느껴봐"
       ]
     },
     {
       "Key": 2,
       "Text": [
         "Blah Blah Blah, Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,",
-        "제대로 치워라 제대로 치워라 제대로 치워라 제대로 치워라"
+        "더러워진 방 때문에 나도 감염 됐었던 것 같아.. 나도 구해줘.."
       ]
     },
     {
@@ -26,6 +26,20 @@
       "Text": [
         "Finally...",
         "드디어 여기까지 왔구나.."
+      ]
+    },
+    {
+      "Key": 4,
+      "Text": [
+        "Why don't you nerf this?",
+        "너도 한번 어지럽혀져 봐라"
+      ]
+    },
+    {
+      "Key": 5,
+      "Text": [
+        "Quite impressive. You must've taken a hit from this too!",
+        "제법이군 이것도 피해보시지"
       ]
     }
   ]

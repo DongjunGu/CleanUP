@@ -15,7 +15,8 @@ public class DeskZone : MonoBehaviour
     public GameObject monitorNoise;
     public GameObject Almondzone;
     public GameObject MonitorText;
-    public GameObject MonitorText2;
+    public GameObject MonitorUI;
+    public GameObject MonitorAnim;
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
@@ -31,7 +32,7 @@ public class DeskZone : MonoBehaviour
         playerAnim.SetBool("isRun", false);
         player.GetComponent<NewPlayerController>().enabled = false;
         yield return new WaitForSeconds(0.01f);
-        SpringArm.SetActive(false);
+        SpringArm.GetComponent<SpringArmCamera>().enabled = false;
         player.transform.localRotation = Quaternion.identity;
         mainCamera.transform.SetParent(cameraPos);
 
@@ -46,7 +47,10 @@ public class DeskZone : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         monitorNoise.SetActive(false);
         yield return new WaitForSeconds(2.0f);
-        MonitorText2.SetActive(true);
+        MonitorUI.SetActive(true);
+        MonitorAnim.SetActive(true);
+        yield return new WaitForSeconds(2.0f);
+        MonitorAnim.SetActive(false);
         MonitorText.SetActive(true);
         yield return new WaitForSeconds(5.0f);
         //SpringArm.transform.localPosition = new Vector3(0f, 11f, -12f);
@@ -55,8 +59,8 @@ public class DeskZone : MonoBehaviour
         //mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         
         player.GetComponent<NewPlayerController>().enabled = true;
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(3.0f);
         
-        Almondzone.SetActive(true);
+        //Almondzone.SetActive(true);
     }
 }

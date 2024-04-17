@@ -12,27 +12,36 @@ public class LaserPattern : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.startWidth = laserWidth;
         lineRenderer.endWidth = laserWidth;
+        lineRenderer.enabled = false;
+        Invoke("ActiveLaser", 3f);
     }
     private void Update()
     {
-        if (target != null)
-        {
-            StartCoroutine(ShootLaserCoroutine());
-        }
-        else
-        {
-            lineRenderer.enabled = false;
-        }
-        
+        ShootLaser();
+
     }
-    IEnumerator ShootLaserCoroutine()
+    //IEnumerator ShootLaserCoroutine()
+    //{
+    //    lineRenderer.SetPosition(0, transform.position);
+    //    Vector3 targetPosition = target.transform.position;
+    //    Vector3 newDir = Vector3.forward;
+    //    //Vector3 direction = targetPosition - transform.position;
+    //    //float distance = direction.magnitude;
+    //    float distance = newDir.magnitude * 10f;
+    //    //targetPosition = transform.position + direction.normalized * distance;
+    //    targetPosition = transform.position + newDir.normalized * distance;
+    //    lineRenderer.SetPosition(1, targetPosition);
+    //    yield return null;
+    //}
+
+    void ShootLaser()
     {
-        lineRenderer.SetPosition(0, transform.position);
-        Vector3 targetPosition = target.transform.position;
-        Vector3 direction = targetPosition - transform.position;
-        float distance = direction.magnitude;
-        targetPosition = transform.position + direction.normalized * distance;
-        lineRenderer.SetPosition(1, targetPosition);
-        yield return null;
+        lineRenderer.SetPosition(0, transform.position + Vector3.up * 3f);
+        lineRenderer.SetPosition(1, transform.position + Vector3.up * 3f + transform.forward * 100f);
+    }
+
+    void ActiveLaser()
+    {
+        lineRenderer.enabled = true;
     }
 }

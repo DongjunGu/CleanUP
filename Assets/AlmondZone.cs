@@ -48,7 +48,8 @@ public class AlmondZone : MonoBehaviour
     void DropAlmond(Vector3 spawnPosition)
     {
         Quaternion randomRotation = Random.rotation;
-        Instantiate(Almond, spawnPosition + Vector3.up * 50f, randomRotation);
+        Instantiate(Almond, spawnPosition + Vector3.up * 50f, randomRotation).GetComponent<Rigidbody>().velocity = Vector3.down * 50f;
+
     }
     void DestroySpawnedObjects()
     {

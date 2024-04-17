@@ -1,25 +1,32 @@
 {
-    "datas": [
-      {
-        "Key": 0,
-        "Text": [
-          "It seems like there's something shining over there. But be careful, the untidy chess pieces might be angry!",
-          "저기 무언가가 빛이 나는 것 같아. 하지만 조심해 정리되지 않은 체스말들이 화가 났을꺼야!"
-        ]
-      },
-      {
-        "Key": 1,
-        "Text": [
-          "Blah Blah Blah, Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,",
-          "어지럽힌 이 곳을 봐! 어쩌고 저쩌고 더러워서 살 수가 없어. 너도 한번 느껴봐 ㅋ"
-        ]
-      },
-      {
-        "Key": 2,
-        "Text": [
-          "Blah Blah Blah, Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,",
-          "제대로 치워라 제대로 치워라 제대로 치워라 제대로 치워라"
-        ]
-      }
-    ]
+  "datas": [
+    {
+      "Key": 0,
+      "Text": [
+        "It seems like there's something shining over there. But be careful, the untidy chess pieces might be angry!",
+        "저기 무언가가 빛이 나는 것 같아. 하지만 조심해 정리되지 않은 체스말들이 화가 났을꺼야!"
+      ]
+    },
+    {
+      "Key": 1,
+      "Text": [
+        "Blah Blah Blah, Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,",
+        "어지럽힌 이 곳을 봐! 어쩌고 저쩌고 더러워서 살 수가 없어. 너도 한번 느껴봐 ㅋ"
+      ]
+    },
+    {
+      "Key": 2,
+      "Text": [
+        "Blah Blah Blah, Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,Blah Blah Blah,",
+        "제대로 치워라 제대로 치워라 제대로 치워라 제대로 치워라"
+      ]
+    },
+    {
+      "Key": 3,
+      "Text": [
+        "Finally...",
+        "드디어 여기까지 왔구나.."
+      ]
+    }
+  ]
 }

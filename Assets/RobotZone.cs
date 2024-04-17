@@ -147,7 +147,7 @@ public class RobotZone : MonoBehaviour
         StartCoroutine(SpawnEnemy());
        
 
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(5.0f);
         mainCamera.transform.SetParent(socket);
         mainCamera.transform.localPosition = Vector3.zero;
         mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
@@ -177,10 +177,11 @@ public class RobotZone : MonoBehaviour
         StartCoroutine(RobotPointing());
         TMPImage.SetActive(false);
         TMPObj.GetComponent<TextMeshProUGUI>().text = "";
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(4.2f);
         Calendar.GetComponent<Animator>().enabled = true;
         yield return new WaitForSeconds(4.0f);
         mainCamera.transform.SetParent(socket);
+        mainCamera.fieldOfView = 40;
         mainCamera.transform.localPosition = Vector3.zero;
         mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         //player.GetComponent<NewPlayerController>().enabled = true;
@@ -219,8 +220,8 @@ public class RobotZone : MonoBehaviour
     IEnumerator RotateCamera()
     {
         Quaternion startRotation = transform.rotation;
-        Quaternion targetRotation = Quaternion.Euler(0, -33f, 0);
-
+        Quaternion targetRotation = Quaternion.Euler(-12f, -33f, 0);
+        mainCamera.fieldOfView = 50;
         while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
         {
             cameraPos.transform.rotation = Quaternion.RotateTowards(cameraPos.transform.rotation, targetRotation, 30f * Time.deltaTime);
@@ -239,6 +240,7 @@ public class RobotZone : MonoBehaviour
         robotAnim.SetBool("Point", true);
         yield return new WaitForSeconds(2.0f);
         StartCoroutine(RotateCamera());
+        yield return new WaitForSeconds(2.0f);
         laser3.SetActive(true);
     }
     IEnumerator Text1()

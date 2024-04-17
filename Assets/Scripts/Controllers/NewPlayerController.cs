@@ -138,7 +138,7 @@ public class NewPlayerController : MonoBehaviour
         if (_isAttack)
             dir = new Vector3(h, 0, v).normalized;
 
-        if (!(v == 0 && h == 0))
+        if (!(Mathf.Approximately(v,0.0f) && Mathf.Approximately(h,0.0f)))
         {
             Vector3 _moveHorizontal = transform.right * h;
             Vector3 _moveVertical = transform.forward * v;
@@ -161,10 +161,6 @@ public class NewPlayerController : MonoBehaviour
             {
                 dist = pushhit.distance - offset * 1.0f;
             }
-            //else
-            //{
-            //    anim.SetBool("isPush", false);
-            //}
             transform.Translate(slopeVelocity * dist, Space.World);
 
             Quaternion targetRotation = Quaternion.LookRotation(new Vector3(slopeVelocity.x, 0, slopeVelocity.z), Vector3.up);
@@ -192,7 +188,6 @@ public class NewPlayerController : MonoBehaviour
                 anim.SetTrigger("playDoubleJump");
                 playerRigidbody.AddForce(Vector3.up * 14.0f, ForceMode.Impulse);
                 Invoke("FallAfterJump", 0.3f);
-                Debug.Log("JUMP3");
                 return;
             }
 
@@ -206,7 +201,6 @@ public class NewPlayerController : MonoBehaviour
                     anim.SetBool("isJumping", true);
                     anim.SetTrigger("playJump");
                     _canDoubleJump = true;
-                    Debug.Log("JUMP2");
                     Invoke("FallAfterJump", 0.3f);
                     return;
 
@@ -216,19 +210,20 @@ public class NewPlayerController : MonoBehaviour
             {
                 playerRigidbody.velocity = Vector3.zero;
                 playerRigidbody.AddForce(Vector3.up * 15.0f, ForceMode.Impulse);
+                Debug.Log("JUMP");
                 anim.SetBool("isJumping", true);
                 _isJumping = true;
                 anim.SetTrigger("playJump");
                 _canDoubleJump = true;
-                Debug.Log("JUMP");
                 Invoke("FallAfterJump", 0.3f);
+                
                 return;
             }
         }
     }
     void FallAfterJump()
     {
-        playerRigidbody.AddForce(Vector3.down * 3.0f, ForceMode.Impulse);
+        playerRigidbody.AddForce(Vector3.down * 5.0f, ForceMode.Impulse);
     }
     void PlayFall()
     {

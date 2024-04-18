@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DeskZone : MonoBehaviour
 {
+    public static bool IsDeskView = false;
     public GameObject SpringArm;
     public Camera mainCamera;
     public Transform cameraPos;
@@ -28,6 +29,7 @@ public class DeskZone : MonoBehaviour
     }
     public IEnumerator CameraMove()
     {
+        IsDeskView = true;
         Animator playerAnim = player.GetComponent<Animator>();
         playerAnim.SetBool("isRun", false);
         player.GetComponent<NewPlayerController>().enabled = false;
@@ -53,6 +55,7 @@ public class DeskZone : MonoBehaviour
         MonitorAnim.SetActive(false);
         MonitorText.SetActive(true);
         yield return new WaitForSeconds(5.0f);
+
         //SpringArm.transform.localPosition = new Vector3(0f, 11f, -12f);
         //mainCamera.transform.SetParent(socket);
         //mainCamera.transform.localPosition = Vector3.zero;

@@ -4,44 +4,72 @@ using UnityEngine;
 
 public class LaserPattern : MonoBehaviour
 {
-    public GameObject target;
     private LineRenderer lineRenderer;
-    public float laserWidth = 0.1f;
+    public float maxDistance = 70f;
+    public float duration = 3f;
+    public float laserWidth = 1f;
+    private float elapsedTime = 0f;
+
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.startWidth = laserWidth;
         lineRenderer.endWidth = laserWidth;
-        lineRenderer.enabled = false;
-        Invoke("ActiveLaser", 5f);
+        
     }
     private void Update()
     {
-        ShootLaser();
-
+        FireLaser();
     }
-    //IEnumerator ShootLaserCoroutine()
-    //{
-    //    lineRenderer.SetPosition(0, transform.position);
-    //    Vector3 targetPosition = target.transform.position;
-    //    Vector3 newDir = Vector3.forward;
-    //    //Vector3 direction = targetPosition - transform.position;
-    //    //float distance = direction.magnitude;
-    //    float distance = newDir.magnitude * 10f;
-    //    //targetPosition = transform.position + direction.normalized * distance;
-    //    targetPosition = transform.position + newDir.normalized * distance;
-    //    lineRenderer.SetPosition(1, targetPosition);
-    //    yield return null;
-    //}
 
-    void ShootLaser()
+    //IEnumerator FireLaser()
+    //{
+    //    lineRenderer.SetPosition(0, transform.position + Vector3.up * 3f);
+
+    //    float initialDistance = Vector3.Distance(transform.position + Vector3.up * 3f, transform.position + Vector3.up * 3f + transform.forward * maxDistance);
+
+    //    while (elapsedTime < duration)
+    //    {
+    //        float progress = elapsedTime / duration;
+    //        float currentDistance = initialDistance * progress;
+    //        Vector3 currentPosition = transform.position + Vector3.up * 3f + transform.forward * currentDistance;
+
+    //        lineRenderer.SetPosition(1, currentPosition);
+
+    //        elapsedTime += Time.deltaTime;
+
+    //        yield return null;
+    //    }
+
+    //    lineRenderer.SetPosition(1, transform.position + Vector3.up * 3f + transform.forward * maxDistance);
+    //}
+    void FireLaser()
     {
         lineRenderer.SetPosition(0, transform.position + Vector3.up * 3f);
-        lineRenderer.SetPosition(1, transform.position + Vector3.up * 3f + transform.forward * 100f);
-    }
-    void ActiveLaser()
-    {
-        lineRenderer.enabled = true;
+
+        float initialDistance = Vector3.Distance(transform.position + Vector3.up * 3f, transform.position + Vector3.up * 3f + transform.forward * maxDistance);
+
+        while (elapsedTime < duration)
+        {
+            float progress = elapsedTime / duration;
+            float currentDistance = initialDistance * progress;
+            Vector3 currentPosition = transform.position + Vector3.up * 3f + transform.forward * currentDistance;
+
+            lineRenderer.SetPosition(1, currentPosition);
+
+            elapsedTime += Time.deltaTime;
+
+            return;
+        }
+        lineRenderer.SetPosition(1, transform.position + Vector3.up * 3f + transform.forward * maxDistance);
+
+        
     }
 
+    private void ResetLineRenderer()
+    {
+        lineRenderer.SetPosition(0, Vector3.zero);
+        lineRenderer.SetPosition(1, Vector3.zero);
+        elapsedTime = 0;
+    }
 }

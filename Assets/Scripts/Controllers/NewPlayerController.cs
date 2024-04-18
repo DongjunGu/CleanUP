@@ -173,8 +173,12 @@ public class NewPlayerController : MonoBehaviour
 
         if (!(CameraMode.isTableView))
         {
-            float mouseX = Input.GetAxis("Mouse X");
-            transform.Rotate(Vector3.up * mouseX * _rotateSpeed);
+            if (!(DeskZone.IsDeskView))
+            {
+                float mouseX = Input.GetAxis("Mouse X");
+                transform.Rotate(Vector3.up * mouseX * _rotateSpeed);
+            }
+            
         }
 
     }

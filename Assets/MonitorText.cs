@@ -13,42 +13,37 @@ public class MonitorText : MonoBehaviour
     public int language;
     public GameObject Almondzone;
     public GameObject MonitorAnim;
-    public GameObject LaserEnemy;
+    public GameObject LaserEnemyObj;
     public Transform Spawnpoint;
     void Start()
     {
+        StartCoroutine(MonitorTextStart());
+    }
+
+    IEnumerator MonitorTextStart()
+    {
         Animator monitorAnim = MonitorAnim.GetComponent<Animator>();
         int index = 4;
-        StartCoroutine(WelcomeText(() =>
-        {
-
-            StartCoroutine(PrintText(index++, () =>
-             {
-                 StartCoroutine(CountNumber(() =>
-                 {
-                     StartCoroutine(PrintText(index++, () =>
-                     {
-                         ClearText(); MonitorAnim.SetActive(true); monitorAnim.SetBool("isAngry", true);
-                         StartCoroutine(SpawnLaserEnemy(() =>
-                         {
-                             StartCoroutine(CountNumber(() =>
-                             {
-                                 ClearText();
-                             }));
-
-                         })); MonitorAnim.SetActive(false); ClearText(); 
-                     })); Almondzone.SetActive(false); DestroySpawnedObjects();
-                 }));
-                 Almondzone.SetActive(true);
-             }));
-
-        }));
+        //yield return StartCoroutine(WelcomeText());
+        //yield return StartCoroutine(PrintText(index++));
+        //Almondzone.SetActive(true);
+        //yield return StartCoroutine(CountNumber(15));
+        //Almondzone.SetActive(false);
+        //DestroySpawnedObjects();
+        //yield return StartCoroutine(PrintText(index++));
+        //ClearText();
+        //MonitorAnim.SetActive(true);
+        //monitorAnim.SetBool("isAngry", true);
+        yield return StartCoroutine(SpawnLaserEnemy());
+        MonitorAnim.SetActive(false);
+        yield return StartCoroutine(CountNumber(40));
+        ClearText();
     }
     void ClearText()
     {
         monitorText.text = "";
     }
-    IEnumerator WelcomeText(UnityAction done)
+    IEnumerator WelcomeText()
     {
         text = TalkManager.table.datas[3].Text[language];
         int cur = 0;
@@ -59,9 +54,8 @@ public class MonitorText : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         yield return new WaitForSeconds(1.5f);
-        done?.Invoke();
     }
-    IEnumerator PrintText(int index, UnityAction done)
+    IEnumerator PrintText(int index)
     {
         ClearText();
         text = TalkManager.table.datas[index].Text[language];
@@ -73,14 +67,12 @@ public class MonitorText : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         yield return new WaitForSeconds(2.0f);
-        done?.Invoke();
         
     }
 
-    IEnumerator CountNumber(UnityAction done)
+    IEnumerator CountNumber(int count)
     {
         ClearText();
-        int count = 10;
         while (count >= 0)
         {
             monitorText.text = count.ToString();
@@ -88,7 +80,6 @@ public class MonitorText : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
         yield return new WaitForSeconds(2.0f);
-        done?.Invoke();
     }
 
     void DestroySpawnedObjects()
@@ -105,18 +96,20 @@ public class MonitorText : MonoBehaviour
             Destroy(obj);
         }
     }
-
-    void SpawnLaserEnemy()
+    IEnumerator SpawnLaserEnemy()
     {
-        Instantiate(LaserEnemy, Spawnpoint.transform.position, Quaternion.identity);
+        GameObject instantiatedObject = Instantiate(LaserEnemyObj, Spawnpoint.transform.position, Quaternion.identity);
+        LaserEnemy laserEnemyScript = instantiatedObject.GetComponent<LaserEnemy>();
+        yield return new WaitForSeconds(3.0f);
         
-    }
-    IEnumerator SpawnLaserEnemy(UnityAction done)
-    {
-        Instantiate(LaserEnemy, Spawnpoint.transform.position, Quaternion.identity);
-        LaserEnemy.GetComponent<Animator>().enabled = false;
-        yield return new WaitForSeconds(2.0f);
-        LaserEnemy.GetComponent<Animator>().enabled = true;
-        done?.Invoke();
+        if (laserEnemyScript != null)
+        {
+            laserEnemyScript.enabled = true;
+        }
+
+        while(!(LaserEnemy.IsArrived))
+        {
+            yield return new WaitForSeconds(1f);
+        }
     }
 }

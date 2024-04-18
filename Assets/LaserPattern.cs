@@ -13,7 +13,7 @@ public class LaserPattern : MonoBehaviour
         lineRenderer.startWidth = laserWidth;
         lineRenderer.endWidth = laserWidth;
         lineRenderer.enabled = false;
-        Invoke("ActiveLaser", 3f);
+        Invoke("ActiveLaser", 5f);
     }
     private void Update()
     {
@@ -39,9 +39,9 @@ public class LaserPattern : MonoBehaviour
         lineRenderer.SetPosition(0, transform.position + Vector3.up * 3f);
         lineRenderer.SetPosition(1, transform.position + Vector3.up * 3f + transform.forward * 100f);
     }
-
     void ActiveLaser()
     {
         lineRenderer.enabled = true;
     }
+
 }

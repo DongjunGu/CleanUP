@@ -48,6 +48,13 @@
         "Okay.. I see\n  Go get him mouse!",
         "몸짓이 빠르군.. 직접 처리해라!"
       ]
+    },
+    {
+      "Key": 7,
+      "Text": [
+        "       AWEEEE!! Stop me if you can!      ",
+        "너무 화가 나! 들이 받아 주지!"
+      ]
     }
   ]
 }

@@ -83,9 +83,11 @@ public class DeskZone : MonoBehaviour
             mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, cameraMousePos.rotation, rotationSpeed * Time.deltaTime);
             yield return null;
         }
-
-
-        yield return new WaitForSeconds(3f);
+        Mouse.GetComponent<Animator>().enabled = true;
+        Mouse.GetComponent<MouseEnemy>().enabled = true;
+        yield return new WaitForSeconds(5f);
+        Mouse.GetComponent<Animator>().enabled = false;
+        yield return new WaitForSeconds(0.1f);
         mainCamera.transform.SetParent(socket);
         mainCamera.transform.localPosition = Vector3.zero;
         mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);

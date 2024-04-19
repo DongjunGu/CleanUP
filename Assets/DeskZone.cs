@@ -9,6 +9,7 @@ public class DeskZone : MonoBehaviour
     public GameObject SpringArm;
     public Camera mainCamera;
     public Transform cameraPos;
+    public Transform cameraMousePos;
     public Transform socket;
     public float moveSpeed = 1.0f;
     public float rotationSpeed = 1.0f;
@@ -18,11 +19,12 @@ public class DeskZone : MonoBehaviour
     public GameObject MonitorText;
     public GameObject MonitorUI;
     public GameObject MonitorAnim;
+    public GameObject Mouse;
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
-            
+
             StartCoroutine(CameraMove());
             GetComponent<Collider>().enabled = false;
         }
@@ -56,14 +58,38 @@ public class DeskZone : MonoBehaviour
         MonitorText.SetActive(true);
         yield return new WaitForSeconds(5.0f);
 
-        //SpringArm.transform.localPosition = new Vector3(0f, 11f, -12f);
-        //mainCamera.transform.SetParent(socket);
-        //mainCamera.transform.localPosition = Vector3.zero;
-        //mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
-        
         player.GetComponent<NewPlayerController>().enabled = true;
         yield return new WaitForSeconds(3.0f);
+
+    }
+
+    public void CamMove()
+    {
+        StartCoroutine(CameraMoveToMouse());
+    }
+    public IEnumerator CameraMoveToMouse()
+    {
+        IsDeskView = false;
+        Animator playerAnim = player.GetComponent<Animator>();
+        playerAnim.SetBool("isRun", false);
+        player.GetComponent<NewPlayerController>().enabled = false;
+        yield return new WaitForSeconds(0.01f);
         
-        //Almondzone.SetActive(true);
+        mainCamera.transform.SetParent(cameraMousePos);
+
+        while (Vector3.Distance(mainCamera.transform.localPosition, Vector3.zero) > 1.5f)
+        {
+            mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, cameraMousePos.position, moveSpeed * Time.deltaTime);
+            mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, cameraMousePos.rotation, rotationSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+
+        yield return new WaitForSeconds(3f);
+        mainCamera.transform.SetParent(socket);
+        mainCamera.transform.localPosition = Vector3.zero;
+        mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        SpringArm.GetComponent<SpringArmCamera>().enabled = true;
+        player.GetComponent<NewPlayerController>().enabled = true;
     }
 }

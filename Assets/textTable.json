@@ -41,6 +41,13 @@
         "Quite impressive. You must've taken a hit from this too!",
         "제법이군 이것도 피해보시지"
       ]
+    },
+    {
+      "Key": 6,
+      "Text": [
+        "Okay.. I see\n  Go get him mouse!",
+        "몸짓이 빠르군.. 직접 처리해라!"
+      ]
     }
   ]
 }

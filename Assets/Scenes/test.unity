@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8464,6 +8464,21 @@ MonoBehaviour:
   LaserEnemyObj: {fileID: 7894462212981914862, guid: 6a4487e631dce3b44a623a279dcc8218,
     type: 3}
   Spawnpoint: {fileID: 1447529411}
+  act:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 895194876}
+        m_TargetAssemblyTypeName: DeskZone, Assembly-CSharp
+        m_MethodName: CamMove
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &283344524 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1635630211, guid: a8acf1e590493124ea87bbe833a90fb5,
@@ -15747,6 +15762,7 @@ MonoBehaviour:
   SpringArm: {fileID: 28971676}
   mainCamera: {fileID: 963194227}
   cameraPos: {fileID: 1549298533}
+  cameraMousePos: {fileID: 989164464}
   socket: {fileID: 767644888}
   moveSpeed: 1
   rotationSpeed: 1
@@ -16538,6 +16554,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6371973135141081585}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &989164463
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 989164464}
+  m_Layer: 0
+  m_Name: DeskCameraMousePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &989164464
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 989164463}
+  m_LocalRotation: {x: 0.052982226, y: 0.65780157, z: -0.046476077, w: 0.7498867}
+  m_LocalPosition: {x: 35.54, y: 66.28, z: 158.63}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 49
+  m_LocalEulerAnglesHint: {x: 8.083, y: 82.515, z: 0}
 --- !u!4 &991651923 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1833970410475473646, guid: 5c771900069038340aac7d9f82f7daf5,
@@ -42727,6 +42773,7 @@ GameObject:
   m_Component:
   - component: {fileID: 248470246916458252}
   - component: {fileID: 2938394547803791903}
+  - component: {fileID: 248470246916234029}
   m_Layer: 6
   m_Name: Mouse
   m_TagString: Untagged
@@ -42734,6 +42781,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &248470246916234029
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248470246916234028}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bc68b45167e034c4a985858795750cc2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &248470246916234030
 GameObject:
   m_ObjectHideFlags: 0

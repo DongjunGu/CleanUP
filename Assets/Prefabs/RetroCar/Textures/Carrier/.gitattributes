@@ -1,4 +1,0 @@
-CARRIER_3072.psd filter=lfs diff=lfs merge=lfs -text
-CARRIER_3072.psd.meta filter=lfs diff=lfs merge=lfs -text
-CARRIER_4096.psd filter=lfs diff=lfs merge=lfs -text
-CARRIER_4096.psd.meta filter=lfs diff=lfs merge=lfs -text

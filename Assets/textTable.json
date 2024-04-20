@@ -55,6 +55,13 @@
         "       AWEEEE!! Stop me if you can!      ",
         "너무 화가 나! 들이 받아 주지!"
       ]
+    },
+    {
+      "Key": 8,
+      "Text": [
+        "Overloaded...",
+        "과부화 상태..!"
+      ]
     }
   ]
 }

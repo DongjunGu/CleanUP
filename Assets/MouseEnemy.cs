@@ -19,18 +19,14 @@ public class MouseEnemy : MonoBehaviour
     }
     IEnumerator MouseControl()
     {
-        int index;
-        //StartCoroutine(Text1(index++));
-        yield return new WaitForSeconds(5.0f);
-        TMPImage.SetActive(false);
-        TMPObj.GetComponent<TextMeshProUGUI>().text = "";
-        yield return new WaitForSeconds(5.0f);
-
+        int index = 7;
+        yield return StartCoroutine(Text1(index++));
         yield return StartCoroutine(MouseRush1());
         yield return StartCoroutine(MouseRush1());
         yield return StartCoroutine(MouseRush1());
         yield return StartCoroutine(MouseRush1());
-        yield return StartCoroutine(MouseRush1());
+        yield return StartCoroutine(MouseRush1()); 
+        yield return StartCoroutine(Text1(index++));
     }
     IEnumerator Text1(int index)
     {
@@ -44,7 +40,9 @@ public class MouseEnemy : MonoBehaviour
             myLabel.text += text[cur++];
             yield return new WaitForSeconds(0.02f);
         }
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(5.0f);
+        TMPImage.SetActive(false);
+        TMPObj.GetComponent<TextMeshProUGUI>().text = "";
     }
 
     IEnumerator MouseRush1()

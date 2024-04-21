@@ -17,6 +17,7 @@ TagManager:
   - RobotEnemy
   - Almond
   - AlmondDropPos
+  - Mouse
   layers:
   - Default
   - TransparentFX

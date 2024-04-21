@@ -22,6 +22,7 @@ public class NewPlayerController : MonoBehaviour
     public bool[] hasWeapons;
     public Transform respawn1;
     public Transform respawn2;
+    public Transform respawn3;
     public GameObject remy;
     public GameObject[] dusts;
     public int hasDust;
@@ -33,7 +34,12 @@ public class NewPlayerController : MonoBehaviour
     Animator anim;
     private float v = 0.0f;
     private float h = 0.0f;
-    //private float _rotateSpeed = 10.0f;
+    public GameObject deskZone;
+    public GameObject monitorText;
+    public GameObject monitorUI;
+    public UnityEngine.Events.UnityEvent act1;
+    public UnityEngine.Events.UnityEvent act2;
+    public UnityEngine.Events.UnityEvent act3;
 
     private Rigidbody playerRigidbody;
 
@@ -88,10 +94,10 @@ public class NewPlayerController : MonoBehaviour
     }
     void Start()
     {
-        prefab = Resources.Load("PlayerHpBar") as GameObject;
+        prefab = Resources.Load("HpbarTest") as GameObject;
         hpPrefab = MonoBehaviour.Instantiate(prefab, HpBarCanvas.Root) as GameObject;
         hpUI = hpPrefab.GetComponent<HpBarUI>();
-        hpUI.target = transform.Find("HpPos");
+        //hpUI.target = transform.Find("HpPos");
         hpUI.hp = currentHp;
         hpUI.maxHP = maxHP;
         //hpPrefab.SetActive(false);
@@ -421,9 +427,27 @@ public class NewPlayerController : MonoBehaviour
             playerRigidbody.AddForce(Vector3.up * 30.0f, ForceMode.Impulse);
             Debug.Log("CumpulsionJump");
         }
-
-        if (((1 << collision.gameObject.layer) & obstacleLayer) != 0) //Layer
+        if (collision.gameObject.tag == "Almond")
         {
+            if (hpUI != null)
+            {
+                currentHp -= 30;
+                hpUI.takeDamage(30);
+            }
+        }
+        if (collision.gameObject.tag == "Mouse")
+        {
+            if (hpUI != null)
+            {
+                if (!_isDamaged)
+                {
+                    MouseEnemy mouseEnemy =  collision.gameObject.GetComponent<MouseEnemy>();
+                    currentHp -= mouseEnemy.damage;
+                    hpUI.takeDamage(mouseEnemy.damage);
+                    StartCoroutine(OnDamage());
+                }
+                    
+            }
 
         }
 
@@ -558,13 +582,18 @@ public class NewPlayerController : MonoBehaviour
                     StartCoroutine(OnDamage());
                 }
             }
-
         }
     }
     IEnumerator OnDamage()
     {
         _isDamaged = true;
         yield return new WaitForSeconds(1.0f);
+        _isDamaged = false;
+    }
+    IEnumerator OnDamageMouse()
+    {
+        _isDamaged = true;
+        yield return new WaitForSeconds(3.0f);
         _isDamaged = false;
     }
     void CheckGrounded()
@@ -693,7 +722,6 @@ public class NewPlayerController : MonoBehaviour
             ChessController.SpawnEnemy();
 
             transform.position = respawn1.position;
-            Debug.Log("½ÇÇà");
 
             currentHp = 200;
             hpUI.hp = currentHp;
@@ -727,6 +755,37 @@ public class NewPlayerController : MonoBehaviour
             RespawnImage.GetComponent<Image>().enabled = false;
             RespawnImage.GetComponent<Animator>().enabled = false;
             hpPrefab.SetActive(true);
+            enabled = wasPlayerMoveEnabled;
+        }
+
+        if (stage == 3)
+        {
+            monitorUI.SetActive(false);
+            monitorText.SetActive(false);
+            act1?.Invoke();
+            bool wasPlayerMoveEnabled = enabled;
+            enabled = false;
+            anim.SetBool("isRun", false);
+            remy.SetActive(false);
+            RespawnImage.GetComponent<Image>().enabled = true;
+            RespawnImage.GetComponent<Animator>().enabled = true;
+            hpPrefab.SetActive(false);
+            act2?.Invoke();//mouse destroy
+
+            yield return new WaitForSeconds(1.0f);
+            remy.SetActive(true);
+            act3?.Invoke(); //mouse respawn
+            transform.position = respawn3.position;
+            currentHp = 200;
+            hpUI.hp = currentHp;
+            
+            yield return new WaitForSeconds(2.0f);
+
+            RespawnImage.GetComponent<Image>().enabled = false;
+            RespawnImage.GetComponent<Animator>().enabled = false;
+            hpPrefab.SetActive(true);
+            
+            deskZone.GetComponent<Collider>().enabled = true;
             enabled = wasPlayerMoveEnabled;
         }
     }

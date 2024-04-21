@@ -20,14 +20,35 @@ public class DeskZone : MonoBehaviour
     public GameObject MonitorUI;
     public GameObject MonitorAnim;
     public GameObject Mouse;
+    private GameObject mouseObj;
+    public UnityEngine.Events.UnityEvent CameraQuiz;
+    private void Start()
+    {
+        SpawnMouse();
+        mouseObj = GameObject.FindGameObjectWithTag("Mouse");
+    }
+
+    void Update()
+    {
+        
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-
+            NewPlayerController.stage = 3;
             StartCoroutine(CameraMove());
             GetComponent<Collider>().enabled = false;
         }
+    }
+    public void SpawnMouse()
+    {
+        Instantiate(Mouse);
+    }
+
+    public void DestroyMouse()
+    {
+        Destroy(mouseObj);
     }
     public IEnumerator CameraMove()
     {
@@ -67,6 +88,10 @@ public class DeskZone : MonoBehaviour
     {
         StartCoroutine(CameraMoveToMouse());
     }
+    public void CamBackToMonitor()
+    {
+        StartCoroutine(CameraBackToMonitor());
+    }
     public IEnumerator CameraMoveToMouse()
     {
         IsDeskView = false;
@@ -83,15 +108,38 @@ public class DeskZone : MonoBehaviour
             mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, cameraMousePos.rotation, rotationSpeed * Time.deltaTime);
             yield return null;
         }
-        Mouse.GetComponent<Animator>().enabled = true;
-        Mouse.GetComponent<MouseEnemy>().enabled = true;
+        mouseObj.GetComponent<Animator>().enabled = true;
+        mouseObj.GetComponent<MouseEnemy>().enabled = true;
         yield return new WaitForSeconds(5f);
-        Mouse.GetComponent<Animator>().enabled = false;
+        mouseObj.GetComponent<Animator>().enabled = false;
         yield return new WaitForSeconds(0.1f);
         mainCamera.transform.SetParent(socket);
         mainCamera.transform.localPosition = Vector3.zero;
         mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         SpringArm.GetComponent<SpringArmCamera>().enabled = true;
         player.GetComponent<NewPlayerController>().enabled = true;
+    }
+    public IEnumerator CameraBackToMonitor()
+    {
+        yield return new WaitForSeconds(3.0f);
+        IsDeskView = true;
+        Animator playerAnim = player.GetComponent<Animator>();
+        playerAnim.SetBool("isRun", false);
+        player.GetComponent<NewPlayerController>().enabled = false;
+        yield return new WaitForSeconds(0.01f);
+        SpringArm.GetComponent<SpringArmCamera>().enabled = false;
+        player.transform.localRotation = Quaternion.identity;
+        mainCamera.transform.SetParent(cameraPos);
+
+        while (Vector3.Distance(mainCamera.transform.localPosition, Vector3.zero) > 1.5f)
+        {
+            mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, cameraPos.position, moveSpeed * Time.deltaTime);
+            mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, cameraPos.rotation, rotationSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        player.GetComponent<NewPlayerController>().enabled = true;
+        yield return new WaitForSeconds(3.0f);
+        CameraQuiz?.Invoke();
     }
 }

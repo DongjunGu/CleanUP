@@ -45,7 +45,7 @@
     {
       "Key": 6,
       "Text": [
-        "Okay.. I see\n  Go get him mouse!",
+        "Okay.. I see.\n  Go get him Mouse!",
         "몸짓이 빠르군.. 직접 처리해라!"
       ]
     },
@@ -61,6 +61,13 @@
       "Text": [
         "Overloaded...",
         "과부화 상태..!"
+      ]
+    },
+    {
+      "Key": 9,
+      "Text": [
+        "Its Quiz Time",
+        "이렇게 해선 끝이 없겠군"
       ]
     }
   ]

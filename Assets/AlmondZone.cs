@@ -14,7 +14,7 @@ public class AlmondZone : MonoBehaviour
     }
     void Start()
     {
-        //StartCoroutine(SpawnAndDestroyLoop());
+        
     }
     IEnumerator SpawnAndDestroyLoop()
     {

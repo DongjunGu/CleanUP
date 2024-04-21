@@ -20,11 +20,9 @@ public class HpBarUI : MonoBehaviour
         hp = maxHP;
         
     }
-
-    
     void Update()
     {
-        if (target == null) return;
+        //if (target == null) return;
         if (hpSlider.value != hp)
         {
             hpSlider.value = hp;
@@ -33,7 +31,7 @@ public class HpBarUI : MonoBehaviour
         {
             easehpSlider.value = Mathf.Lerp(easehpSlider.value, hp, lerpSpeed);
         }
-
+        if(target!=null)
         transform.position = Camera.main.WorldToScreenPoint(target.position);
 
         if(transform.position.z < 0 )

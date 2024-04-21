@@ -17,7 +17,9 @@ public class MonitorText : MonoBehaviour
     public Transform Spawnpoint;
 
     public UnityEngine.Events.UnityEvent act;
-    void Start()
+    public UnityEngine.Events.UnityEvent AfterCameraMove;
+
+    void OnEnable()
     {
         StartCoroutine(MonitorTextStart());
     }
@@ -25,27 +27,37 @@ public class MonitorText : MonoBehaviour
     IEnumerator MonitorTextStart()
     {
         Animator monitorAnim = MonitorAnim.GetComponent<Animator>();
-        int index = 6;
-        //yield return StartCoroutine(WelcomeText());
-        //yield return StartCoroutine(PrintText(index++));
-        //Almondzone.SetActive(true);
-        //yield return StartCoroutine(CountNumber(15));
-        //Almondzone.SetActive(false);
-        //DestroySpawnedObjects();
-        //yield return StartCoroutine(PrintText(index++));
-        //ClearText();
-        //MonitorAnim.SetActive(true);
-        //monitorAnim.SetBool("isAngry", true);
-        //yield return StartCoroutine(SpawnLaserEnemy());
-        //MonitorAnim.SetActive(false);
-        //Almondzone.SetActive(true);
-        //yield return StartCoroutine(CountNumber(5)); //40sec
-        //ClearText();
-        //DestroySpawnedObjects();
-        yield return StartCoroutine(PrintText(index++));
+        int index = 4;
+        yield return StartCoroutine(WelcomeText());
+        yield return StartCoroutine(PrintText(index++)); //4
+        Almondzone.SetActive(true);
+        yield return StartCoroutine(CountNumber(15));
+        DestroySpawnedObjects();
+        yield return StartCoroutine(PrintText(index++)); //5
+        ClearText();
+        MonitorAnim.SetActive(true);
+        monitorAnim.SetBool("isAngry", true);
+        yield return StartCoroutine(SpawnLaserEnemy());
+        MonitorAnim.SetActive(false);
+        Almondzone.SetActive(true);
+        yield return StartCoroutine(CountNumber(40)); //40sec
+        ClearText();
+        DestroySpawnedObjects();
+        yield return StartCoroutine(PrintText(index++)); //6
         act?.Invoke();
         ClearText();
     }
+    public void StartQuiz()
+    {
+        StartCoroutine(QuizStart());
+    }
+    IEnumerator QuizStart()
+    {
+        int index = 9;
+        Debug.Log("Quiz Start");
+        yield return StartCoroutine(PrintText(index++));
+    }
+    
     void ClearText()
     {
         monitorText.text = "";
@@ -89,7 +101,7 @@ public class MonitorText : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
     }
 
-    void DestroySpawnedObjects()
+    public void DestroySpawnedObjects()
     {
         GameObject[] almondDropPoints = GameObject.FindGameObjectsWithTag("AlmondDropPos");
         foreach (GameObject obj in almondDropPoints)
@@ -104,6 +116,7 @@ public class MonitorText : MonoBehaviour
         }
         GameObject laserEnemyObj = GameObject.FindGameObjectWithTag("RobotEnemy");
         Destroy(laserEnemyObj);
+        Almondzone.SetActive(false);
     }
     IEnumerator SpawnLaserEnemy()
     {

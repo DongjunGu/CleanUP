@@ -95,6 +95,21 @@ MonoBehaviour:
   maxHP: 500
   currentHp: 500
   damage: 0
+  MouseClear:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DeskZone, Assembly-CSharp
+        m_MethodName: CamBackToMonitor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &89742305
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -119,8 +134,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.06850737, y: 0.033851355, z: 0.11106795}
-  m_Center: {x: -0.00240219, y: 0.019776274, z: 0.0015271566}
+  m_Size: {x: 0.07647865, y: 0.033851355, z: 0.11106795}
+  m_Center: {x: -0.00049498066, y: 0.019776274, z: 0.0015271584}
 --- !u!1 &3089701309906011922
 GameObject:
   m_ObjectHideFlags: 0

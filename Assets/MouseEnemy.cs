@@ -23,7 +23,6 @@ public class MouseEnemy : MonoBehaviour
     GameObject prefab;
     GameObject hpPrefab;
     HpBarUI hpUI;
-    bool halfHp = false;
     public UnityEngine.Events.UnityEvent MouseClear;
     void Awake()
     {
@@ -43,11 +42,16 @@ public class MouseEnemy : MonoBehaviour
                 original_color = renderer.material.color;
             }
         }
+        myLabel = SceneData.Inst.mouseLabel;
+        TMPImage = SceneData.Inst.mouseImage;
+        TMPObj = SceneData.Inst.mouseText;
+        targetPosition = SceneData.Inst.mouseTarget;
+        MouseClear = SceneData.Inst.MouseClear;
     }
     void Start()
     {
         StartCoroutine(MouseControl());
-        damage = 100;
+        damage = 50;
     }
     void SpawnHPBar()
     {
@@ -60,26 +64,26 @@ public class MouseEnemy : MonoBehaviour
     }
     IEnumerator MouseControl()
     {
-        yield return StartCoroutine(Text1());
-        yield return StartCoroutine(Text3());
+        //yield return StartCoroutine(Text1());
+        //yield return StartCoroutine(Text3());
         SpawnHPBar();
-        yield return StartCoroutine(MouseRush1(30));
-        yield return StartCoroutine(MouseRush1(35));
-        yield return StartCoroutine(MouseRush1(40));
-        yield return StartCoroutine(MouseRush1(45));
-        yield return StartCoroutine(MouseRush1(50));
-        hpPrefab.SetActive(false);
-        yield return StartCoroutine(Text2()); //overLoaded
-        hpPrefab.SetActive(true);
-        yield return StartCoroutine(Waiting());
-        hpPrefab.SetActive(false);
-        yield return StartCoroutine(Text3()); //추격
-        hpPrefab.SetActive(true);
-        yield return StartCoroutine(MouseRush1(40));
-        yield return StartCoroutine(MouseRush1(45));
-        yield return StartCoroutine(MouseRush1(50));
-        hpPrefab.SetActive(false);
-        yield return StartCoroutine(Text2()); //overLoaded
+        //yield return StartCoroutine(MouseRush1(30));
+        //yield return StartCoroutine(MouseRush1(35));
+        //yield return StartCoroutine(MouseRush1(40));
+        //yield return StartCoroutine(MouseRush1(45));
+        //yield return StartCoroutine(MouseRush1(50));
+        //hpPrefab.SetActive(false);
+        //yield return StartCoroutine(Text2()); //overLoaded
+        //hpPrefab.SetActive(true);
+        //yield return StartCoroutine(Waiting());
+        //hpPrefab.SetActive(false);
+        //yield return StartCoroutine(Text3()); //추격
+        //hpPrefab.SetActive(true);
+        //yield return StartCoroutine(MouseRush1(40));
+        //yield return StartCoroutine(MouseRush1(45));
+        //yield return StartCoroutine(MouseRush1(50));
+        //hpPrefab.SetActive(false);
+        //yield return StartCoroutine(Text2()); //overLoaded
         hpPrefab.SetActive(true);
         yield return StartCoroutine(Victory());
     }
@@ -90,6 +94,12 @@ public class MouseEnemy : MonoBehaviour
     {
         if (hpPrefab != null)
             Destroy(hpPrefab);
+        if(TMPImage != null)
+        {
+            TMPImage.SetActive(false);
+            TMPObj.GetComponent<TextMeshProUGUI>().text = "";
+        }
+            
     }
     public void NextStep()
     {
@@ -99,7 +109,6 @@ public class MouseEnemy : MonoBehaviour
     {
         while (currentHp > 250)
         {
-            Debug.Log("HalfHP");
             yield return null;
         }
     }
@@ -107,27 +116,29 @@ public class MouseEnemy : MonoBehaviour
     {
         while (currentHp > 0)
         {
-            Debug.Log("0HP");
             yield return null;
         }
     }
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "basicAttack" && canTakeDamage)
+        if (this.enabled)
         {
-            Weapons weapons = other.GetComponent<Weapons>();
-            currentHp -= weapons.damage;
-
-            Debug.Log(currentHp);
-            StartCoroutine(DamageCooldown());
-            StartCoroutine(Damaged());
-
-
-            if (hpUI != null)
+            if (other.tag == "basicAttack" && canTakeDamage)
             {
-                hpUI.takeDamage(weapons.damage);
+                Weapons weapons = other.GetComponent<Weapons>();
+                currentHp -= weapons.damage;
+
+                StartCoroutine(DamageCooldown());
+                StartCoroutine(Damaged());
+
+
+                if (hpUI != null)
+                {
+                    hpUI.takeDamage(weapons.damage);
+                }
             }
         }
+       
     }
     IEnumerator DamageCooldown()
     {

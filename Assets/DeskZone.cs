@@ -25,7 +25,7 @@ public class DeskZone : MonoBehaviour
     private void Start()
     {
         SpawnMouse();
-        mouseObj = GameObject.FindGameObjectWithTag("Mouse");
+        //mouseObj = GameObject.FindGameObjectWithTag("Mouse");
     }
 
     void Update()
@@ -43,7 +43,7 @@ public class DeskZone : MonoBehaviour
     }
     public void SpawnMouse()
     {
-        Instantiate(Mouse);
+        mouseObj = Instantiate(Mouse);
     }
 
     public void DestroyMouse()
@@ -67,20 +67,20 @@ public class DeskZone : MonoBehaviour
             mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, cameraPos.rotation, rotationSpeed * Time.deltaTime);
             yield return null;
         }
-        yield return new WaitForSeconds(1.0f);
-        monitorNoise.SetActive(true);
-        yield return new WaitForSeconds(2.0f);
-        monitorNoise.SetActive(false);
-        yield return new WaitForSeconds(2.0f);
+        //yield return new WaitForSeconds(1.0f); //Test¸¦ À§ÇØ comment
+        //monitorNoise.SetActive(true);
+        //yield return new WaitForSeconds(2.0f);
+        //monitorNoise.SetActive(false);
+        //yield return new WaitForSeconds(2.0f);
         MonitorUI.SetActive(true);
-        MonitorAnim.SetActive(true);
-        yield return new WaitForSeconds(2.0f);
+        //MonitorAnim.SetActive(true);
+        //yield return new WaitForSeconds(2.0f);
         MonitorAnim.SetActive(false);
         MonitorText.SetActive(true);
-        yield return new WaitForSeconds(5.0f);
+        //yield return new WaitForSeconds(5.0f);
 
         player.GetComponent<NewPlayerController>().enabled = true;
-        yield return new WaitForSeconds(3.0f);
+        //yield return new WaitForSeconds(3.0f);
 
     }
 

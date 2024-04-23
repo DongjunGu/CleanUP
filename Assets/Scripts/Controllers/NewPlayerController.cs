@@ -77,7 +77,7 @@ public class NewPlayerController : MonoBehaviour
     float maxSlopeAngle = 80.0f;
 
     RaycastHit slopeHit;
-    
+    public static int Papernumber;
     public enum State
     {
         Normal, TriggerBox
@@ -144,7 +144,7 @@ public class NewPlayerController : MonoBehaviour
         if (_isAttack)
             dir = new Vector3(h, 0, v).normalized;
 
-        if (!(Mathf.Approximately(v,0.0f) && Mathf.Approximately(h,0.0f)))
+        if (!(Mathf.Approximately(v, 0.0f) && Mathf.Approximately(h, 0.0f)))
         {
             Vector3 _moveHorizontal = transform.right * h;
             Vector3 _moveVertical = transform.forward * v;
@@ -184,7 +184,7 @@ public class NewPlayerController : MonoBehaviour
                 float mouseX = Input.GetAxis("Mouse X");
                 transform.Rotate(Vector3.up * mouseX * _rotateSpeed);
             }
-            
+
         }
 
     }
@@ -226,7 +226,7 @@ public class NewPlayerController : MonoBehaviour
                 anim.SetTrigger("playJump");
                 _canDoubleJump = true;
                 Invoke("FallAfterJump", 0.3f);
-                
+
                 return;
             }
         }
@@ -373,7 +373,7 @@ public class NewPlayerController : MonoBehaviour
                 int weaponIndex = item.value;
                 hasWeapons[weaponIndex] = true;
                 Destroy(getItem);
-                
+
 
                 //if (getItem.name == "Broom")
                 //{
@@ -441,12 +441,12 @@ public class NewPlayerController : MonoBehaviour
             {
                 if (!_isDamaged)
                 {
-                    MouseEnemy mouseEnemy =  collision.gameObject.GetComponent<MouseEnemy>();
+                    MouseEnemy mouseEnemy = collision.gameObject.GetComponent<MouseEnemy>();
                     currentHp -= mouseEnemy.damage;
                     hpUI.takeDamage(mouseEnemy.damage);
                     StartCoroutine(OnDamage());
                 }
-                    
+
             }
 
         }
@@ -550,7 +550,24 @@ public class NewPlayerController : MonoBehaviour
             if (checkInput != null)
                 StopCoroutine(checkInput);
         }
-
+        if (other.gameObject.name == "Paper1box")
+            Papernumber = 0;
+        if (other.gameObject.name == "Paper2box")
+            Papernumber = 0;
+        if (other.gameObject.name == "Paper3box")
+            Papernumber = 0;
+        if (other.gameObject.name == "Paper4box")
+            Papernumber = 0;
+        if (other.gameObject.name == "Paper5box")
+            Papernumber = 0;
+        if (other.gameObject.name == "Paper6box")
+            Papernumber = 0;
+        if (other.gameObject.name == "Paper7box")
+            Papernumber = 0;
+        if (other.gameObject.name == "Paper8box")
+            Papernumber = 0;
+        if (other.gameObject.name == "Paper9box")
+            Papernumber = 0;
     }
 
     void OnTriggerEnter(Collider other)
@@ -583,6 +600,29 @@ public class NewPlayerController : MonoBehaviour
                 }
             }
         }
+        if (other.gameObject.name == "Paper1box")
+            Papernumber = 1;
+        if (other.gameObject.name == "Paper2box")
+            Papernumber = 2;
+        if (other.gameObject.name == "Paper3box")
+            Papernumber = 3;
+        if (other.gameObject.name == "Paper4box")
+            Papernumber = 4;
+        if (other.gameObject.name == "Paper5box")
+            Papernumber = 5;
+        if (other.gameObject.name == "Paper6box")
+            Papernumber = 6;
+        if (other.gameObject.name == "Paper7box")
+            Papernumber = 7;
+        if (other.gameObject.name == "Paper8box")
+            Papernumber = 8;
+        if (other.gameObject.name == "Paper9box")
+            Papernumber = 9;
+    }
+    public void GetLaserDamaer(int laserDamage)
+    {
+        currentHp -= laserDamage;
+        hpUI.takeDamage(laserDamage);
     }
     IEnumerator OnDamage()
     {

@@ -9,7 +9,7 @@ public class LaserPattern : MonoBehaviour
     public float duration = 3f;
     public float laserWidth = 1f;
     private float elapsedTime = 0f;
-
+    public LayerMask hitLayers;
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -21,31 +21,25 @@ public class LaserPattern : MonoBehaviour
     {
         FireLaser();
     }
-
-    //IEnumerator FireLaser()
-    //{
-    //    lineRenderer.SetPosition(0, transform.position + Vector3.up * 3f);
-
-    //    float initialDistance = Vector3.Distance(transform.position + Vector3.up * 3f, transform.position + Vector3.up * 3f + transform.forward * maxDistance);
-
-    //    while (elapsedTime < duration)
-    //    {
-    //        float progress = elapsedTime / duration;
-    //        float currentDistance = initialDistance * progress;
-    //        Vector3 currentPosition = transform.position + Vector3.up * 3f + transform.forward * currentDistance;
-
-    //        lineRenderer.SetPosition(1, currentPosition);
-
-    //        elapsedTime += Time.deltaTime;
-
-    //        yield return null;
-    //    }
-
-    //    lineRenderer.SetPosition(1, transform.position + Vector3.up * 3f + transform.forward * maxDistance);
-    //}
     void FireLaser()
     {
         lineRenderer.SetPosition(0, transform.position + Vector3.up * 3f);
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position + Vector3.up * 3f, transform.forward, out hit, maxDistance))
+        {
+            if(hit.transform.tag == "Player")
+            {
+                NewPlayerController playerScript = hit.transform.GetComponent<NewPlayerController>();
+                playerScript.GetLaserDamaer(2);
+            }
+            
+        }
+        else
+        {
+            lineRenderer.SetPosition(1, transform.position + Vector3.up * 3f + transform.forward * maxDistance);
+        }
 
         float initialDistance = Vector3.Distance(transform.position + Vector3.up * 3f, transform.position + Vector3.up * 3f + transform.forward * maxDistance);
 

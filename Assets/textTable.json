@@ -67,8 +67,23 @@
       "Key": 9,
       "Text": [
         "Its Quiz Time",
-        "이렇게 해선 끝이 없겠군"
+        "이렇게 해선\n 끝이 없겠군"
+      ]
+    },
+    {
+      "Key": 10,
+      "Text": [
+        "If you fail to solve it within the time limit,\n then it's my victory.",
+        "제한 시간 안에\n 풀지 못하면\n 나의 승리다"
+      ]
+    },
+    {
+      "Key": 11,
+      "Text": [
+        "Next Quiz",
+        "다음 문제다."
       ]
     }
+
   ]
 }

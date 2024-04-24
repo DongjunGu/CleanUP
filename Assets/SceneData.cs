@@ -10,6 +10,7 @@ public class SceneData : MonoBehaviour
     public GameObject mouseText;
     public GameObject mouseImage;
     public UnityEngine.Events.UnityEvent MouseClear;
+    public GameObject DamagedImage;
     // Start is called before the first frame update
     void Start()
     {

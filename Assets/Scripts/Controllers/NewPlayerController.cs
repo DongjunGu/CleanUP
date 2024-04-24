@@ -17,7 +17,10 @@ public class NewPlayerController : MonoBehaviour
     [SerializeField] public float _rotateSpeed = 5.0f;
 
     public Image RespawnImage;
+    public GameObject DamagedImage;
     public Camera mainCamera;
+    public Transform socket;
+    public GameObject springArm;
     public GameObject[] weapons;
     public bool[] hasWeapons;
     public Transform respawn1;
@@ -25,8 +28,8 @@ public class NewPlayerController : MonoBehaviour
     public Transform respawn3;
     public GameObject remy;
     public GameObject[] dusts;
-    public int hasDust;
 
+    public int hasDust;
     public int maxDust;
     public GameObject dustObject;
     public int maxHP;
@@ -37,10 +40,14 @@ public class NewPlayerController : MonoBehaviour
     public GameObject deskZone;
     public GameObject monitorText;
     public GameObject monitorUI;
+    public GameObject subText;
+    public GameObject thirdText;
+    public GameObject quizController;
+    
     public UnityEngine.Events.UnityEvent act1;
     public UnityEngine.Events.UnityEvent act2;
     public UnityEngine.Events.UnityEvent act3;
-
+    public UnityEngine.Events.UnityEvent QuizRestart;
     private Rigidbody playerRigidbody;
 
 
@@ -94,7 +101,7 @@ public class NewPlayerController : MonoBehaviour
     }
     void Start()
     {
-        prefab = Resources.Load("HpbarTest") as GameObject;
+        prefab = Resources.Load("HpbarPlayer") as GameObject;
         hpPrefab = MonoBehaviour.Instantiate(prefab, HpBarCanvas.Root) as GameObject;
         hpUI = hpPrefab.GetComponent<HpBarUI>();
         //hpUI.target = transform.Find("HpPos");
@@ -446,11 +453,9 @@ public class NewPlayerController : MonoBehaviour
                     hpUI.takeDamage(mouseEnemy.damage);
                     StartCoroutine(OnDamage());
                 }
-
             }
 
         }
-
 
     }
     Coroutine checkInput;
@@ -739,7 +744,7 @@ public class NewPlayerController : MonoBehaviour
         {
             bool wasPlayerMoveEnabled = enabled;
             enabled = false;
-
+            DamagedImage.SetActive(false);
             GameObject[] enemyDusts = GameObject.FindGameObjectsWithTag("Item");
             if (enemyDusts != null)
             {
@@ -779,6 +784,7 @@ public class NewPlayerController : MonoBehaviour
             enabled = false;
             anim.SetBool("isRun", false);
             remy.SetActive(false);
+            DamagedImage.SetActive(false);
             RespawnImage.GetComponent<Image>().enabled = true;
             RespawnImage.GetComponent<Animator>().enabled = true;
             hpPrefab.SetActive(false);
@@ -802,8 +808,14 @@ public class NewPlayerController : MonoBehaviour
         {
             monitorUI.SetActive(false);
             monitorText.SetActive(false);
+            subText.SetActive(false);
+            thirdText.SetActive(false);
+            DamagedImage.SetActive(false);
+            DeskZone.IsDeskView = false;
+            QuizRestart?.Invoke();
             act1?.Invoke();
             bool wasPlayerMoveEnabled = enabled;
+            quizController.SetActive(false);
             enabled = false;
             anim.SetBool("isRun", false);
             remy.SetActive(false);
@@ -816,16 +828,20 @@ public class NewPlayerController : MonoBehaviour
             remy.SetActive(true);
             act3?.Invoke(); //mouse respawn
             transform.position = respawn3.position;
+            mainCamera.transform.SetParent(socket);
+            mainCamera.transform.localPosition = Vector3.zero;
+            mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
             currentHp = 200;
             hpUI.hp = currentHp;
             
             yield return new WaitForSeconds(2.0f);
-
+            springArm.GetComponent<SpringArmCamera>().enabled = true;
             RespawnImage.GetComponent<Image>().enabled = false;
             RespawnImage.GetComponent<Animator>().enabled = false;
             hpPrefab.SetActive(true);
             
             deskZone.GetComponent<Collider>().enabled = true;
+           
             enabled = wasPlayerMoveEnabled;
         }
     }

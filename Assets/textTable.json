@@ -45,45 +45,76 @@
     {
       "Key": 6,
       "Text": [
-        "Okay.. I see.\n  Go get him Mouse!",
-        "몸짓이 빠르군.. 직접 처리해라!"
+        "Its Quiz Time",
+        "이렇게 해선\n 끝이 없겠군"
+
       ]
     },
     {
       "Key": 7,
-      "Text": [
-        "       AWEEEE!! Stop me if you can!      ",
-        "너무 화가 나! 들이 받아 주지!"
-      ]
-    },
-    {
-      "Key": 8,
-      "Text": [
-        "Overloaded...",
-        "과부화 상태..!"
-      ]
-    },
-    {
-      "Key": 9,
-      "Text": [
-        "Its Quiz Time",
-        "이렇게 해선\n 끝이 없겠군"
-      ]
-    },
-    {
-      "Key": 10,
       "Text": [
         "If you fail to solve it within the time limit,\n then it's my victory.",
         "제한 시간 안에\n 풀지 못하면\n 나의 승리다"
       ]
     },
     {
-      "Key": 11,
+      "Key": 8,
       "Text": [
         "Next Quiz",
         "다음 문제다."
+
+      ]
+    },
+    {
+      "Key": 9,
+      "Text": [
+        "Well..\n You're Good.\nHow about this?'",
+        "좀 하는군..\n이건 어떨까?."
+
+      ]
+    },
+    {
+      "Key": 10,
+      "Text": [
+        "You're clever!'",
+        "머리가 비상하구나.\n좋다!!"
+
+      ]
+    },
+    {
+      "Key": 11,
+      "Text": [
+        "Okay.. I see.\n  Go get him Mouse!",
+        "직접 처리해라!"
+      ]
+    },
+    {
+      "Key": 12,
+      "Text": [
+        "       AWEEEE!! Stop me if you can!      ",
+        "       너무 화가 나! 들이 받아 주지!        "
+      ]
+    },
+    {
+      "Key": 13,
+      "Text": [
+        "Overloaded...",
+        "과부화 상태..!"
+      ]
+    },
+    {
+      "Key": 14,
+      "Text": [
+        "You've been beaten too..\nI'll deal with you myself",
+        "너까지 당하다니..\n내가 직접 상대해주마"
+      ]
+    },
+    {
+      "Key": 15,
+      "Text": [
+        "Come here",
+        "이리 들어 오너라"
       ]
     }
-
   ]
 }

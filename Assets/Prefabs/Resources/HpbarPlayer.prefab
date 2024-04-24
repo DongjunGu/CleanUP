@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 5609158864143918893}
   - component: {fileID: 5609158864143918882}
   m_Layer: 5
-  m_Name: HpbarTest
+  m_Name: HpbarPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

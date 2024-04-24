@@ -61,7 +61,7 @@ public class CameraMode : MonoBehaviour
         respawnWall.SetActive(true);
         player.transform.position = playerDestination.transform.position;
         mainCamera.orthographic = true;
-        mainCamera.orthographicSize = 35;
+        mainCamera.orthographicSize = 37.5f;
     }
 
     void ReturnToOriginalPlace()

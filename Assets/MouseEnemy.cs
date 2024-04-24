@@ -64,26 +64,27 @@ public class MouseEnemy : MonoBehaviour
     }
     IEnumerator MouseControl()
     {
-        //yield return StartCoroutine(Text1());
-        //yield return StartCoroutine(Text3());
+        yield return StartCoroutine(Text1());
+        yield return StartCoroutine(Text3());
+        myLabel.text = "";
         SpawnHPBar();
-        //yield return StartCoroutine(MouseRush1(30));
-        //yield return StartCoroutine(MouseRush1(35));
-        //yield return StartCoroutine(MouseRush1(40));
-        //yield return StartCoroutine(MouseRush1(45));
-        //yield return StartCoroutine(MouseRush1(50));
-        //hpPrefab.SetActive(false);
-        //yield return StartCoroutine(Text2()); //overLoaded
-        //hpPrefab.SetActive(true);
-        //yield return StartCoroutine(Waiting());
-        //hpPrefab.SetActive(false);
-        //yield return StartCoroutine(Text3()); //추격
-        //hpPrefab.SetActive(true);
-        //yield return StartCoroutine(MouseRush1(40));
-        //yield return StartCoroutine(MouseRush1(45));
-        //yield return StartCoroutine(MouseRush1(50));
-        //hpPrefab.SetActive(false);
-        //yield return StartCoroutine(Text2()); //overLoaded
+        yield return StartCoroutine(MouseRush1(30));
+        yield return StartCoroutine(MouseRush1(35));
+        yield return StartCoroutine(MouseRush1(40));
+        yield return StartCoroutine(MouseRush1(45));
+        yield return StartCoroutine(MouseRush1(50));
+        hpPrefab.SetActive(false);
+        yield return StartCoroutine(Text2()); //overLoaded
+        hpPrefab.SetActive(true);
+        yield return StartCoroutine(Waiting());
+        hpPrefab.SetActive(false);
+        yield return StartCoroutine(Text3()); //추격
+        hpPrefab.SetActive(true);
+        yield return StartCoroutine(MouseRush1(40));
+        yield return StartCoroutine(MouseRush1(45));
+        yield return StartCoroutine(MouseRush1(50));
+        hpPrefab.SetActive(false);
+        yield return StartCoroutine(Text2()); //overLoaded
         hpPrefab.SetActive(true);
         yield return StartCoroutine(Victory());
     }
@@ -99,12 +100,13 @@ public class MouseEnemy : MonoBehaviour
             TMPImage.SetActive(false);
             TMPObj.GetComponent<TextMeshProUGUI>().text = "";
         }
-            
-    }
-    public void NextStep()
-    {
         MouseClear?.Invoke();
+
     }
+    //public void NextStep()
+    //{
+    //    MouseClear?.Invoke();
+    //}
     IEnumerator Waiting()
     {
         while (currentHp > 250)
@@ -163,7 +165,7 @@ public class MouseEnemy : MonoBehaviour
 
             Destroy(gameObject, 2);
             Destroy(hpPrefab, 2);
-            NextStep();
+            //NextStep();
         }
     }
     IEnumerator ChangeColor()
@@ -174,10 +176,10 @@ public class MouseEnemy : MonoBehaviour
     }
     public void HitByDust()
     {
-        hpPrefab.SetActive(true);
-        currentHp -= 100;
+        
         if (hpUI != null)
         {
+            currentHp -= 100;
             hpUI.takeDamage(100);
         }
         StartCoroutine(Damaged());
@@ -188,7 +190,7 @@ public class MouseEnemy : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         TMPImage.SetActive(true);
         myLabel.alignment = TextAlignmentOptions.Center;
-        text = TalkManager.table.datas[7].Text[language];
+        text = TalkManager.table.datas[12].Text[language];
         int cur = 0;
 
         while (cur < text.Length)
@@ -204,7 +206,7 @@ public class MouseEnemy : MonoBehaviour
     IEnumerator Text2()
     {
         TMPImage.SetActive(true);
-        text = TalkManager.table.datas[8].Text[language];
+        text = TalkManager.table.datas[13].Text[language];
         int cur = 0;
 
         while (cur < text.Length)

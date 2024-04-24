@@ -10,37 +10,72 @@ public class QuizControl : MonoBehaviour
     public TMPro.TMP_Text thirdText;
     public GameObject subTextObj;
     public GameObject thirdTextObj;
+    public GameObject foodDrop;
+    public GameObject player;
     public string text;
     public int language;
-    bool test = true;
-    private void Start()
+    public UnityEngine.Events.UnityEvent MouseEnemyStart;
+    void OnEnable()
     {
         StartCoroutine(QuizStartControl());
     }
+    public void RestartQuiz()
+    {
+        foreach (GameObject obj in Paper)
+        {
+            obj.GetComponent<Animator>().SetBool("isShuffle", false);
+            obj.SetActive(false);
+        }
+
+        foodDrop.SetActive(false);
+        mainText.fontSize = 24;
+        ClearMainText();
+        ClearSubText();
+        ClearThirdText();
+        StopAllCoroutines();
+    }
     private void Update()
     {
-        //if(!test)
-        //    mainText.text = $"5 + ({NewPlayerController.Papernumber}) = 8";
+
     }
     IEnumerator QuizStartControl()
     {
-        int index = 10;
+        int index = 7;
         subTextObj.SetActive(true);
         thirdTextObj.SetActive(true);
         yield return StartCoroutine(SpawnPaper());
+        
         yield return StartCoroutine(PrintmainText(index++)); //If you fail to solve it within the time limit
-
+        
         StartCoroutine(PrintQuizText1()); // 5 + ( ) = 8
-        yield return StartCoroutine(CountNumber(10));
+        yield return StartCoroutine(CountNumber(15));
         yield return StartCoroutine(CheckAnswer(3));
 
-        yield return StartCoroutine(PrintmainText(index++));
+        yield return StartCoroutine(PrintmainText(index++)); //Next Quiz
 
-        StartCoroutine(PrintQuizText2()); // ( ) * 6 = 42
-        yield return StartCoroutine(CountNumber(10));
+        StartCoroutine(PrintQuizText2()); // ( ) * 9 = 81
+        yield return StartCoroutine(CountNumber(15));
+        yield return StartCoroutine(CheckAnswer(9));
+
+        yield return StartCoroutine(PrintmainText(index++)); //Well.. You're Good. How about this?
+        yield return StartCoroutine(ShufflePaper());
+
+        StartCoroutine(PrintQuizText3()); // 12 - 10 / 2 = ( ) = 7
+        yield return StartCoroutine(CountNumber(15));
         yield return StartCoroutine(CheckAnswer(7));
 
-        
+        yield return StartCoroutine(PrintmainText(index++)); // 10 You're clever!
+        yield return StartCoroutine(PrintmainText(index++)); // 11 Okay..\n Go get him Mouse!
+        MouseEnemyStart?.Invoke();
+    }
+    IEnumerator ShufflePaper()
+    {
+        foreach (GameObject obj in Paper)
+        {
+            obj.GetComponent<Animator>().SetBool("isShuffle", true);
+        }
+
+        yield return new WaitForSeconds(3.0f);
     }
     IEnumerator CheckAnswer(int answer)
     {
@@ -48,25 +83,36 @@ public class QuizControl : MonoBehaviour
         {
             thirdText.text = "CORRECT";
             yield return new WaitForSeconds(3.0f);
-            subText.text = "";
-            thirdText.text = "";
+            ClearSubText();
+            ClearThirdText();
         }
         else
         {
             thirdText.text = "WRONG";
             yield return new WaitForSeconds(3.0f);
-            subText.text = "";
-            thirdText.text = "";
+            ClearSubText();
+            ClearThirdText();
+            thirdText.text = $"Answer = {answer}";
+            yield return new WaitForSeconds(2.0f);
+            ClearSubText();
+            ClearThirdText();
             //Angry Animation
-            //Drop Laser
+            foodDrop.SetActive(true);
+            yield return new WaitForSeconds(2.5f);
+            NewPlayerController playerhp = player.GetComponent<NewPlayerController>();
+            playerhp.currentHp -= 200;//Test 200
+            playerhp.hpUI.takeDamage(200);
+            yield return new WaitForSeconds(2.0f);
+            foodDrop.SetActive(false);
         }
     }
     IEnumerator SpawnPaper()
     {
         foreach (GameObject obj in Paper)
         {
-            obj.SetActive(true); //Paper Active
+            obj.SetActive(true);
         }
+
         yield return new WaitForSeconds(5.0f);
 
         foreach (GameObject obj in Paper) 
@@ -77,7 +123,7 @@ public class QuizControl : MonoBehaviour
 
     IEnumerator PrintmainText(int index)
     {
-        mainText.text = "";
+        ClearMainText();
         mainText.fontSize = 24;
         text = TalkManager.table.datas[index].Text[language];
         int cur = 0;
@@ -92,7 +138,7 @@ public class QuizControl : MonoBehaviour
 
     IEnumerator PrintQuizText1()
     {
-        mainText.text = "";
+        ClearMainText();
         mainText.fontSize = 40;
         text = $"5 + ( ) = 8";
         int cur = 0;
@@ -104,19 +150,20 @@ public class QuizControl : MonoBehaviour
         }
         yield return new WaitForSeconds(1f);
 
-        mainText.text = "";
-        while (Time.time - startTime <= 10f)
+        ClearMainText();
+        while (Time.time - startTime <= 16f)
         {
-            mainText.text = $"5 + ({NewPlayerController.Papernumber}) = 8";
+            string temp = NewPlayerController.Papernumber == 0? " " : NewPlayerController.Papernumber.ToString();
+            mainText.text = $"5 + ({temp}) = 8";
 
             yield return null;
         }
     }
     IEnumerator PrintQuizText2()
     {
-        mainText.text = "";
+        ClearMainText();
         mainText.fontSize = 40;
-        text = $"( ) * 6 = 42";
+        text = $"( ) * 9 = 81";
         int cur = 0;
         float startTime = Time.time;
         while (cur < text.Length)
@@ -126,19 +173,44 @@ public class QuizControl : MonoBehaviour
         }
         yield return new WaitForSeconds(1f);
 
-        mainText.text = "";
-        while (Time.time - startTime <= 20f)
+        ClearMainText();
+        while (Time.time - startTime <= 16f)
         {
-            mainText.text = $"({NewPlayerController.Papernumber}) * 6 = 42";
+            string temp = NewPlayerController.Papernumber == 0? " " : NewPlayerController.Papernumber.ToString();
+            mainText.text = $"({temp}) * 9 = 81";
 
             yield return null;
         }
     }
 
+    IEnumerator PrintQuizText3()
+    {
+        ClearMainText();
+        mainText.fontSize = 40;
+        text = $"12 - 10 / 2 = ( )"; //7
+        int cur = 0;
+        float startTime = Time.time;
+        while (cur < text.Length)
+        {
+            mainText.text += text[cur++];
+            yield return new WaitForSeconds(0.1f);
+        }
+        yield return new WaitForSeconds(1f);
+
+        ClearMainText();
+
+        while (Time.time - startTime <= 16f)
+        {
+            string temp = NewPlayerController.Papernumber == 0 ? " " : NewPlayerController.Papernumber.ToString();
+            mainText.text = $"12 - 10 / 2 = ({temp})";
+
+            yield return null;
+        }
+    }
     IEnumerator CountNumber(int count)
     {
         yield return new WaitForSeconds(1f);
-        subText.text = "";
+        ClearSubText();
         while (count >= 0)
         {
             subText.text = count.ToString();
@@ -146,8 +218,16 @@ public class QuizControl : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
     }
-    //void ClearText()
-    //{
-    //    mainText.text = "";
-    //}
+    void ClearMainText()
+    {
+        mainText.text = "";
+    }
+    void ClearSubText()
+    {
+        subText.text = "";
+    }
+    void ClearThirdText()
+    {
+        thirdText.text = "";
+    }
 }

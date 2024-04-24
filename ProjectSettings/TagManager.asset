@@ -18,6 +18,7 @@ TagManager:
   - Almond
   - AlmondDropPos
   - Mouse
+  - Food
   layers:
   - Default
   - TransparentFX

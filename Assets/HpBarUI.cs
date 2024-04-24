@@ -11,14 +11,13 @@ public class HpBarUI : MonoBehaviour
     public float maxHP;
     public float hp;
     private float lerpSpeed = 0.05f;
-    
+    public GameObject damagedImage;
     void Start()
     {
         easehpSlider.maxValue = maxHP;
         hpSlider.maxValue = hp;
-
         hp = maxHP;
-        
+        damagedImage = SceneData.Inst.DamagedImage;
     }
     void Update()
     {
@@ -38,9 +37,22 @@ public class HpBarUI : MonoBehaviour
         {
             transform.position = new Vector3(0, 10000, 0);
         }
+
+        
+        
+    }
+
+    IEnumerator DamagedDelay()
+    {
+        damagedImage.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        damagedImage.SetActive(false);
+        yield return null;
     }
     public void takeDamage(float damage)
     {
         hp -= damage; // enemy의 hp를 weapons.damage만큼 감소시킴
+        if(transform.name == "HpbarPlayer(Clone)")
+            StartCoroutine(DamagedDelay());
     }
 }

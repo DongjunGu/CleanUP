@@ -17,37 +17,39 @@ public class MonitorText : MonoBehaviour
     public Transform Spawnpoint;
     public GameObject LampLight;
     public GameObject player;
-    public UnityEngine.Events.UnityEvent act;
     public UnityEngine.Events.UnityEvent QuizController;
+
 
     void OnEnable()
     {
+        monitorText.text = "";
         //StartCoroutine(MonitorTextStart());
-        StartCoroutine(QuizStart());
+        LastStage();
     }
 
     IEnumerator MonitorTextStart()
     {
         Animator monitorAnim = MonitorAnim.GetComponent<Animator>();
         int index = 4;
-        //yield return StartCoroutine(WelcomeText());
-        //yield return StartCoroutine(PrintText(index++)); //4
-        //Almondzone.SetActive(true);
-        //yield return StartCoroutine(CountNumber(15));
-        //DestroySpawnedObjects();
-        //yield return StartCoroutine(PrintText(index++)); //5
-        //ClearText();
-        //MonitorAnim.SetActive(true);
-        //monitorAnim.SetBool("isAngry", true);
-        //yield return StartCoroutine(SpawnLaserEnemy());
-        //MonitorAnim.SetActive(false);
-        //Almondzone.SetActive(true);
-        //yield return StartCoroutine(CountNumber(40)); //40sec
-        //ClearText();
-        //DestroySpawnedObjects();
-        yield return StartCoroutine(PrintText(index++)); //6
-        act?.Invoke();
+        yield return StartCoroutine(WelcomeText());
+        yield return StartCoroutine(PrintText(index++)); //4
+        Almondzone.SetActive(true);
+        yield return StartCoroutine(CountNumber(15));
+        DestroySpawnedObjects();
+        yield return StartCoroutine(PrintText(index++)); //5
         ClearText();
+        MonitorAnim.SetActive(true);
+        monitorAnim.SetBool("isAngry", true);
+        yield return StartCoroutine(SpawnLaserEnemy());
+        MonitorAnim.SetActive(false);
+        Almondzone.SetActive(true);
+        yield return StartCoroutine(CountNumber(45)); //45sec
+        ClearText();
+        DestroySpawnedObjects();
+        yield return new WaitForSeconds(2.0f);
+        StartCoroutine(QuizStart());
+        ClearText();
+        yield return null;
     }
     public void StartQuiz()
     {
@@ -61,10 +63,24 @@ public class MonitorText : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         LampLight.SetActive(false);
         int index = 9;
-        yield return StartCoroutine(PrintText(index++)); //QuizStart
+        yield return StartCoroutine(PrintText(index++));
         QuizController?.Invoke();
     }
-    
+
+    void LastStage()
+    {
+        StartCoroutine(LastStageStart());
+    }
+    IEnumerator LastStageStart()
+    {
+        LampLight.SetActive(true);
+        int playerHp = player.GetComponent<NewPlayerController>().currentHp = 200;
+        player.GetComponent<NewPlayerController>().hpUI.hp = playerHp;
+        yield return new WaitForSeconds(2.0f);
+        LampLight.SetActive(false);
+        int index = 14;
+        yield return StartCoroutine(PrintText(index++)); //14
+    }
     void ClearText()
     {
         monitorText.text = "";

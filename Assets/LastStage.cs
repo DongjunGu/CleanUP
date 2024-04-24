@@ -6,11 +6,16 @@ public class LastStage : MonoBehaviour
 {
     public GameObject[] folders;
     public Transform target;
+    public GameObject chrome;
     private void Start()
     {
-        StartCoroutine(ThrowFolder());
+        StartCoroutine(StartLastStage());
 
-
+    }
+    IEnumerator StartLastStage()
+    {
+        yield return StartCoroutine(ThrowFolder());
+        yield return StartCoroutine(ActiveChrome());
     }
 
     IEnumerator ThrowFolder()
@@ -22,5 +27,12 @@ public class LastStage : MonoBehaviour
             yield return new WaitForSeconds(2.0f);
             obj.SetActive(false);
         }
+    }
+
+    IEnumerator ActiveChrome()
+    {
+        chrome.SetActive(true);
+        yield return new WaitForSeconds(3.0f);
+        chrome.GetComponent<ChromeEnemy>().enabled = true;
     }
 }

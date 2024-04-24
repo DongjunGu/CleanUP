@@ -104,10 +104,8 @@ public class NewPlayerController : MonoBehaviour
         prefab = Resources.Load("HpbarPlayer") as GameObject;
         hpPrefab = MonoBehaviour.Instantiate(prefab, HpBarCanvas.Root) as GameObject;
         hpUI = hpPrefab.GetComponent<HpBarUI>();
-        //hpUI.target = transform.Find("HpPos");
         hpUI.hp = currentHp;
         hpUI.maxHP = maxHP;
-        //hpPrefab.SetActive(false);
     }
     void Update()
     {

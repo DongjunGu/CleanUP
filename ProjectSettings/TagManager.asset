@@ -19,6 +19,7 @@ TagManager:
   - AlmondDropPos
   - Mouse
   - Food
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -38,7 +39,7 @@ TagManager:
   - Obstacle
   - Camera
   - Pushable
-  - 
+  - Boss
   - 
   - 
   - 

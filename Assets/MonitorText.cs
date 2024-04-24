@@ -17,6 +17,12 @@ public class MonitorText : MonoBehaviour
     public Transform Spawnpoint;
     public GameObject LampLight;
     public GameObject player;
+    public GameObject SpinImage;
+    public GameObject Monitor;
+    public Transform TeleportPos;
+    public Camera mainCamera;
+    public Transform socket;
+    public GameObject SpringArm;
     public UnityEngine.Events.UnityEvent QuizController;
 
 
@@ -80,6 +86,43 @@ public class MonitorText : MonoBehaviour
         LampLight.SetActive(false);
         int index = 14;
         yield return StartCoroutine(PrintText(index++)); //14
+        yield return StartCoroutine(PrintText(index++)); //15
+        ClearText();
+        //회오리 이미지
+        SpinImage.SetActive(true);
+        yield return new WaitForSeconds(2.0f);
+        //화면전환
+        mainCamera.transform.SetParent(socket);
+        mainCamera.transform.localPosition = Vector3.zero;
+        mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        SpringArm.GetComponent<SpringArmCamera>().enabled = true;
+        //모니터 collider 비활성화
+        Monitor.GetComponent<MeshCollider>().enabled = false;
+        //이동스크립트 비활성화
+        player.GetComponent<NewPlayerController>().enabled = false;
+        player.GetComponent<Rigidbody>().useGravity = false;
+        //상승
+        float elapsedTime = 0.0f;
+        float duration = 2.0f;
+
+        elapsedTime += Time.deltaTime;
+        while (elapsedTime < duration)
+        {
+            player.transform.position += Vector3.up * 10.0f * Time.deltaTime;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        player.GetComponent<Animator>().SetBool("isSpin", true);
+        //모니터로 이동
+        float dist = Vector3.Distance(TeleportPos.position, player.transform.position);
+        while (!TelePort.teleported)
+        {
+            Vector3 dir = (TeleportPos.position - player.transform.position).normalized;
+            player.transform.position += dir * 20.0f * Time.deltaTime;
+            yield return null;
+        }
+        player.GetComponent<Rigidbody>().useGravity = true;
+
     }
     void ClearText()
     {

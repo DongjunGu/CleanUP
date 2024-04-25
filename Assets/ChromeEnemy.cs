@@ -14,10 +14,18 @@ public class ChromeEnemy : MonoBehaviour
     }
     IEnumerator StartChrome()
     {
-        yield return StartCoroutine(ChromeMove(50));
+        yield return new WaitForSeconds(3.0f);
+        yield return StartCoroutine(ChromeMove(40));
         yield return StartCoroutine(RestartChrome());
-        yield return StartCoroutine(ChromeMove(50));
-        Destroy(gameObject);
+        yield return StartCoroutine(ChromeMove(40));
+        yield return StartCoroutine(RestartChrome());
+        yield return StartCoroutine(ChromeMove(40));
+        yield return StartCoroutine(RestartChrome());
+        yield return StartCoroutine(ChromeMove(40));
+        yield return StartCoroutine(RestartChrome());
+        yield return StartCoroutine(ChromeMove(40));
+        yield return StartCoroutine(RestartChrome());
+        yield return StartCoroutine(ChromeMove(40));
     }
     private void Update()
     {

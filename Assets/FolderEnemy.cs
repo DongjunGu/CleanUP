@@ -9,9 +9,13 @@ public class FolderEnemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<NewPlayerController>().currentHp -= 10;
-            collision.gameObject.GetComponent<NewPlayerController>().hpUI.takeDamage(10);
-            StartCoroutine(OnDamage());
+            if (!_isDamaged)
+            {
+                collision.gameObject.GetComponent<NewPlayerController>().currentHp -= 10;
+                collision.gameObject.GetComponent<NewPlayerController>().hpUI.takeDamage(10);
+                StartCoroutine(OnDamage());
+            }
+            
         }
     }
 

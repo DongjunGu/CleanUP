@@ -105,7 +105,7 @@
     {
       "Key": 14,
       "Text": [
-        "You've been beaten too..\nI'll deal with you myself",
+        "Mouse..\nYou've been beaten too..\nI'll deal with you myself",
         "너까지 당하다니..\n내가 직접 상대해주마"
       ]
     },
@@ -114,6 +114,41 @@
       "Text": [
         "Come here",
         "이리 들어 오너라"
+      ]
+    },
+    {
+      "Key": 16,
+      "Text": [
+        "SO MESSY!",
+        "너가 지나쳐온 길을 봤느냐.\n얼마나 엉망인지..\n덤벼라"
+      ]
+    },
+    {
+      "Key": 17,
+      "Text": [
+        "Come beat me!",
+        "네가 가까이 올 수는 있을까?"
+      ]
+    },
+    {
+      "Key": 18,
+      "Text": [
+        "Lucky You!",
+        "재밌군!"
+      ]
+    },
+    {
+      "Key": 19,
+      "Text": [
+        "Do it Again!",
+        "다시 와보거라!!"
+      ]
+    },
+    {
+      "Key": 20,
+      "Text": [
+        "I'll handle it!",
+        "내가 직접 처리하겠다"
       ]
     }
   ]

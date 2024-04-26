@@ -54,9 +54,8 @@ public class BossEnemy : MonoBehaviour
     }
     void Start()
     {
-        StartCoroutine(ChasePlayer());
         SpawnHPBar();
-        //StartCoroutine(ActiveBoss());
+        StartCoroutine(ActiveBoss());
     }
     private void Update()
     {
@@ -104,8 +103,10 @@ public class BossEnemy : MonoBehaviour
         yield return StartCoroutine(ThrowFolder());
         yield return StartCoroutine(Damaged4times());
         InActiveChrome();
+        hpPrefab.SetActive(false);
         yield return StartCoroutine(PrintText(index++)); // 20 流立贸府窍摆促
         TMPImage.SetActive(false);
+        hpPrefab.SetActive(true);
         yield return StartCoroutine(ChasePlayer());
 
 

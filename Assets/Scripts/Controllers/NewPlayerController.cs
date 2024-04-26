@@ -28,8 +28,8 @@ public class NewPlayerController : MonoBehaviour
     public Transform respawn3;
     public GameObject remy;
     public GameObject[] dusts;
-
-    public int hasDust;
+    public GameObject Inventory;
+    public static int hasDust;
     public int maxDust;
     public GameObject dustObject;
     public int maxHP;
@@ -43,13 +43,12 @@ public class NewPlayerController : MonoBehaviour
     public GameObject subText;
     public GameObject thirdText;
     public GameObject quizController;
-    
+    public AudioClip clip;
     public UnityEngine.Events.UnityEvent act1;
     public UnityEngine.Events.UnityEvent act2;
     public UnityEngine.Events.UnityEvent act3;
     public UnityEngine.Events.UnityEvent QuizRestart;
     private Rigidbody playerRigidbody;
-
 
     bool _isJumping;
     bool _isDodge;
@@ -66,6 +65,8 @@ public class NewPlayerController : MonoBehaviour
     bool isJumpZone = false;
     bool canDodge;
     bool _isDamaged;
+    bool _isToggleInventory;
+    bool _alreadyToggled = true;
     bool wasGrounded = true;
     private bool _isWipeAnimationPlaying = false;
 
@@ -82,7 +83,7 @@ public class NewPlayerController : MonoBehaviour
     int orginWeaponIndex = -1;
     float _attackDelay;
     float maxSlopeAngle = 80.0f;
-
+    float lastFootstepTime;
     RaycastHit slopeHit;
     public static int Papernumber;
     public enum State
@@ -116,6 +117,7 @@ public class NewPlayerController : MonoBehaviour
         SwapWeapon();
         Attack();
         Dust();
+        OpenInventory();
         CheckGrounded();
         if (currentHp <= 0)
         {
@@ -132,10 +134,11 @@ public class NewPlayerController : MonoBehaviour
         _swapItem3 = Input.GetButtonDown("SwapItem3");
         _attackKey = Input.GetButtonDown("Attack1");
         _dustAttack = Input.GetButtonDown("Attack2");
-
+        _isToggleInventory = Input.GetButtonDown("Inventory");
     }
     void PlayerMove()
     {
+        
         if (CameraMode.IsGamePause)
         {
             anim.SetBool("isRun", false);
@@ -155,6 +158,7 @@ public class NewPlayerController : MonoBehaviour
             Vector3 _moveVertical = transform.forward * v;
             float dist = _speed * Time.deltaTime;
             anim.SetBool("isRun", true);
+            
 
             playerDirection = (_moveHorizontal + _moveVertical).normalized;
 
@@ -173,9 +177,16 @@ public class NewPlayerController : MonoBehaviour
                 dist = pushhit.distance - offset * 1.0f;
             }
             transform.Translate(slopeVelocity * dist, Space.World);
-
+            
             Quaternion targetRotation = Quaternion.LookRotation(new Vector3(slopeVelocity.x, 0, slopeVelocity.z), Vector3.up);
             player.rotation = Quaternion.Slerp(player.rotation, targetRotation, Time.deltaTime * _rotateSpeed);
+
+            
+            //if (Time.time - lastFootstepTime > 0.7f)
+            //{
+            //    SoundController.Instance.PlaySound("Walk", clip);
+            //    lastFootstepTime = Time.time;
+            //}
         }
         else
         {
@@ -200,7 +211,8 @@ public class NewPlayerController : MonoBehaviour
             if (_isJumping && _canDoubleJump)
             {
                 _canDoubleJump = false;
-                anim.SetTrigger("playDoubleJump");
+                //anim.SetTrigger("playDoubleJump");
+                anim.SetBool("isDoubleJumping", true);
                 playerRigidbody.AddForce(Vector3.up * 14.0f, ForceMode.Impulse);
                 Invoke("FallAfterJump", 0.3f);
                 return;
@@ -225,13 +237,11 @@ public class NewPlayerController : MonoBehaviour
             {
                 playerRigidbody.velocity = Vector3.zero;
                 playerRigidbody.AddForce(Vector3.up * 15.0f, ForceMode.Impulse);
-                Debug.Log("JUMP");
-                anim.SetBool("isJumping", true);
                 _isJumping = true;
                 anim.SetTrigger("playJump");
                 _canDoubleJump = true;
                 Invoke("FallAfterJump", 0.3f);
-
+                
                 return;
             }
         }
@@ -239,6 +249,7 @@ public class NewPlayerController : MonoBehaviour
     void FallAfterJump()
     {
         playerRigidbody.AddForce(Vector3.down * 5.0f, ForceMode.Impulse);
+        
     }
     void PlayFall()
     {
@@ -375,22 +386,34 @@ public class NewPlayerController : MonoBehaviour
             if (getItem.tag == "Weapon")
             {
                 Items item = getItem.GetComponent<Items>();
+                anim.SetTrigger("playObtain");
                 int weaponIndex = item.value;
                 hasWeapons[weaponIndex] = true;
                 Destroy(getItem);
-
-
-                //if (getItem.name == "Broom")
-                //{
-                //    weaponImage1.SetActive(true);
-
-                //}
-                //else if (getItem.name == "Hammer")
-                //{
-                //    weaponImage2.SetActive(true);
-                //}
-
+                Inventory.GetComponent<Animator>().SetBool("isToggle", true);
+                Invoke("InventoryIn", 3f);
             }
+        }
+    }
+    void InventoryIn()
+    {
+        Inventory.GetComponent<Animator>().SetBool("isToggle", false);
+    }
+    void OpenInventory()
+    {
+        if (_isToggleInventory)
+        {
+            if (_alreadyToggled)
+            {
+                Inventory.GetComponent<Animator>().SetBool("isToggle", true);
+                _alreadyToggled = !_alreadyToggled;
+            }
+            else
+            {
+                Inventory.GetComponent<Animator>().SetBool("isToggle", false);
+                _alreadyToggled = !_alreadyToggled;
+            }
+               
         }
     }
     private void OnAnimatorMove()
@@ -645,7 +668,7 @@ public class NewPlayerController : MonoBehaviour
         float raycastDistance = 0.5f;
 
         Vector3 raycastOrigin = transform.position + Vector3.up * 0.1f;
-        anim.ResetTrigger("playFall");
+        //anim.ResetTrigger("playFall");
 
         LayerMask combinedLayers = groundLayer | wallLayer | obstacleLayer; //TODO
 
@@ -665,7 +688,7 @@ public class NewPlayerController : MonoBehaviour
         if (isGroundedNow && !wasGrounded)
         {
             Debug.Log("Grounded");
-            anim.SetBool("isJumping", false);
+            anim.SetBool("isDoubleJumping", false);
             _isJumping = false;
             canDodge = false;
         }

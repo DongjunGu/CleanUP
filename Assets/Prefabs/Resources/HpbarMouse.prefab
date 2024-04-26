@@ -218,6 +218,7 @@ MonoBehaviour:
   easehpSlider: {fileID: 7623127871089753752}
   maxHP: 0
   hp: 0
+  damagedImage: {fileID: 0}
 --- !u!1 &7623127871089753758
 GameObject:
   m_ObjectHideFlags: 0

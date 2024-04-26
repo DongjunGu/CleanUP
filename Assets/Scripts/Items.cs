@@ -10,6 +10,7 @@ public class Items : MonoBehaviour
     public Type type;
     public int value;
     public static bool isObtain = false;
+    public UnityEngine.Events.UnityEvent ObtainWeapon;
     private void Start()
     {
         if (type == Type.Bat)
@@ -29,10 +30,9 @@ public class Items : MonoBehaviour
         if(type == Type.Broom)
         {
             isObtain = true;
-            //GameObject Greendoor = GameObject.Find("green_door");
-            //NewPlayerController.stage++;
-            //Destroy(Greendoor);
+            ObtainWeapon?.Invoke();
         }
+        ObtainWeapon?.Invoke();
     }
 
     public void RotateBroom()
@@ -59,4 +59,5 @@ public class Items : MonoBehaviour
     {
         transform.Rotate(Vector3.right, 25.0f * Time.deltaTime);
     }
+
 }

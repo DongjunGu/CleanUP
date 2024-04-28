@@ -143,6 +143,9 @@ MonoBehaviour:
   easehpSlider: {fileID: 3404731424234006897}
   maxHP: 0
   hp: 0
+  damagedImage: {fileID: 0}
+  clipPlayerDamaged: {fileID: 0}
+  clipEnemyDamaged: {fileID: 8300000, guid: 4fcf4c701bd75e64d9932388058293c3, type: 3}
 --- !u!1 &3404731423233921260
 GameObject:
   m_ObjectHideFlags: 0

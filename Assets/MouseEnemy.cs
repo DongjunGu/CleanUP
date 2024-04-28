@@ -93,14 +93,18 @@ public class MouseEnemy : MonoBehaviour
     }
     public void OnDestroy()
     {
-        if (hpPrefab != null)
-            Destroy(hpPrefab);
-        if(TMPImage != null)
+        if (this.enabled)
         {
-            TMPImage.SetActive(false);
-            TMPObj.GetComponent<TextMeshProUGUI>().text = "";
+            if (hpPrefab != null)
+                Destroy(hpPrefab);
+            if (TMPImage != null)
+            {
+                TMPImage.SetActive(false);
+                TMPObj.GetComponent<TextMeshProUGUI>().text = "";
+            }
+            MouseClear?.Invoke();
         }
-        MouseClear?.Invoke();
+            
 
     }
     //public void NextStep()

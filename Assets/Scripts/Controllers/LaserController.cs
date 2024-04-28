@@ -7,15 +7,16 @@ public class LaserController : MonoBehaviour
     public LayerMask layerMask; // 레이저가 충돌을 감지할 레이어
     public GameObject target;
     private LineRenderer lineRenderer;
+    public AudioClip clipLaserCharge;
+    public AudioClip clipLaserShoot;
     void Start()
     {
-       
     }
     private void OnEnable()
     {
         lineRenderer = GetComponent<LineRenderer>();
-
         StartCoroutine(ShootLaserRepeatedly());
+        
     }
     IEnumerator ShootLaserRepeatedly()
     {
@@ -59,13 +60,20 @@ public class LaserController : MonoBehaviour
             Vector3 endPos = startPos + destination.normalized * distance;
             lineRenderer.SetPosition(0, startPos);
             lineRenderer.SetPosition(1, endPos);
-           
         }
     }
 
     IEnumerator HideLaser(float delay)
     {
+        StartCoroutine(LaserSound());
         yield return new WaitForSeconds(delay);
         lineRenderer.enabled = false;
     }
+
+    IEnumerator LaserSound()
+    {
+        SoundController.Instance.PlayLaserRobot("LaserShoot", clipLaserShoot);
+        yield return null;
+    }
+
 }

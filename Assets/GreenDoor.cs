@@ -12,6 +12,7 @@ public class GreenDoor : MonoBehaviour
     public GameObject greenDoor;
     public GameObject particle1;
     public GameObject particle2;
+    public AudioClip clipDoordestroy;
     void Update()
     {
         if (Items.isObtain)
@@ -34,6 +35,7 @@ public class GreenDoor : MonoBehaviour
             yield return null;
         }
         Destroy(greenDoor);
+        SoundController.Instance.PlaySound("DoorDestroy", clipDoordestroy);
         particle1.SetActive(true);
         particle2.SetActive(true);
         yield return new WaitForSeconds(3.0f);

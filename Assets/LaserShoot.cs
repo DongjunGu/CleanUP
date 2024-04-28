@@ -7,7 +7,8 @@ public class LaserShoot : MonoBehaviour
 {
     public GameObject target;
     private LineRenderer lineRenderer;
-
+    public AudioClip clipLaser;
+    public AudioClip clipCalendar;
 
     void Start()
     {
@@ -34,7 +35,7 @@ public class LaserShoot : MonoBehaviour
 
         float duration = 0.3f;
         float elapsedTime = 0f;
-
+        SoundController.Instance.PlayObjectSoundRobot("LaserShoot", clipLaser);
         while (elapsedTime < duration)
         {
             float t = elapsedTime / duration;
@@ -66,7 +67,11 @@ public class LaserShoot : MonoBehaviour
 
         lineRenderer.startWidth = 1f;
         lineRenderer.endWidth = 1f;
+        SoundController.Instance.PlayObjectSoundRobot("Calendar", clipCalendar);
         yield return new WaitForSeconds(0.5f);
         lineRenderer.enabled = false;
+
+        
+        
     }
 }

@@ -20,6 +20,7 @@ public class ChessController : MonoBehaviour
     public float moveSpeed = 1.0f;
     public float rotationSpeed = 1.0f;
     bool hasClearedChess = false;
+    public AudioClip clipDrawer;
     void Awake()
     {
         if (instance == null)
@@ -92,7 +93,7 @@ public class ChessController : MonoBehaviour
     {
         CameraMode.IsGamePause = true;
         yield return new WaitForSeconds(1.0f);
-
+        SoundController.bgmNum = 2;
         mainCamera.transform.SetParent(cameraPos);
 
         while (Vector3.Distance(mainCamera.transform.localPosition, Vector3.zero) > 1.5f)
@@ -104,7 +105,7 @@ public class ChessController : MonoBehaviour
         //yield return new WaitForSeconds(1.0f);
 
         Drawer.GetComponent<Animator>().enabled = true;
-
+        SoundController.Instance.PlaySound("Drawer", clipDrawer);
         yield return new WaitForSeconds(4.0f);
         mainCamera.transform.SetParent(socket);
         mainCamera.transform.localPosition = Vector3.zero;

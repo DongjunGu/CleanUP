@@ -8,6 +8,7 @@ public class NewPlayerController : MonoBehaviour
 {
     public static int stage = 1;
     public static int direction;
+    [SerializeField] public static int hasDust;
     [SerializeField] public float _speed = 10.0f;
     [SerializeField] LayerMask groundLayer = 1 << 9;
     [SerializeField] LayerMask wallLayer = 1 << 6;
@@ -26,10 +27,11 @@ public class NewPlayerController : MonoBehaviour
     public Transform respawn1;
     public Transform respawn2;
     public Transform respawn3;
+    public Transform respawn4;
     public GameObject remy;
     public GameObject[] dusts;
     public GameObject Inventory;
-    public static int hasDust;
+    //public static int hasDust;
     public int maxDust;
     public GameObject dustObject;
     public int maxHP;
@@ -38,16 +40,26 @@ public class NewPlayerController : MonoBehaviour
     private float v = 0.0f;
     private float h = 0.0f;
     public GameObject deskZone;
-    public GameObject monitorText;
+    public GameObject monitorText; 
     public GameObject monitorUI;
     public GameObject subText;
     public GameObject thirdText;
     public GameObject quizController;
     public AudioClip clip;
+    public AudioClip clipJump;
+    public AudioClip clipLand;
+    public AudioClip clipDodge;
+    public AudioClip clipObtain;
+    public AudioClip clipSwap;
+    public AudioClip clipInventory;
+    public AudioClip cliphit1;
+    public AudioClip clipCumpulsJump;
     public UnityEngine.Events.UnityEvent act1;
     public UnityEngine.Events.UnityEvent act2;
     public UnityEngine.Events.UnityEvent act3;
     public UnityEngine.Events.UnityEvent QuizRestart;
+    public UnityEngine.Events.UnityEvent BossRestart;
+    public UnityEngine.Events.UnityEvent BossRestartAction;
     private Rigidbody playerRigidbody;
 
     bool _isJumping;
@@ -214,6 +226,7 @@ public class NewPlayerController : MonoBehaviour
                 //anim.SetTrigger("playDoubleJump");
                 anim.SetBool("isDoubleJumping", true);
                 playerRigidbody.AddForce(Vector3.up * 14.0f, ForceMode.Impulse);
+                SoundController.Instance.PlaySound("Jump", clipJump);
                 Invoke("FallAfterJump", 0.3f);
                 return;
             }
@@ -237,6 +250,7 @@ public class NewPlayerController : MonoBehaviour
             {
                 playerRigidbody.velocity = Vector3.zero;
                 playerRigidbody.AddForce(Vector3.up * 15.0f, ForceMode.Impulse);
+                SoundController.Instance.PlaySound("Jump", clipJump);
                 _isJumping = true;
                 anim.SetTrigger("playJump");
                 _canDoubleJump = true;
@@ -260,6 +274,7 @@ public class NewPlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && !_isSwap && !_isDodge && dir != Vector3.zero && !_isJumping && !canDodge)
         {
             anim.SetTrigger("playDodge");
+            SoundController.Instance.PlaySound("Dodge", clipDodge);
             _isDodge = true;
             _isJumping = true;
             canDodge = false;
@@ -294,7 +309,7 @@ public class NewPlayerController : MonoBehaviour
             orginWeaponIndex = weaponIndex;
             orginWeapon = weapons[weaponIndex].GetComponent<Weapons>();
             orginWeapon.gameObject.SetActive(true);
-
+            SoundController.Instance.PlaySound("Swap", clipSwap);
             anim.SetTrigger("playSwap");
             _isSwap = true;
             Invoke("SwapFinish", 0.8f);
@@ -316,6 +331,7 @@ public class NewPlayerController : MonoBehaviour
         if (_attackKey && _isAttack && !_isDodge && !_isJumping && !_isWipeAnimationPlaying)
         {
             StartCoroutine(PlayWipeAnimation());
+            SoundController.Instance.PlaySound("Hit", cliphit1);
         }
     }
     void Dust()
@@ -389,6 +405,7 @@ public class NewPlayerController : MonoBehaviour
                 anim.SetTrigger("playObtain");
                 int weaponIndex = item.value;
                 hasWeapons[weaponIndex] = true;
+                SoundController.Instance.PlaySound("Obtain", clipObtain);
                 Destroy(getItem);
                 Inventory.GetComponent<Animator>().SetBool("isToggle", true);
                 Invoke("InventoryIn", 3f);
@@ -403,6 +420,7 @@ public class NewPlayerController : MonoBehaviour
     {
         if (_isToggleInventory)
         {
+            SoundController.Instance.PlaySound("Inventory", clipInventory);
             if (_alreadyToggled)
             {
                 Inventory.GetComponent<Animator>().SetBool("isToggle", true);
@@ -449,11 +467,10 @@ public class NewPlayerController : MonoBehaviour
         if (collision.gameObject.tag == "CumpulsionJumpZone")
         {
             playerRigidbody.velocity = Vector3.zero;
-            //anim.SetBool("isJumping", true);
+            SoundController.Instance.PlaySound("CumpulsJump", clipCumpulsJump);
             _isJumping = false;
             _canDoubleJump = false;
             playerRigidbody.AddForce(Vector3.up * 30.0f, ForceMode.Impulse);
-            Debug.Log("CumpulsionJump");
         }
         if (collision.gameObject.tag == "Almond")
         {
@@ -606,6 +623,7 @@ public class NewPlayerController : MonoBehaviour
             {
                 case Items.Type.Dust:
                     hasDust += item.value;
+                    SoundController.Instance.PlaySound("Obtain", clipObtain);
                     if (hasDust > maxDust)
                         hasDust = maxDust;
                     break;
@@ -688,6 +706,7 @@ public class NewPlayerController : MonoBehaviour
         if (isGroundedNow && !wasGrounded)
         {
             Debug.Log("Grounded");
+            SoundController.Instance.PlaySound("Land", clipLand);
             anim.SetBool("isDoubleJumping", false);
             _isJumping = false;
             canDodge = false;
@@ -801,6 +820,7 @@ public class NewPlayerController : MonoBehaviour
         }
         if(stage == 2)
         {
+            SoundController.bgmNum = 2;
             bool wasPlayerMoveEnabled = enabled;
             enabled = false;
             anim.SetBool("isRun", false);
@@ -864,6 +884,40 @@ public class NewPlayerController : MonoBehaviour
             deskZone.GetComponent<Collider>().enabled = true;
            
             enabled = wasPlayerMoveEnabled;
+        }
+
+        if (stage == 4)
+        {
+            DamagedImage.SetActive(false);
+            
+            bool wasPlayerMoveEnabled = enabled;
+            
+            enabled = false;
+            anim.SetBool("isRun", false);
+            remy.SetActive(false);
+            RespawnImage.GetComponent<Image>().enabled = true;
+            RespawnImage.GetComponent<Animator>().enabled = true;
+            hpPrefab.SetActive(false);
+            BossRestart?.Invoke();
+
+            yield return new WaitForSeconds(1.0f);
+            remy.SetActive(true);
+            transform.position = respawn4.position;
+            mainCamera.transform.SetParent(socket);
+            mainCamera.transform.localPosition = Vector3.zero;
+            mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+            currentHp = 200;
+            hpUI.hp = currentHp;
+
+            yield return new WaitForSeconds(2.0f);
+            springArm.GetComponent<SpringArmCamera>().enabled = true;
+            RespawnImage.GetComponent<Image>().enabled = false;
+            RespawnImage.GetComponent<Animator>().enabled = false;
+            hpPrefab.SetActive(true);
+
+            enabled = wasPlayerMoveEnabled;
+            yield return new WaitForSeconds(1.5f);
+            BossRestartAction?.Invoke();
         }
     }
 }

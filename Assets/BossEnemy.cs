@@ -38,11 +38,13 @@ public class BossEnemy : MonoBehaviour
     Material skinned_mat;
     Material original_mat;
     Color original_color;
+    Vector3 originPos;
     int countDamage = 0;
     int basicHitCount = 0;
     public UnityEngine.Events.UnityEvent BossDead;
     void Awake()
     {
+        originPos = transform.position;
         anim = GetComponent<Animator>();
         SkinnedMeshRenderer skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         if (skinnedMeshRenderer != null)
@@ -52,8 +54,9 @@ public class BossEnemy : MonoBehaviour
         }
 
     }
-    void Start()
+    void OnEnable()
     {
+        
         SpawnHPBar();
         StartCoroutine(ActiveBoss());
     }
@@ -70,6 +73,26 @@ public class BossEnemy : MonoBehaviour
         hpUI.maxHP = maxHP;
     }
 
+    public void RestartBoss()
+    {
+        Destroy(hpPrefab);
+        StopAllCoroutines();
+        DestroyVirus();
+        DestroySpawnedFolders();
+        chrome.GetComponent<ChromeEnemy>().enabled = false;
+        InActiveChrome();
+        anim.SetTrigger("playIdle");
+        anim.SetBool("isWalk", false);
+        anim.SetBool("isBasicAttack", false);
+        anim.SetBool("isMagicAttack", false);
+        GetComponent<Animator>().enabled = false;
+        countDamage = 0;
+        transform.position = originPos;
+        currentHp = 2000;
+        hpUI.hp = currentHp;
+        transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+
+    }
 
     IEnumerator ActiveBoss()
     {
@@ -124,7 +147,9 @@ public class BossEnemy : MonoBehaviour
         float chargeTime = 3f;
         while (true)
         {
-            Vector3 dir = (player.transform.position - transform.position).normalized;
+            Vector3 dir = player.transform.position - transform.position;
+            dir.y = 0f;
+            dir = dir.normalized;
             transform.position += dir * moveSpeed * Time.deltaTime;
             anim.SetBool("isWalk", true);
             Quaternion lookRotation = Quaternion.LookRotation(dir);
@@ -154,20 +179,16 @@ public class BossEnemy : MonoBehaviour
             }
             yield return StartCoroutine(BasicAttack());
 
-
-
-
             yield return null;
         }
     }
     public void DestroyVirus()
     {
-        if (virusObj1 != null)
-            Destroy(virusObj1);
-        if (virusObj2 != null)
-            Destroy(virusObj2);
-        if (virusObj3 != null)
-            Destroy(virusObj3);
+        GameObject[] VirusObjs = GameObject.FindGameObjectsWithTag("Virus");
+        foreach (GameObject obj in VirusObjs)
+        {
+            Destroy(obj);
+        }
     }
     IEnumerator basicAttackDelay()
     {
@@ -298,8 +319,8 @@ public class BossEnemy : MonoBehaviour
     {
         if (hpUI != null)
         {
-            currentHp -= 100;
-            hpUI.takeDamage(100);
+            currentHp -= 50;
+            hpUI.takeDamage(50);
         }
         StartCoroutine(ChangeColor());
         StartCoroutine(Damaged());
@@ -325,7 +346,7 @@ public class BossEnemy : MonoBehaviour
             obj.SetActive(false);
         }
     }
-    void DestroySpawnedFolders()
+    public void DestroySpawnedFolders()
     {
         if (spawnedFolders != null)
         {
@@ -355,7 +376,6 @@ public class BossEnemy : MonoBehaviour
 
     IEnumerator PrintText(int index)
     {
-
         TMPImage.SetActive(true);
         myLabel.alignment = TextAlignmentOptions.Center;
         text = TalkManager.table.datas[index].Text[language];
@@ -375,7 +395,6 @@ public class BossEnemy : MonoBehaviour
         playerAnim.SetBool("isRun", false);
         yield return new WaitForSeconds(0.01f);
         mainCamera.transform.SetParent(bossCameraPos);
-
 
         while (Vector3.Distance(mainCamera.transform.localPosition, Vector3.zero) > 1.5f)
         {

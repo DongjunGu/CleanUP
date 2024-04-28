@@ -25,7 +25,6 @@ public class DeskZone : MonoBehaviour
     private void Start()
     {
         SpawnMouse();
-        //mouseObj = GameObject.FindGameObjectWithTag("Mouse");
     }
 
     void Update()
@@ -37,6 +36,7 @@ public class DeskZone : MonoBehaviour
         if (other.tag == "Player")
         {
             NewPlayerController.stage = 3;
+            
             StartCoroutine(CameraMove());
             GetComponent<Collider>().enabled = false;
         }
@@ -67,11 +67,13 @@ public class DeskZone : MonoBehaviour
             mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, cameraPos.rotation, rotationSpeed * Time.deltaTime);
             yield return null;
         }
+        SoundController.bgmNum = 4;
         yield return new WaitForSeconds(1.0f);
         monitorNoise.SetActive(true);
         yield return new WaitForSeconds(2.0f);
         monitorNoise.SetActive(false);
         yield return new WaitForSeconds(2.0f);
+        
         MonitorUI.SetActive(true);
         MonitorAnim.SetActive(true);
         yield return new WaitForSeconds(2.0f);

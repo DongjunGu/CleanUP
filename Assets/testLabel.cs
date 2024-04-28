@@ -11,27 +11,13 @@ public class testLabel : MonoBehaviour
     public string text;
     private TalkManager talkManager;
     public int language;
-    void Awake()
-    {
-        //text = talkManager.mainText;
-        //Debug.Log(text);
-        //text = talkManager.mainText;
-        
-        
-    }
-
-    void Update()
-    {
-       
-
-    }
-
+    
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
         {
-            
             StartCoroutine(Showing());
+            SoundController.bgmNum = 1;
         }
     }
     private void OnTriggerExit(Collider other)

@@ -12,6 +12,8 @@ public class HpBarUI : MonoBehaviour
     public float hp;
     private float lerpSpeed = 0.05f;
     public GameObject damagedImage;
+    public AudioClip clipPlayerDamaged;
+    public AudioClip clipEnemyDamaged;
     void Start()
     {
         easehpSlider.maxValue = maxHP;
@@ -52,7 +54,13 @@ public class HpBarUI : MonoBehaviour
     public void takeDamage(float damage)
     {
         hp -= damage; // enemy의 hp를 weapons.damage만큼 감소시킴
-        if(transform.name == "HpbarPlayer(Clone)")
-            StartCoroutine(DamagedDelay());
+        SoundController.Instance.PlaySound("EnemyDamaged", clipEnemyDamaged);
+        if (transform.name == "HpbarPlayer(Clone)")
+        {
+            SoundController.Instance.PlaySound("PlayerDamaged", clipPlayerDamaged);
+            if(target!=null)
+                StartCoroutine(DamagedDelay());
+        }
+            
     }
 }

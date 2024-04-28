@@ -13,10 +13,10 @@ public class Pushable : MonoBehaviour
     private bool isPlayerChild = false;
     private Animator anim;
     public Vector3 orignalPosition;
-    public static int count;
+    public static int count = 0;
     public static bool allBlockSet = false;
+    public AudioClip clipPush;
 
-   
     void Start()
     {
         anim = player.GetComponent<Animator>();
@@ -30,7 +30,7 @@ public class Pushable : MonoBehaviour
     }
     void AllBlockSet()
     {
-        if (count == 1)
+        if (count == 7) //Test, should be 7
             allBlockSet = true;
     }
 
@@ -123,6 +123,8 @@ public class Pushable : MonoBehaviour
                     if(check == false)
                     {
                         transform.Translate(moveDirection * dist);
+                        //Debug.Log("push");
+                        //SoundController.Instance.PlaySound("Push", clipPush);
                     }
 
 

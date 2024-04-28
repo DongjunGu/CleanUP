@@ -20,9 +20,15 @@ public class LastStage : MonoBehaviour
     public GameObject boss;
     public UnityEngine.Events.UnityEvent ActiveBoss;
     public UnityEngine.Events.UnityEvent ExitDoorActive;
-    IEnumerator Start()
+    void OnEnable()
+    {
+        StartCoroutine(StartLastStage());
+    }
+
+    IEnumerator StartLastStage()
     {
         int index = 16;
+        boss.GetComponent<Animator>().enabled = true;
         //Ä«¸Þ¶ó
         yield return new WaitForSeconds(2.0f);
         yield return StartCoroutine(CameraMove());
@@ -32,10 +38,10 @@ public class LastStage : MonoBehaviour
         yield return StartCoroutine(CameraMovePlayer());
         ActiveBoss?.Invoke();
     }
-
     IEnumerator PrintText(int index)
     {
         TMPImage.SetActive(true);
+        myLabel.alignment = TextAlignmentOptions.Left;
         text = TalkManager.table.datas[index].Text[language];
         int cur = 0;
 

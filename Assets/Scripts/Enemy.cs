@@ -13,10 +13,11 @@ public class Enemy : MonoBehaviour
     public int damage;
     public Transform target;
     public GameObject dustItemObject;
+    public int EnemyCode;
     private bool canTakeDamage = true;
     public Vector3 enemyOrgPlace;
     bool _isDestroyed;
-    bool _isDetected;
+    bool _isDetected = false;
     Rigidbody rigid;
     BoxCollider boxCol;
     Material skinned_mat;
@@ -68,6 +69,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         DetectPlayer();
+        
     }
     void OnDestroy()
     {
@@ -83,28 +85,51 @@ public class Enemy : MonoBehaviour
             if (distance <= _scanRange) //Detect
             {
                 hpPrefab.SetActive(true);
-                //GameObject playerHpBar = GameObject.Find("PlayerHpbar(Clone)");
-                //if (playerHpBar != null)
-                //    if (!playerHpBar.activeSelf)
-                //        playerHpBar.SetActive(true);
-                //    else
-                //        return;
-                _isDetected = true;
                 
-                if(!gameObject.name.Contains("Robot"))
-                    nav.SetDestination(target.position);
-            }
+                _isDetected = true;
 
-            if (_isDetected && (distance < 50.0f)) //Chase
-            {
+                //if (!gameObject.name.Contains("Robot"))
+                //{
+                //    nav.SetDestination(target.position);
+                //    GetComponent<AudioSource>().enabled = true;
+                //}
                 nav.SetDestination(target.position);
+                GetComponent<AudioSource>().enabled = true;
+
             }
 
-            if (distance >= 50.0f) //Go Back
+            if (_isDetected && (distance < _scanRange)) //Chase
             {
-                hpPrefab.SetActive(false);
                 if (!gameObject.name.Contains("Robot"))
+                {
+                    nav.SetDestination(target.position);
+                }
+                else if (gameObject.name.Contains("Robot"))
+                {
+                    nav.SetDestination(target.position);
+                }
+            }
+
+            //if (distance >= 50.0f) //Go Back
+            //{
+            //    hpPrefab.SetActive(false);
+            //    if (!gameObject.name.Contains("Robot"))
+            //    {
+            //        nav.SetDestination(enemyOrgPlace);
+            //        GetComponent<AudioSource>().enabled = false;
+            //    }
+            //}
+            if(distance > _scanRange)
+            {
+                if (!gameObject.name.Contains("Robot"))
+                {
                     nav.SetDestination(enemyOrgPlace);
+                }
+                //else if (gameObject.name.Contains("Robot") && distance >= 50)
+                //{
+                    
+                //}
+                GetComponent<AudioSource>().enabled = false;
             }
         }
         

@@ -23,14 +23,15 @@ public class MonitorText : MonoBehaviour
     public Camera mainCamera;
     public Transform socket;
     public GameObject SpringArm;
+    public AudioClip clipTyping;
     public UnityEngine.Events.UnityEvent QuizController;
 
 
     void OnEnable()
     {
         monitorText.text = "";
-        //StartCoroutine(MonitorTextStart());
-        LastStage();
+        StartCoroutine(MonitorTextStart());
+        //LastStage();
     }
 
     IEnumerator MonitorTextStart()
@@ -132,10 +133,12 @@ public class MonitorText : MonoBehaviour
     {
         text = TalkManager.table.datas[3].Text[language];
         int cur = 0;
+        //SoundController.Instance.PlayType("Typing", clipTyping, 3.0f);
 
         while (cur < text.Length)
         {
             monitorText.text += text[cur++];
+            SoundController.Instance.PlayType("Typing", clipTyping, 0.1f);
             yield return new WaitForSeconds(0.1f);
         }
         yield return new WaitForSeconds(1.5f);
@@ -143,12 +146,14 @@ public class MonitorText : MonoBehaviour
     IEnumerator PrintText(int index)
     {
         ClearText();
+
         text = TalkManager.table.datas[index].Text[language];
         int cur = 0;
-
+        //SoundController.Instance.PlayType("Typing", clipTyping, 3.0f);
         while (cur < text.Length)
         {
             monitorText.text += text[cur++];
+            SoundController.Instance.PlayType("Typing", clipTyping, 0.1f);
             yield return new WaitForSeconds(0.1f);
         }
         yield return new WaitForSeconds(2.0f);

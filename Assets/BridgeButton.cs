@@ -14,8 +14,12 @@ public class BridgeButton : MonoBehaviour
     public Transform socket;
     public float moveSpeed = 0.5f;
     public float rotationSpeed = 0.5f;
+    public AudioClip clipPressed;
+    public AudioClip clipBrideActive;
     bool hasAllset = false;
     bool isActive = false;
+    bool soundActive = false;
+    bool soundActive2 = false;
     void Start()
     {
 
@@ -52,10 +56,29 @@ public class BridgeButton : MonoBehaviour
         if (isActive)
         {
             animator.SetBool("playerIn", true);
-            Animator bridgeAnim = bridgeBlock.GetComponent<Animator>();
-            bridgeAnim.enabled = true;
+            ActiveSound();
+            Invoke("ActiveBrige", 2f);
         }
+    }
 
+    void ActiveSound()
+    {
+        if(!soundActive)
+         SoundController.Instance.PlaySound("Pressed", clipPressed);
+        soundActive = true;
+    }
+    
+    void ActiveBrige()
+    {
+        Animator bridgeAnim = bridgeBlock.GetComponent<Animator>();
+        bridgeAnim.enabled = true;
+        ActiveSound2();
+    }
+    void ActiveSound2()
+    {
+        if (!soundActive2)
+            SoundController.Instance.PlaySound("Pressed", clipBrideActive);
+        soundActive2 = true;
     }
     void OnTriggerEnter(Collider other)
     {

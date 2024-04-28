@@ -28,6 +28,12 @@ public class RobotZone : MonoBehaviour
     public float rotationSpeed = 1.0f;
     public GameObject player;
     public GameObject laser3;
+    public AudioClip clipRobotStand;
+    public AudioClip clipRobotVoiceFull;
+    public AudioClip clipRobotVoiceShort;
+    public AudioClip clipRobotEnemyDrop;
+    public AudioClip clipRobotDown;
+    public AudioClip clipRobotPointing;
     GameObject mainRobot;
     GameObject Robotenemies;
     
@@ -71,11 +77,11 @@ public class RobotZone : MonoBehaviour
         {
             mainRobot.GetComponent<Animator>().enabled = true;
             NewPlayerController.stage = 2;
+            SoundController.bgmNum = 3;
             GetComponent<BoxCollider>().enabled = false;
             Debug.Log(NewPlayerController.stage);
             StartCoroutine(CameraMove());
             StartCoroutine(LaserActive());
-
         }
     }
     public void StartRobot()
@@ -140,21 +146,43 @@ public class RobotZone : MonoBehaviour
         }
         yield return new WaitForSeconds(2.0f);
         StartCoroutine(Text1());
-        yield return new WaitForSeconds(6.0f);
+        yield return new WaitForSeconds(7.0f);
+        
         TMPImage.SetActive(false);
         TMPObj.GetComponent<TextMeshProUGUI>().text = "";
-        yield return new WaitForSeconds(3.0f);
+
+        yield return new WaitForSeconds(1.0f);
+        SoundController.Instance.PlayObjectSoundRobot("Stand", clipRobotStand);
         StartCoroutine(SpawnEnemy());
-       
+
+        SoundController.Instance.PlaySoundLoopRobot("RobotEnemyDrop", clipRobotEnemyDrop, 5f);
+
+        StartCoroutine(CameraShowRobotEnemy());
 
         yield return new WaitForSeconds(5.0f);
         mainCamera.transform.SetParent(socket);
         mainCamera.transform.localPosition = Vector3.zero;
         mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
 
+        cameraPos.transform.rotation  = Quaternion.Euler(0f, 0f, 0f);
 
         player.GetComponent<NewPlayerController>().enabled = true;
     }
+    IEnumerator CameraShowRobotEnemy()
+    {
+        Quaternion startRotation = cameraPos.transform.rotation;
+        Quaternion targetRotation = Quaternion.Euler(11.5f, 0f, 0f);
+        float elapsedTime = 0f;
+        float rotationDuration = 2f;
+        while (elapsedTime < rotationDuration)
+        {
+            cameraPos.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsedTime / rotationDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+    }
+
     IEnumerator CameraMove2()
     {
         //Animator playerAnim = player.GetComponent<Animator>();
@@ -175,6 +203,7 @@ public class RobotZone : MonoBehaviour
         StartCoroutine(Text2());
         yield return new WaitForSeconds(3.0f);
         StartCoroutine(RobotPointing());
+        SoundController.Instance.PlayObjectSoundRobot("Pointing", clipRobotPointing);
         TMPImage.SetActive(false);
         TMPObj.GetComponent<TextMeshProUGUI>().text = "";
         yield return new WaitForSeconds(4.2f);
@@ -185,6 +214,8 @@ public class RobotZone : MonoBehaviour
         mainCamera.transform.localPosition = Vector3.zero;
         mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         //player.GetComponent<NewPlayerController>().enabled = true;
+        SoundController.bgmNum = 2;
+        SoundController.Instance.ResumeBackgroundMusic();
     }
     public void DestroyEnemy()
     {
@@ -205,6 +236,7 @@ public class RobotZone : MonoBehaviour
     {
         if (RobotCount.Count == 6 && !hasClearedRobot)
         {
+            SoundController.Instance.MuteBackgroundMusic();
             ResetHealth();
             hasClearedRobot = true;
             for (int i = 0; i < Laser.Count; i++)
@@ -213,9 +245,15 @@ public class RobotZone : MonoBehaviour
             }
             Animator robotAnim = mainRobot.GetComponent<Animator>();
             robotAnim.SetBool("Clear", true);
+            Invoke("RobotDown", 1f);
             StartCoroutine(CameraMove2());
             
+
         }
+    }
+    void RobotDown()
+    {
+        SoundController.Instance.PlayObjectSoundRobot("Down", clipRobotDown);
     }
     IEnumerator RotateCamera()
     {
@@ -249,10 +287,11 @@ public class RobotZone : MonoBehaviour
         text = TalkManager.table.datas[1].Text[language];
         //text1,text2
         int cur = 0;
-
+        SoundController.Instance.PlaySoundLoopRobot("RobotVoice", clipRobotVoiceFull, 5.5f);
         while (cur < text.Length)
         {
             myLabel.text += text[cur++];
+            //SoundController.Instance.PlayType("RobotVoice", clipRobotVoiceShort, 0.02f);
             yield return new WaitForSeconds(0.02f);
         }
         yield return new WaitForSeconds(1.5f);
@@ -262,10 +301,11 @@ public class RobotZone : MonoBehaviour
         TMPImage.SetActive(true);
         text = TalkManager.table.datas[2].Text[language];
         int cur = 0;
-
+        SoundController.Instance.PlaySound("RobotVoice", clipRobotVoiceFull);
         while (cur < text.Length)
         {
             myLabel.text += text[cur++];
+            //SoundController.Instance.PlayType("RobotVoice", clipRobotVoiceShort, 0.02f);
             yield return new WaitForSeconds(0.02f);
         }
         yield return new WaitForSeconds(1.5f);

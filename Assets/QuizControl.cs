@@ -14,6 +14,7 @@ public class QuizControl : MonoBehaviour
     public GameObject player;
     public string text;
     public int language;
+    public AudioClip clipTyping;
     public UnityEngine.Events.UnityEvent MouseEnemyStart;
     void OnEnable()
     {
@@ -131,6 +132,7 @@ public class QuizControl : MonoBehaviour
         while (cur < text.Length)
         {
             mainText.text += text[cur++];
+            SoundController.Instance.PlayType("Typing", clipTyping, 0.1f);
             yield return new WaitForSeconds(0.1f);
         }
         yield return new WaitForSeconds(2.0f);
@@ -146,6 +148,7 @@ public class QuizControl : MonoBehaviour
         while (cur < text.Length)
         {
             mainText.text += text[cur++];
+            SoundController.Instance.PlayType("Typing", clipTyping, 0.1f);
             yield return new WaitForSeconds(0.1f);
         }
         yield return new WaitForSeconds(1f);
@@ -169,6 +172,7 @@ public class QuizControl : MonoBehaviour
         while (cur < text.Length)
         {
             mainText.text += text[cur++];
+            SoundController.Instance.PlayType("Typing", clipTyping, 0.1f);
             yield return new WaitForSeconds(0.1f);
         }
         yield return new WaitForSeconds(1f);
@@ -193,6 +197,7 @@ public class QuizControl : MonoBehaviour
         while (cur < text.Length)
         {
             mainText.text += text[cur++];
+            SoundController.Instance.PlayType("Typing", clipTyping, 0.1f);
             yield return new WaitForSeconds(0.1f);
         }
         yield return new WaitForSeconds(1f);

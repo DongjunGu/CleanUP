@@ -12,6 +12,7 @@ public class TelePort : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            NewPlayerController.stage = 4;
             teleported = true;
             other.transform.position = spawnPoint.position;
             player.GetComponent<Animator>().SetBool("isSpin", false);

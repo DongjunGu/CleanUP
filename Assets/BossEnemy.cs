@@ -300,7 +300,7 @@ public class BossEnemy : MonoBehaviour
         {
             original_mat.color = Color.gray;
             basicAttackCollider.enabled = false;
-            anim.SetBool("isDie", true);
+            anim.SetTrigger("playDie");
             Destroy(hpPrefab, 2);
             yield return new WaitForSeconds(2.0f);
             StopAllCoroutines();

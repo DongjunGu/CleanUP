@@ -237,6 +237,7 @@ public class RobotZone : MonoBehaviour
         {
             SoundController.Instance.MuteBackgroundMusic();
             ResetHealth();
+            hasClearedRobot = false;
             for (int i = 0; i < Laser.Count; i++)
             {
                 Laser[i].SetActive(false);

@@ -50,7 +50,7 @@ public class EndingCameraTrigg : MonoBehaviour
         yield return StartCoroutine(CameraRotate());
         
 
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(1.0f);
         mainCamera.transform.SetParent(socket);
         mainCamera.transform.localPosition = Vector3.zero;
         mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);

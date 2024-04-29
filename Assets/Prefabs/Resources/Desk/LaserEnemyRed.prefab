@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7894462211520741344}
   - component: {fileID: 7894462211520741350}
   - component: {fileID: 7894462211520741345}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt7 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 7894462211539979893}
   - component: {fileID: 7894462211539979883}
   - component: {fileID: 7894462211539979882}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: left_plate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 7894462211582594959}
   - component: {fileID: 7894462211582594957}
   - component: {fileID: 7894462211582594956}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt8 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +252,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7894462211608677431}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: right_arm_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 7894462211614651198}
   - component: {fileID: 7894462211614651196}
   - component: {fileID: 7894462211614651199}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt4 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -365,7 +365,7 @@ GameObject:
   - component: {fileID: 7894462211658770893}
   - component: {fileID: 7894462211658770883}
   - component: {fileID: 7894462211658770882}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt6 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -444,7 +444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7894462211700727388}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: right_arm_jt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -478,7 +478,7 @@ GameObject:
   - component: {fileID: 7894462211708163505}
   - component: {fileID: 7894462211708163511}
   - component: {fileID: 7894462211708163510}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt7 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -559,7 +559,7 @@ GameObject:
   - component: {fileID: 7894462211771224565}
   - component: {fileID: 7894462211771224555}
   - component: {fileID: 7894462211771224554}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: ballJoint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -640,7 +640,7 @@ GameObject:
   - component: {fileID: 7894462211862358971}
   - component: {fileID: 7894462211862358969}
   - component: {fileID: 7894462211862358968}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt6 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -721,7 +721,7 @@ GameObject:
   - component: {fileID: 7894462211900657852}
   - component: {fileID: 7894462211900657842}
   - component: {fileID: 7894462211900657853}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: ballJoint1 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -802,7 +802,7 @@ GameObject:
   - component: {fileID: 7894462211916800502}
   - component: {fileID: 7894462211916800500}
   - component: {fileID: 7894462211916800503}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -884,7 +884,7 @@ GameObject:
   - component: {fileID: 7894462211932550342}
   - component: {fileID: 7894462211932550340}
   - component: {fileID: 7894462211932550343}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: right_plate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -963,7 +963,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7894462211940798722}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: left_arm_jt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -997,7 +997,7 @@ GameObject:
   - component: {fileID: 7894462211943739908}
   - component: {fileID: 7894462211943740026}
   - component: {fileID: 7894462211943739909}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1078,7 +1078,7 @@ GameObject:
   - component: {fileID: 7894462211979481350}
   - component: {fileID: 7894462211979481348}
   - component: {fileID: 7894462211979481351}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1159,7 +1159,7 @@ GameObject:
   - component: {fileID: 7894462211981534839}
   - component: {fileID: 7894462211981534837}
   - component: {fileID: 7894462211981534836}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt5 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1240,7 +1240,7 @@ GameObject:
   - component: {fileID: 7894462212002837477}
   - component: {fileID: 7894462212002837467}
   - component: {fileID: 7894462212002837466}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1319,7 +1319,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7894462212182768159}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: main_jt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1356,7 +1356,7 @@ GameObject:
   - component: {fileID: 7894462212196651947}
   - component: {fileID: 7894462212196651945}
   - component: {fileID: 7894462212196651944}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1435,7 +1435,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7894462212232126851}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: rear_arm_jt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1467,7 +1467,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7894462212284373447}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: right_elbow_jt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1501,7 +1501,7 @@ GameObject:
   - component: {fileID: 7894462212345600338}
   - component: {fileID: 7894462212345600336}
   - component: {fileID: 7894462212345600339}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt1 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1582,7 +1582,7 @@ GameObject:
   - component: {fileID: 7894462212385598927}
   - component: {fileID: 7894462212385598925}
   - component: {fileID: 7894462212385598924}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: ballJoint1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1663,7 +1663,7 @@ GameObject:
   - component: {fileID: 7894462212388056716}
   - component: {fileID: 7894462212388056706}
   - component: {fileID: 7894462212388056717}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: arm2 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1749,7 +1749,7 @@ GameObject:
   - component: {fileID: 7894462212450430591}
   - component: {fileID: 7894462212450430589}
   - component: {fileID: 7894462212450430588}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt5 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1830,7 +1830,7 @@ GameObject:
   - component: {fileID: 7894462212470596271}
   - component: {fileID: 7894462212470596269}
   - component: {fileID: 7894462212470596268}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: eyeDome
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1914,7 +1914,7 @@ GameObject:
   - component: {fileID: 7894462212510558532}
   - component: {fileID: 7894462212510558650}
   - component: {fileID: 7894462212510558533}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: r_eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1995,7 +1995,7 @@ GameObject:
   - component: {fileID: 7894462212535230613}
   - component: {fileID: 7894462212535230603}
   - component: {fileID: 7894462212535230602}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2076,7 +2076,7 @@ GameObject:
   - component: {fileID: 7894462212577682121}
   - component: {fileID: 7894462212577682127}
   - component: {fileID: 7894462212577682126}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: eyeDome1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2157,7 +2157,7 @@ GameObject:
   - component: {fileID: 7894462212591528217}
   - component: {fileID: 7894462212591528223}
   - component: {fileID: 7894462212591528222}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: right_arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2244,7 +2244,7 @@ GameObject:
   - component: {fileID: 7894462212615863935}
   - component: {fileID: 7894462212615863933}
   - component: {fileID: 7894462212615863932}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: arm2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2330,7 +2330,7 @@ GameObject:
   - component: {fileID: 7894462212617882627}
   - component: {fileID: 7894462212617882625}
   - component: {fileID: 7894462212617882624}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: left_arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2417,7 +2417,7 @@ GameObject:
   - component: {fileID: 7894462212627395927}
   - component: {fileID: 7894462212627395925}
   - component: {fileID: 7894462212627395924}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2496,7 +2496,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7894462212636988480}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: BarPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2528,7 +2528,7 @@ GameObject:
   - component: {fileID: 7894462212684336987}
   - component: {fileID: 7894462212684336985}
   - component: {fileID: 7894462212684336984}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2609,7 +2609,7 @@ GameObject:
   - component: {fileID: 7894462212736281640}
   - component: {fileID: 7894462212736281646}
   - component: {fileID: 7894462212736281641}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: ballJoint2 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2690,7 +2690,7 @@ GameObject:
   - component: {fileID: 7894462212890595058}
   - component: {fileID: 7894462212890595056}
   - component: {fileID: 7894462212890595059}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt2 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2771,7 +2771,7 @@ GameObject:
   - component: {fileID: 7894462212962184452}
   - component: {fileID: 7894462212962184570}
   - component: {fileID: 7894462212962184453}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt3 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2857,7 +2857,7 @@ GameObject:
   - component: {fileID: -5485133945467570271}
   - component: {fileID: 5426886842656199178}
   - component: {fileID: 7968463283784614320}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: LaserEnemyRed
   m_TagString: RobotEnemy
   m_Icon: {fileID: 0}
@@ -3173,7 +3173,7 @@ GameObject:
   - component: {fileID: 7894462213059153333}
   - component: {fileID: 7894462213059153323}
   - component: {fileID: 7894462213059153322}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: ballJoint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3254,7 +3254,7 @@ GameObject:
   - component: {fileID: 7894462213076665066}
   - component: {fileID: 7894462213076665064}
   - component: {fileID: 7894462213076665067}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3335,7 +3335,7 @@ GameObject:
   - component: {fileID: 7894462213087310985}
   - component: {fileID: 7894462213087310991}
   - component: {fileID: 7894462213087310990}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: ballJoint2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3414,7 +3414,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7894462213089359945}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: rear_elbow_jt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3446,7 +3446,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7894462213129869967}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: left_arm_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3478,7 +3478,7 @@ GameObject:
   - component: {fileID: 7894462213138866919}
   - component: {fileID: 7894462213138866917}
   - component: {fileID: 7894462213138866916}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: rear_arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3565,7 +3565,7 @@ GameObject:
   - component: {fileID: 7894462213175113044}
   - component: {fileID: 7894462213175113034}
   - component: {fileID: 7894462213175113045}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: eyeLid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3646,7 +3646,7 @@ GameObject:
   - component: {fileID: 7894462213253586733}
   - component: {fileID: 7894462213253586723}
   - component: {fileID: 7894462213253586722}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: rear_plate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3727,7 +3727,7 @@ GameObject:
   - component: {fileID: 7894462213286971421}
   - component: {fileID: 7894462213286971411}
   - component: {fileID: 7894462213286971410}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt4 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3808,7 +3808,7 @@ GameObject:
   - component: {fileID: 7894462213326699768}
   - component: {fileID: 7894462213326699774}
   - component: {fileID: 7894462213326699769}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3889,7 +3889,7 @@ GameObject:
   - component: {fileID: 7894462213338190167}
   - component: {fileID: 7894462213338190165}
   - component: {fileID: 7894462213338190164}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt3 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3968,7 +3968,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7894462213346265333}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: left_elbow_jt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4002,7 +4002,7 @@ GameObject:
   - component: {fileID: 7894462213354906397}
   - component: {fileID: 7894462213354906387}
   - component: {fileID: 7894462213354906386}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4081,7 +4081,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7894462213363414118}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: rear_arm_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4113,7 +4113,7 @@ GameObject:
   - component: {fileID: 7894462213493587821}
   - component: {fileID: 7894462213493587811}
   - component: {fileID: 7894462213493587810}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: bolt8 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4194,7 +4194,7 @@ GameObject:
   - component: {fileID: 7894462213523295644}
   - component: {fileID: 7894462213523295634}
   - component: {fileID: 7894462213523295645}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: arm2 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4280,7 +4280,7 @@ GameObject:
   - component: {fileID: 7894462213569267998}
   - component: {fileID: 7894462213569267996}
   - component: {fileID: 7894462213569267999}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: l_eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -15,6 +15,10 @@ public class QuizControl : MonoBehaviour
     public string text;
     public int language;
     public AudioClip clipTyping;
+    public AudioClip clipPaperSpawn;
+    public AudioClip clipCorrect;
+    public AudioClip clipWrong;
+    public AudioClip clipCountDown;
     public UnityEngine.Events.UnityEvent MouseEnemyStart;
     void OnEnable()
     {
@@ -42,35 +46,50 @@ public class QuizControl : MonoBehaviour
     IEnumerator QuizStartControl()
     {
         int index = 7;
-        subTextObj.SetActive(true);
-        thirdTextObj.SetActive(true);
-        yield return StartCoroutine(SpawnPaper());
+        //subTextObj.SetActive(true);
+        //thirdTextObj.SetActive(true);
+        //SoundController.Instance.PlaySoundDesk("PaperSpawn", clipPaperSpawn);
+        //yield return StartCoroutine(SpawnPaper());
         
-        yield return StartCoroutine(PrintmainText(index++)); //If you fail to solve it within the time limit
+        //yield return StartCoroutine(PrintmainText(index++)); //If you fail to solve it within the time limit
         
-        StartCoroutine(PrintQuizText1()); // 5 + ( ) = 8
-        yield return StartCoroutine(CountNumber(15));
-        yield return StartCoroutine(CheckAnswer(3));
+        //StartCoroutine(PrintQuizText1()); // 5 + ( ) = 8
+        //yield return StartCoroutine(CountNumber(15));
+        //yield return StartCoroutine(CheckAnswer(3));
 
-        yield return StartCoroutine(PrintmainText(index++)); //Next Quiz
+        //yield return StartCoroutine(PrintmainText(index++)); //Next Quiz
 
-        StartCoroutine(PrintQuizText2()); // ( ) * 9 = 81
-        yield return StartCoroutine(CountNumber(15));
-        yield return StartCoroutine(CheckAnswer(9));
+        //StartCoroutine(PrintQuizText2()); // ( ) * 9 = 81
+        //yield return StartCoroutine(CountNumber(15));
+        //yield return StartCoroutine(CheckAnswer(9));
 
-        yield return StartCoroutine(PrintmainText(index++)); //Well.. You're Good. How about this?
-        yield return StartCoroutine(ShufflePaper());
+        //yield return StartCoroutine(PrintmainText(index++)); //Well.. You're Good. How about this?
+        //yield return StartCoroutine(ShufflePaper());
 
-        StartCoroutine(PrintQuizText3()); // 12 - 10 / 2 = ( ) = 7
-        yield return StartCoroutine(CountNumber(15));
-        yield return StartCoroutine(CheckAnswer(7));
+        //StartCoroutine(PrintQuizText3()); // 12 - 10 / 2 = ( ) = 7
+        //yield return StartCoroutine(CountNumber(15));
+        //yield return StartCoroutine(CheckAnswer(7));
 
         yield return StartCoroutine(PrintmainText(index++)); // 10 You're clever!
-        yield return StartCoroutine(PrintmainText(index++)); // 11 Okay..\n Go get him Mouse!
+        //yield return StartCoroutine(PrintmainText(index++)); // 11 Okay..\n Go get him Mouse!
+
+        //foreach (GameObject obj in Paper)
+        //{
+        //    foreach (Transform child in obj.transform)
+        //    {
+        //        BoxCollider childCollider = child.GetComponent<BoxCollider>();
+
+        //        if (childCollider != null)
+        //        {
+        //            childCollider.enabled = false;
+        //        }
+        //    }
+        //}
         MouseEnemyStart?.Invoke();
     }
     IEnumerator ShufflePaper()
     {
+        SoundController.Instance.PlaySoundDesk("PaperSpawn", clipPaperSpawn);
         foreach (GameObject obj in Paper)
         {
             obj.GetComponent<Animator>().SetBool("isShuffle", true);
@@ -82,6 +101,7 @@ public class QuizControl : MonoBehaviour
     {
         if (NewPlayerController.Papernumber == answer)
         {
+            SoundController.Instance.PlaySoundDesk("Correct", clipCorrect);
             thirdText.text = "CORRECT";
             yield return new WaitForSeconds(3.0f);
             ClearSubText();
@@ -89,6 +109,7 @@ public class QuizControl : MonoBehaviour
         }
         else
         {
+            SoundController.Instance.PlaySoundDesk("Wrong", clipWrong);
             thirdText.text = "WRONG";
             yield return new WaitForSeconds(3.0f);
             ClearSubText();
@@ -112,6 +133,7 @@ public class QuizControl : MonoBehaviour
         foreach (GameObject obj in Paper)
         {
             obj.SetActive(true);
+            obj.GetComponent<Collider>().enabled = false;
         }
 
         yield return new WaitForSeconds(5.0f);
@@ -119,6 +141,15 @@ public class QuizControl : MonoBehaviour
         foreach (GameObject obj in Paper) 
         {
             obj.GetComponent<Collider>().enabled = true; //Active Collider
+            foreach (Transform child in obj.transform)
+            {
+                BoxCollider childCollider = child.GetComponent<BoxCollider>();
+
+                if (childCollider != null)
+                {
+                    childCollider.enabled = true;
+                }
+            }
         }
     }
 
@@ -219,6 +250,7 @@ public class QuizControl : MonoBehaviour
         while (count >= 0)
         {
             subText.text = count.ToString();
+            SoundController.Instance.PlaySoundDesk("CountDown", clipCountDown);
             count--;
             yield return new WaitForSeconds(1f);
         }

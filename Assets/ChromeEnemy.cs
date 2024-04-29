@@ -9,8 +9,10 @@ public class ChromeEnemy : MonoBehaviour
     bool _isDamaged = false;
     int count = 0;
     private Vector3 originPos;
+    AudioSource audioSource;
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         originPos = transform.position;
     }
     private void OnEnable()
@@ -20,7 +22,7 @@ public class ChromeEnemy : MonoBehaviour
     }
     IEnumerator StartChrome()
     {
-        yield return new WaitForSeconds(1.0f);
+        audioSource.mute = false;
         yield return StartCoroutine(ChromeMove(40));
         yield return StartCoroutine(RestartChrome());
         yield return StartCoroutine(ChromeMove(40));
@@ -35,7 +37,7 @@ public class ChromeEnemy : MonoBehaviour
     }
     private void Update()
     {
-        transform.rotation *= Quaternion.Euler(0f, 0f, -100f * Time.deltaTime);
+        transform.rotation *= Quaternion.Euler(0f, 0f, -360f * Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)

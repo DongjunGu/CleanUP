@@ -126,3 +126,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcde7c2f229ad6f4d8a1e43f7a6ae621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clipAlmond: {fileID: 8300000, guid: e52dc2154301726478934f359697c2e8, type: 3}

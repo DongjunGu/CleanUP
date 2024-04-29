@@ -3078,9 +3078,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90425228e8afd5a4ca830efd58964c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPosition: {fileID: 516757813511285376, guid: 2e825eecbf9389545bec3fc1414d23db,
-    type: 3}
+  targetPosition1: {fileID: 0}
+  targetPosition2: {fileID: 0}
+  targetPosition3: {fileID: 0}
   speed: 5
+  stoppingDistance: 0.5
+  clipLaserEnemy: {fileID: 8300000, guid: 7ed5c7e857858fb4b91442a7e6024f54, type: 3}
 --- !u!1 &1382376387123626883
 GameObject:
   m_ObjectHideFlags: 0

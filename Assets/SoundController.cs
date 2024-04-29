@@ -11,7 +11,11 @@ public class SoundController : MonoBehaviour
     public AudioSource BackGroungMusic;
     public List<AudioClip> bgmClips;
     public AudioMixerGroup playerAudioMixerGroup;
+    public AudioMixerGroup playerRunMixerGroup;
     public AudioMixerGroup robotAudioMixerGroup;
+    public AudioMixerGroup deskAudioMixerGroup;
+    public AudioMixerGroup mouseAudioMixerGroup;
+    public AudioMixerGroup bossAudioMixerGroup;
     public static int bgmNum = 0;
     int currentBgmNumber;
     private void Awake()
@@ -47,9 +51,9 @@ public class SoundController : MonoBehaviour
     {
         GameObject go = new GameObject(name + "Sound");
         AudioSource audioSource = go.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = playerAudioMixerGroup;
         audioSource.clip = clip;
         audioSource.Play();
-        audioSource.outputAudioMixerGroup = playerAudioMixerGroup;
         Destroy(go, clip.length);
     }
     public void PlayObjectSoundRobot(string name, AudioClip clip)
@@ -81,6 +85,25 @@ public class SoundController : MonoBehaviour
         audioSource.Play();
         Destroy(go, dur);
     }
+    public void PlaySoundDesk(string name, AudioClip clip)
+    {
+        GameObject go = new GameObject(name + "Sound");
+        AudioSource audioSource = go.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = deskAudioMixerGroup;
+        audioSource.clip = clip;
+        audioSource.Play();
+        Destroy(go, clip.length);
+    }
+    public void PlaySoundMouse(string name, AudioClip clip, float dur)
+    {
+        GameObject go = new GameObject(name + "Sound");
+        AudioSource audioSource = go.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = mouseAudioMixerGroup;
+        audioSource.clip = clip;
+        audioSource.spatialBlend = 0.8f;
+        audioSource.Play();
+        Destroy(go, dur);
+    }
     public void PlayLoop(string name, AudioClip clip)
     {
         GameObject go = new GameObject(name + "Sound");
@@ -94,9 +117,19 @@ public class SoundController : MonoBehaviour
     {
         GameObject go = new GameObject(name + "Sound");
         AudioSource audioSource = go.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = playerAudioMixerGroup;
         audioSource.clip = clip;
         audioSource.Play();
-        audioSource.outputAudioMixerGroup = playerAudioMixerGroup;
+        Destroy(go, dur);
+    }
+    public void PlaySoundRun(string name, AudioClip clip, float dur)
+    {
+        GameObject go = new GameObject(name + "Sound");
+        AudioSource audioSource = go.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = playerRunMixerGroup;
+        audioSource.clip = clip;
+        audioSource.Play();
+        
         Destroy(go, dur);
     }
     public void PlaySoundWalk(string name, AudioClip clip)
@@ -126,6 +159,10 @@ public class SoundController : MonoBehaviour
             {
                 BackGroungMusic.volume = 0.03f;
             }
+            else if(currentBgmNumber == 5)
+            {
+                BackGroungMusic.volume = 0.05f;
+            }
             else
             {
                 BackGroungMusic.volume = 0.06f;
@@ -135,7 +172,27 @@ public class SoundController : MonoBehaviour
             BackGroungMusic.Play();
         }
     }
-    
+
+    public void PlayBossSound(string name, AudioClip clip, float dur)
+    {
+        GameObject go = new GameObject(name + "Sound");
+        AudioSource audioSource = go.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = bossAudioMixerGroup;
+        audioSource.clip = clip;
+        audioSource.Play();
+        Destroy(go, clip.length);
+    }
+
+    public void PlayBossSoundSpat(string name, AudioClip clip, float dur)
+    {
+        GameObject go = new GameObject(name + "Sound");
+        AudioSource audioSource = go.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = bossAudioMixerGroup;
+        audioSource.spatialBlend = 0.8f;
+        audioSource.clip = clip;
+        audioSource.Play();
+        Destroy(go, clip.length);
+    }
     public void MuteBackgroundMusic()
     {
         BackGroungMusic.mute = true;

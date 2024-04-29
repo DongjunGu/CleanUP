@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 80868a1eafb48124b9a5d272cabdc04c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - runAudio: {fileID: 8435942366119516635, guid: 506a2e2678b966b47939f7e73c1414e1,
+      type: 3}
+  - clipRun: {fileID: 8300000, guid: c9bdc76448719db449d12ddd3f971813, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

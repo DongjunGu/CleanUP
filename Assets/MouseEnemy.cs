@@ -24,6 +24,8 @@ public class MouseEnemy : MonoBehaviour
     GameObject hpPrefab;
     HpBarUI hpUI;
     public UnityEngine.Events.UnityEvent MouseClear;
+    public AudioClip clipMouseMove;
+    public AudioClip clipMouseDestory;
     void Awake()
     {
         MeshRenderer renderer = GetComponent<MeshRenderer>();
@@ -68,6 +70,7 @@ public class MouseEnemy : MonoBehaviour
         yield return StartCoroutine(Text3());
         myLabel.text = "";
         SpawnHPBar();
+
         yield return StartCoroutine(MouseRush1(30));
         yield return StartCoroutine(MouseRush1(35));
         yield return StartCoroutine(MouseRush1(40));
@@ -102,6 +105,7 @@ public class MouseEnemy : MonoBehaviour
                 TMPImage.SetActive(false);
                 TMPObj.GetComponent<TextMeshProUGUI>().text = "";
             }
+            
             MouseClear?.Invoke();
         }
             
@@ -164,12 +168,14 @@ public class MouseEnemy : MonoBehaviour
 
         else
         {
+            StopAllCoroutines();
+            SoundController.Instance.PlaySoundMouse("MousDead", clipMouseDestory, clipMouseDestory.length);
             original_mat.color = Color.gray;
             gameObject.layer = 8;
 
-            Destroy(gameObject, 2);
-            Destroy(hpPrefab, 2);
-            //NextStep();
+            Destroy(gameObject, 4);
+            Destroy(hpPrefab, 4);
+            
         }
     }
     IEnumerator ChangeColor()
@@ -202,7 +208,7 @@ public class MouseEnemy : MonoBehaviour
             myLabel.text += text[cur++];
             yield return new WaitForSeconds(0.02f);
         }
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(2.0f);
         TMPImage.SetActive(false);
         TMPObj.GetComponent<TextMeshProUGUI>().text = "";
     }
@@ -218,7 +224,7 @@ public class MouseEnemy : MonoBehaviour
             myLabel.text += text[cur++];
             yield return new WaitForSeconds(0.02f);
         }
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(2.0f);
         TMPImage.SetActive(false);
         TMPObj.GetComponent<TextMeshProUGUI>().text = "";
     }
@@ -256,6 +262,7 @@ public class MouseEnemy : MonoBehaviour
     }
     IEnumerator MouseRush1(int speed)
     {
+        SoundController.Instance.PlaySoundMouse("MouseMove", clipMouseMove, 2f);
         StartCoroutine(RotateMouse());
         NavMeshPath path = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, targetPosition.transform.position, -1, path);

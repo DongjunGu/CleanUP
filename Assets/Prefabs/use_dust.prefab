@@ -187,8 +187,8 @@ MonoBehaviour:
   meshObject: {fileID: 4663888762199980384}
   effectObject: {fileID: 2285124960513392030}
   rigid: {fileID: 4333623994689382366}
-  dustCollider: {fileID: 0}
   dustDamage: 100
+  clipExplosion: {fileID: 8300000, guid: 5601e27d711aced44bd83b3184fcabc2, type: 3}
 --- !u!1 &4663888762199980384
 GameObject:
   m_ObjectHideFlags: 0

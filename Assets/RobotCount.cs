@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class RobotCount : MonoBehaviour
 {
-    public int robotCount;
+    public int robotCount = 7;
     public static int Count;
-    void Start()
+    void Awake()
     {
         Count++;
     }
@@ -19,5 +19,7 @@ public class RobotCount : MonoBehaviour
     void Update()
     {
         robotCount = Count;
+        if (robotCount == 0)
+            RobotZone.hasClearedRobot = true;
     }
 }

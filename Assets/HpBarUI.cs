@@ -58,7 +58,6 @@ public class HpBarUI : MonoBehaviour
         if (transform.name == "HpbarPlayer(Clone)")
         {
             SoundController.Instance.PlaySound("PlayerDamaged", clipPlayerDamaged);
-            if(target!=null)
                 StartCoroutine(DamagedDelay());
         }
             

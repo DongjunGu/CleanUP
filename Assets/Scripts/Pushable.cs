@@ -16,7 +16,13 @@ public class Pushable : MonoBehaviour
     public static int count = 0;
     public static bool allBlockSet = false;
     public AudioClip clipPush;
-
+    bool isMoving = false;
+    bool isPlaying = false;
+    AudioSource pushAudio;
+    private void Awake()
+    {
+        pushAudio = GetComponent<AudioSource>();
+    }
     void Start()
     {
         anim = player.GetComponent<Animator>();
@@ -27,6 +33,22 @@ public class Pushable : MonoBehaviour
         distachPlayer();
         ArrivedDestination();
         AllBlockSet();
+        if(isMoving)
+            CubeMoving();
+    }
+
+    void CubeMoving()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            pushAudio.mute = false;
+            //pushAudio.Play();
+        }
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            pushAudio.mute = true;
+
+        }
     }
     void AllBlockSet()
     {
@@ -42,6 +64,7 @@ public class Pushable : MonoBehaviour
             distachPlayerFromParent();
             gameObject.GetComponent<Collider>().enabled = false;
             gameObject.GetComponent<Pushable>().enabled = false;
+            pushAudio.enabled = false;
             count++;
             Debug.Log(count);
         }
@@ -123,6 +146,7 @@ public class Pushable : MonoBehaviour
                     if(check == false)
                     {
                         transform.Translate(moveDirection * dist);
+                        isMoving = true;
                         //Debug.Log("push");
                         //SoundController.Instance.PlaySound("Push", clipPush);
                     }
@@ -132,6 +156,8 @@ public class Pushable : MonoBehaviour
                 else
                 {
                     anim.SetBool("isPush", false);
+                    isMoving = false;
+                    pushAudio.mute = true;
                 }
 
                 player.transform.parent = transform;
@@ -139,6 +165,7 @@ public class Pushable : MonoBehaviour
             }
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
 

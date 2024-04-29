@@ -51,7 +51,7 @@ public class ChessController : MonoBehaviour
 
     void Update()
     {
-        if (ChessPawn.Count == 9 && !hasClearedChess)
+        if (ChessPawn.Count == 0 && !hasClearedChess)
         {
             ChessClear();
             StartCoroutine(CameraMove());

@@ -7,8 +7,8 @@ public class Dust : MonoBehaviour
     public GameObject meshObject;
     public GameObject effectObject;
     public Rigidbody rigid;
-    public Collider dustCollider;
     public int dustDamage = 100;
+    public AudioClip clipExplosion;
     void Start()
     {
         StartCoroutine(Explosion());
@@ -33,6 +33,7 @@ public class Dust : MonoBehaviour
 
     void ExecuteExplosion()
     {
+        SoundController.Instance.PlayType("Dust", clipExplosion, 1f);
         rigid.velocity = Vector3.zero;
         rigid.angularVelocity = Vector3.zero;
         effectObject.SetActive(true);

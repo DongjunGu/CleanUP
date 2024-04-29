@@ -21,6 +21,9 @@ public class DeskZone : MonoBehaviour
     public GameObject MonitorAnim;
     public GameObject Mouse;
     private GameObject mouseObj;
+    public AudioClip clipMonitorNoise;
+    public AudioClip clipMonitorLaugh;
+    public AudioClip clipMouseActive;
     public UnityEngine.Events.UnityEvent NextStep;
     private void Start()
     {
@@ -70,12 +73,14 @@ public class DeskZone : MonoBehaviour
         SoundController.bgmNum = 4;
         yield return new WaitForSeconds(1.0f);
         monitorNoise.SetActive(true);
+        SoundController.Instance.PlaySoundDesk("Noise", clipMonitorNoise);
         yield return new WaitForSeconds(2.0f);
         monitorNoise.SetActive(false);
         yield return new WaitForSeconds(2.0f);
         
         MonitorUI.SetActive(true);
         MonitorAnim.SetActive(true);
+        SoundController.Instance.PlaySoundDesk("Noise", clipMonitorLaugh); 
         yield return new WaitForSeconds(2.0f);
         MonitorAnim.SetActive(false);
         MonitorText.SetActive(true);
@@ -110,6 +115,7 @@ public class DeskZone : MonoBehaviour
             mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, cameraMousePos.rotation, rotationSpeed * Time.deltaTime);
             yield return null;
         }
+        SoundController.Instance.PlaySoundDesk("MouseActive", clipMouseActive); 
         mouseObj.GetComponent<Animator>().enabled = true;
         mouseObj.GetComponent<MouseEnemy>().enabled = true;
         yield return new WaitForSeconds(5f);

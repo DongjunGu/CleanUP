@@ -41,6 +41,12 @@ public class BossEnemy : MonoBehaviour
     Vector3 originPos;
     int countDamage = 0;
     int basicHitCount = 0;
+    public AudioClip clipFolder;
+    public AudioClip clipClap;
+    public AudioClip clipPunch;
+    public AudioClip clipAttack;
+    public AudioClip clipMagicAttack;
+    public AudioClip clipTalk;
     public UnityEngine.Events.UnityEvent BossDead;
     void Awake()
     {
@@ -109,13 +115,17 @@ public class BossEnemy : MonoBehaviour
 
         yield return StartCoroutine(CameraMove());
         anim.SetBool("isClapping", true);
+        
         yield return StartCoroutine(PrintText(index++)); //우연
         anim.SetBool("isClapping", false);
+        anim.SetBool("isTalking", true);
         yield return StartCoroutine(PrintText(index++)); //다시도전
+        anim.SetBool("isTalking", false);
         anim.SetBool("isPunch", true); //플레이어 넉백
         yield return new WaitForSeconds(1.0f);
         TMPImage.SetActive(false);
         yield return StartCoroutine(CameraMovePlayer());
+        SoundController.Instance.PlayBossSound("Punch", clipPunch, clipPunch.length);
         StartCoroutine(KnockBack());
         yield return new WaitForSeconds(2.0f);
         anim.SetBool("isPunch", false);
@@ -127,7 +137,9 @@ public class BossEnemy : MonoBehaviour
         yield return StartCoroutine(Damaged4times());
         InActiveChrome();
         hpPrefab.SetActive(false);
+        anim.SetBool("isTalking", true);
         yield return StartCoroutine(PrintText(index++)); // 20 직접처리하겠다
+        anim.SetBool("isTalking", false);
         TMPImage.SetActive(false);
         hpPrefab.SetActive(true);
         yield return StartCoroutine(ChasePlayer());
@@ -213,6 +225,7 @@ public class BossEnemy : MonoBehaviour
             anim.SetBool("isBasicAttack", true);
             basicHitCount++;
             yield return new WaitForSeconds(1.0f);
+            
             anim.SetBool("isBasicAttack", false);
             yield return new WaitForSeconds(2.0f);
         }
@@ -223,10 +236,10 @@ public class BossEnemy : MonoBehaviour
         float dist = Vector3.Distance(transform.position, player.transform.position);
 
         anim.SetBool("isWalk", false);
-        anim.SetBool("isMagicAttack", true);
+        anim.SetBool("isMagicAttack", true);        
         yield return new WaitForSeconds(1.0f);
         anim.SetBool("isMagicAttack", false);
-
+        
         virusObj1 = Instantiate(virus, transform.position + Vector3.up * 7f + Vector3.back * 2f, Quaternion.identity);
         virusObj2 = Instantiate(virus, transform.position + Vector3.up * 7f + Vector3.back * 2f + Vector3.right, Quaternion.identity);
         virusObj3 = Instantiate(virus, transform.position + Vector3.up * 7f + Vector3.back * 2f + Vector3.left, Quaternion.identity);
@@ -342,7 +355,8 @@ public class BossEnemy : MonoBehaviour
         {
             Vector3 dir = (player.transform.position - obj.transform.position).normalized;
             obj.GetComponent<Rigidbody>().velocity = (dir * 100f);
-            yield return new WaitForSeconds(1.0f);
+            SoundController.Instance.PlayBossSound("Folder", clipFolder, 1f);
+            yield return new WaitForSeconds(1.0f);            
             obj.SetActive(false);
         }
     }
@@ -361,7 +375,7 @@ public class BossEnemy : MonoBehaviour
     IEnumerator ActiveChrome()
     {
         chrome.SetActive(true);
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(2.0f);
         chrome.GetComponent<ChromeEnemy>().enabled = true;
     }
     void InActiveChrome()
@@ -373,7 +387,21 @@ public class BossEnemy : MonoBehaviour
         Vector3 pos = anim.deltaPosition;
         Quaternion rot = anim.deltaRotation;
     }
+    
+    public void ClapSound()
+    {
+        SoundController.Instance.PlayBossSound("Clap", clipClap, 0.5f);
+    }
 
+    public void AttackSound()
+    {
+        SoundController.Instance.PlayBossSound("Attack", clipAttack, clipAttack.length);
+    }
+
+    public void MagicAttackSound()
+    {
+        SoundController.Instance.PlayBossSound("MagicAttack", clipMagicAttack, clipMagicAttack.length);
+    }
     IEnumerator PrintText(int index)
     {
         TMPImage.SetActive(true);
@@ -384,7 +412,8 @@ public class BossEnemy : MonoBehaviour
         while (cur < text.Length)
         {
             myLabel.text += text[cur++];
-            yield return new WaitForSeconds(0.02f);
+            SoundController.Instance.PlayBossSound("Talk", clipTalk, 0.1f);
+            yield return new WaitForSeconds(0.1f);
         }
         yield return new WaitForSeconds(3.0f);
         TMPObj.GetComponent<TextMeshProUGUI>().text = "";

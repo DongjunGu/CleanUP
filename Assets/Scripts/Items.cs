@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Items : MonoBehaviour
 {
-    [SerializeField] GameObject weaponImage;
     public enum Type { Broom, Bat, Hammer, Dust};
     public Type type;
     public int value;

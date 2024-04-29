@@ -76,7 +76,7 @@
     {
       "Key": 10,
       "Text": [
-        "You're clever!'",
+        "You're clever!",
         "머리가 비상하구나.\n좋다!!"
 
       ]
@@ -149,6 +149,20 @@
       "Text": [
         "I'll handle it!",
         "내가 직접 처리하겠다"
+      ]
+    },
+    {
+      "Key": 21,
+      "Text": [
+        "That must be the exit!!",
+        "저기가 출구인가봐!!"
+      ]
+    },
+    {
+      "Key": 22,
+      "Text": [
+        "Let's CLEAN UP!",
+        "바로 치워야 겠다!"
       ]
     }
   ]

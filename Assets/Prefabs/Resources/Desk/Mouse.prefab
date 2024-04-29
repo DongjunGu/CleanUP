@@ -110,6 +110,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  clipMouseMove: {fileID: 8300000, guid: 7a28a0a983ddc4b40bcfad25ebc19900, type: 3}
+  clipMouseDestory: {fileID: 8300000, guid: f95a9b571fdf2b44eadc37a67c5bb4df, type: 3}
 --- !u!65 &89742305
 BoxCollider:
   m_ObjectHideFlags: 0

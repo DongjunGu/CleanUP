@@ -37,7 +37,7 @@ public class RobotZone : MonoBehaviour
     GameObject mainRobot;
     GameObject Robotenemies;
     
-    bool hasClearedRobot = false;
+    public static bool hasClearedRobot = false;
     
     void Awake()
     {
@@ -79,7 +79,6 @@ public class RobotZone : MonoBehaviour
             NewPlayerController.stage = 2;
             SoundController.bgmNum = 3;
             GetComponent<BoxCollider>().enabled = false;
-            Debug.Log(NewPlayerController.stage);
             StartCoroutine(CameraMove());
             StartCoroutine(LaserActive());
         }
@@ -234,11 +233,10 @@ public class RobotZone : MonoBehaviour
 
     public void ClearRobotStage()
     {
-        if (RobotCount.Count == 6 && !hasClearedRobot)
+        if (RobotCount.Count == 0 && hasClearedRobot)
         {
             SoundController.Instance.MuteBackgroundMusic();
             ResetHealth();
-            hasClearedRobot = true;
             for (int i = 0; i < Laser.Count; i++)
             {
                 Laser[i].SetActive(false);

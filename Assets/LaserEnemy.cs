@@ -13,9 +13,12 @@ public class LaserEnemy : MonoBehaviour
     public float speed = 1.0f;
     public float stoppingDistance = 0.5f;
     private bool EnemyRotate = false;
+    AudioSource audioSource;
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         StartCoroutine(RobotAction());
+        audioSource.mute = true;
     }
     void Update()
     {
@@ -30,13 +33,16 @@ public class LaserEnemy : MonoBehaviour
         yield return new WaitForSeconds(3.0f);
         GetComponent<LaserPattern>().enabled = true;
         GetComponent<LineRenderer>().enabled = true;
+        audioSource.mute = false;
         yield return new WaitForSeconds(1.5f);
+        
         IsArrived = true;
         yield return new WaitForSeconds(1f);
         yield return StartCoroutine(LaserPattern2());
         yield return new WaitForSeconds(1f);
         yield return StartCoroutine(LaserPattern3());
         yield return StartCoroutine(LaserPattern4());
+        
         yield return StartCoroutine(LaserPattern5());
         yield return StartCoroutine(LaserPattern6());
     }
@@ -118,6 +124,7 @@ public class LaserEnemy : MonoBehaviour
     IEnumerator LaserPattern5()
     {
         ResetLaser();
+        audioSource.mute = true;
         GetComponent<LaserPattern>().enabled = false;
         NavMeshPath path = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, targetPosition3.transform.position, -1, path);
@@ -133,7 +140,8 @@ public class LaserEnemy : MonoBehaviour
             GetComponent<Animator>().SetBool("isMoving", false);
         }
         yield return new WaitForSeconds(1.0f);
-        
+        audioSource.mute = false;
+
         EnemyRotate = true;
         float elapsedTime = 0.0f;
         GetComponent<LaserPattern>().enabled = true;
@@ -157,6 +165,7 @@ public class LaserEnemy : MonoBehaviour
             transform.Rotate(0f, angleToRotate, 0f);
             yield return null;
         }
+        audioSource.mute = true;
 
     }
     void ResetLaser()

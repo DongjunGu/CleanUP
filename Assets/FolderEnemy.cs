@@ -5,6 +5,11 @@ using UnityEngine;
 public class FolderEnemy : MonoBehaviour
 {
     bool _isDamaged = false;
+    //public AudioClip clipFolder;
+    //private void Start()
+    //{
+    //    SoundController.Instance.PlayBossSound("Folder",clipFolder,clipFolder)
+    //}
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player")

@@ -54,6 +54,7 @@ public class NewPlayerController : MonoBehaviour
     public AudioClip clipInventory;
     public AudioClip cliphit1;
     public AudioClip clipCumpulsJump;
+    public AudioClip clipEntering;
     public UnityEngine.Events.UnityEvent act1;
     public UnityEngine.Events.UnityEvent act2;
     public UnityEngine.Events.UnityEvent act3;
@@ -194,11 +195,6 @@ public class NewPlayerController : MonoBehaviour
             player.rotation = Quaternion.Slerp(player.rotation, targetRotation, Time.deltaTime * _rotateSpeed);
 
             
-            //if (Time.time - lastFootstepTime > 0.7f)
-            //{
-            //    SoundController.Instance.PlaySound("Walk", clip);
-            //    lastFootstepTime = Time.time;
-            //}
         }
         else
         {
@@ -645,23 +641,51 @@ public class NewPlayerController : MonoBehaviour
             }
         }
         if (other.gameObject.name == "Paper1box")
+        {
+            SoundController.Instance.PlaySoundDesk("Entering", clipEntering);
             Papernumber = 1;
+        }
+            
         if (other.gameObject.name == "Paper2box")
+        {
+            SoundController.Instance.PlaySoundDesk("Entering", clipEntering);
             Papernumber = 2;
+        }
         if (other.gameObject.name == "Paper3box")
+        {
+            SoundController.Instance.PlaySoundDesk("Entering", clipEntering);
             Papernumber = 3;
+        }
         if (other.gameObject.name == "Paper4box")
+        {
+            SoundController.Instance.PlaySoundDesk("Entering", clipEntering);
             Papernumber = 4;
+        }
         if (other.gameObject.name == "Paper5box")
+        {
+            SoundController.Instance.PlaySoundDesk("Entering", clipEntering);
             Papernumber = 5;
+        }
         if (other.gameObject.name == "Paper6box")
+        {
+            SoundController.Instance.PlaySoundDesk("Entering", clipEntering);
             Papernumber = 6;
+        }
         if (other.gameObject.name == "Paper7box")
+        {
+            SoundController.Instance.PlaySoundDesk("Entering", clipEntering);
             Papernumber = 7;
+        }
         if (other.gameObject.name == "Paper8box")
+        {
+            SoundController.Instance.PlaySoundDesk("Entering", clipEntering);
             Papernumber = 8;
+        }
         if (other.gameObject.name == "Paper9box")
+        {
+            SoundController.Instance.PlaySoundDesk("Entering", clipEntering);
             Papernumber = 9;
+        }
     }
     public void GetLaserDamaer(int laserDamage)
     {
@@ -874,7 +898,8 @@ public class NewPlayerController : MonoBehaviour
             mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
             currentHp = 200;
             hpUI.hp = currentHp;
-            
+            SoundController.bgmNum = 2;
+
             yield return new WaitForSeconds(2.0f);
             springArm.GetComponent<SpringArmCamera>().enabled = true;
             RespawnImage.GetComponent<Image>().enabled = false;
@@ -908,7 +933,7 @@ public class NewPlayerController : MonoBehaviour
             mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
             currentHp = 200;
             hpUI.hp = currentHp;
-
+            SoundController.bgmNum = 2;
             yield return new WaitForSeconds(2.0f);
             springArm.GetComponent<SpringArmCamera>().enabled = true;
             RespawnImage.GetComponent<Image>().enabled = false;

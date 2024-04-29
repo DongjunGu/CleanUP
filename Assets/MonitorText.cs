@@ -24,14 +24,16 @@ public class MonitorText : MonoBehaviour
     public Transform socket;
     public GameObject SpringArm;
     public AudioClip clipTyping;
+    public AudioClip clipLamp;
+    public AudioClip clipSpin;
     public UnityEngine.Events.UnityEvent QuizController;
 
 
     void OnEnable()
     {
         monitorText.text = "";
-        StartCoroutine(MonitorTextStart());
-        //LastStage();
+        //StartCoroutine(MonitorTextStart());
+        LastStage();
     }
 
     IEnumerator MonitorTextStart()
@@ -65,6 +67,7 @@ public class MonitorText : MonoBehaviour
     IEnumerator QuizStart()
     {
         LampLight.SetActive(true);
+        SoundController.Instance.PlaySoundDesk("Lamp", clipLamp);
         int playerHp = player.GetComponent<NewPlayerController>().currentHp = 200;
         player.GetComponent<NewPlayerController>().hpUI.hp = playerHp;
         yield return new WaitForSeconds(2.0f);
@@ -80,10 +83,12 @@ public class MonitorText : MonoBehaviour
     }
     IEnumerator LastStageStart()
     {
+        SoundController.Instance.MuteBackgroundMusic();
         LampLight.SetActive(true);
+        SoundController.Instance.PlaySoundDesk("Lamp", clipLamp);
         int playerHp = player.GetComponent<NewPlayerController>().currentHp = 200;
         player.GetComponent<NewPlayerController>().hpUI.hp = playerHp;
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         LampLight.SetActive(false);
         int index = 14;
         yield return StartCoroutine(PrintText(index++)); //14
@@ -91,7 +96,8 @@ public class MonitorText : MonoBehaviour
         ClearText();
         //회오리 이미지
         SpinImage.SetActive(true);
-        yield return new WaitForSeconds(2.0f);
+        SoundController.Instance.PlaySoundDesk("Spin", clipSpin);
+        yield return new WaitForSeconds(1.0f);
         //화면전환
         mainCamera.transform.SetParent(socket);
         mainCamera.transform.localPosition = Vector3.zero;
@@ -100,6 +106,7 @@ public class MonitorText : MonoBehaviour
         //모니터 collider 비활성화
         Monitor.GetComponent<MeshCollider>().enabled = false;
         //이동스크립트 비활성화
+        
         player.GetComponent<NewPlayerController>().enabled = false;
         player.GetComponent<Rigidbody>().useGravity = false;
         //상승

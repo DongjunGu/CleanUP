@@ -46,45 +46,45 @@ public class QuizControl : MonoBehaviour
     IEnumerator QuizStartControl()
     {
         int index = 7;
-        //subTextObj.SetActive(true);
-        //thirdTextObj.SetActive(true);
-        //SoundController.Instance.PlaySoundDesk("PaperSpawn", clipPaperSpawn);
-        //yield return StartCoroutine(SpawnPaper());
-        
-        //yield return StartCoroutine(PrintmainText(index++)); //If you fail to solve it within the time limit
-        
-        //StartCoroutine(PrintQuizText1()); // 5 + ( ) = 8
-        //yield return StartCoroutine(CountNumber(15));
-        //yield return StartCoroutine(CheckAnswer(3));
+        subTextObj.SetActive(true);
+        thirdTextObj.SetActive(true);
+        SoundController.Instance.PlaySoundDesk("PaperSpawn", clipPaperSpawn);
+        yield return StartCoroutine(SpawnPaper());
 
-        //yield return StartCoroutine(PrintmainText(index++)); //Next Quiz
+        yield return StartCoroutine(PrintmainText(index++)); //If you fail to solve it within the time limit
 
-        //StartCoroutine(PrintQuizText2()); // ( ) * 9 = 81
-        //yield return StartCoroutine(CountNumber(15));
-        //yield return StartCoroutine(CheckAnswer(9));
+        StartCoroutine(PrintQuizText1()); // 5 + ( ) = 8
+        yield return StartCoroutine(CountNumber(15));
+        yield return StartCoroutine(CheckAnswer(3));
 
-        //yield return StartCoroutine(PrintmainText(index++)); //Well.. You're Good. How about this?
-        //yield return StartCoroutine(ShufflePaper());
+        yield return StartCoroutine(PrintmainText(index++)); //Next Quiz
 
-        //StartCoroutine(PrintQuizText3()); // 12 - 10 / 2 = ( ) = 7
-        //yield return StartCoroutine(CountNumber(15));
-        //yield return StartCoroutine(CheckAnswer(7));
+        StartCoroutine(PrintQuizText2()); // ( ) * 9 = 81
+        yield return StartCoroutine(CountNumber(15));
+        yield return StartCoroutine(CheckAnswer(9));
+
+        yield return StartCoroutine(PrintmainText(index++)); //Well.. You're Good. How about this?
+        yield return StartCoroutine(ShufflePaper());
+
+        StartCoroutine(PrintQuizText3()); // 12 - 10 / 2 = ( ) = 7
+        yield return StartCoroutine(CountNumber(15));
+        yield return StartCoroutine(CheckAnswer(7));
 
         yield return StartCoroutine(PrintmainText(index++)); // 10 You're clever!
-        //yield return StartCoroutine(PrintmainText(index++)); // 11 Okay..\n Go get him Mouse!
+        yield return StartCoroutine(PrintmainText(index++)); // 11 Okay..\n Go get him Mouse!
 
-        //foreach (GameObject obj in Paper)
-        //{
-        //    foreach (Transform child in obj.transform)
-        //    {
-        //        BoxCollider childCollider = child.GetComponent<BoxCollider>();
+        foreach (GameObject obj in Paper)
+        {
+            foreach (Transform child in obj.transform)
+            {
+                BoxCollider childCollider = child.GetComponent<BoxCollider>();
 
-        //        if (childCollider != null)
-        //        {
-        //            childCollider.enabled = false;
-        //        }
-        //    }
-        //}
+                if (childCollider != null)
+                {
+                    childCollider.enabled = false;
+                }
+            }
+        }
         MouseEnemyStart?.Invoke();
     }
     IEnumerator ShufflePaper()

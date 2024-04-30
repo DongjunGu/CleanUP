@@ -145,11 +145,8 @@ public class Enemy : MonoBehaviour
             Weapons weapons = other.GetComponent<Weapons>();
             currentHp -= weapons.damage;
            
-            //weapons.hitEffect.SetActive(true);
-            Debug.Log(currentHp);
             StartCoroutine(DamageCooldown());
             StartCoroutine(Damaged());
-            // weapons.hitEffect.SetActive(false);
 
             
             if(hpUI != null)

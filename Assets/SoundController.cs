@@ -157,15 +157,15 @@ public class SoundController : MonoBehaviour
         {
             if(currentBgmNumber == 0 || currentBgmNumber == 2)
             {
-                BackGroungMusic.volume = 0.03f;
+                BackGroungMusic.volume = 0.06f;
             }
             else if(currentBgmNumber == 5)
             {
-                BackGroungMusic.volume = 0.05f;
+                BackGroungMusic.volume = 0.1f;
             }
             else
             {
-                BackGroungMusic.volume = 0.06f;
+                BackGroungMusic.volume = 0.1f;
             }
             BackGroungMusic.clip = bgmClips[currentBgmNumber];
             BackGroungMusic.loop = true;

@@ -212,6 +212,7 @@ public class RobotZone : MonoBehaviour
         mainCamera.fieldOfView = 40;
         mainCamera.transform.localPosition = Vector3.zero;
         mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        TMPObj.GetComponent<TextMeshProUGUI>().text = "";
         //player.GetComponent<NewPlayerController>().enabled = true;
         SoundController.bgmNum = 2;
         SoundController.Instance.ResumeBackgroundMusic();

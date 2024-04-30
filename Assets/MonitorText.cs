@@ -32,8 +32,8 @@ public class MonitorText : MonoBehaviour
     void OnEnable()
     {
         monitorText.text = "";
-        //StartCoroutine(MonitorTextStart());
-        LastStage();
+        StartCoroutine(MonitorTextStart());
+        //LastStage();
     }
 
     IEnumerator MonitorTextStart()

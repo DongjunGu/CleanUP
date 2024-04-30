@@ -5,19 +5,14 @@ using UnityEngine;
 public class FolderEnemy : MonoBehaviour
 {
     bool _isDamaged = false;
-    //public AudioClip clipFolder;
-    //private void Start()
-    //{
-    //    SoundController.Instance.PlayBossSound("Folder",clipFolder,clipFolder)
-    //}
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             if (!_isDamaged)
             {
-                collision.gameObject.GetComponent<NewPlayerController>().currentHp -= 10;
-                collision.gameObject.GetComponent<NewPlayerController>().hpUI.takeDamage(10);
+                collision.gameObject.GetComponent<NewPlayerController>().currentHp -= 20;
+                collision.gameObject.GetComponent<NewPlayerController>().hpUI.takeDamage(20);
                 StartCoroutine(OnDamage());
             }
             

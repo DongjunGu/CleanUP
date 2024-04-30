@@ -613,7 +613,6 @@ public class NewPlayerController : MonoBehaviour
     {
         if (other.tag == "Item")
         {
-            Debug.Log(other.gameObject.name);
             Items item = other.GetComponent<Items>();
             switch (item.type)
             {
@@ -729,7 +728,6 @@ public class NewPlayerController : MonoBehaviour
         }
         if (isGroundedNow && !wasGrounded)
         {
-            Debug.Log("Grounded");
             SoundController.Instance.PlaySound("Land", clipLand);
             anim.SetBool("isDoubleJumping", false);
             _isJumping = false;

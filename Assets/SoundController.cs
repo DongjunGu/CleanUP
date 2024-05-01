@@ -16,6 +16,7 @@ public class SoundController : MonoBehaviour
     public AudioMixerGroup deskAudioMixerGroup;
     public AudioMixerGroup mouseAudioMixerGroup;
     public AudioMixerGroup bossAudioMixerGroup;
+    public int language = 1;
     public static int bgmNum = 0;
     int currentBgmNumber;
     private void Awake()

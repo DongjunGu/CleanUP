@@ -11,7 +11,11 @@ public class testLabel : MonoBehaviour
     public string text;
     private TalkManager talkManager;
     public int language;
-    
+
+    public void Start()
+    {
+        language = SoundController.Instance.language;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")

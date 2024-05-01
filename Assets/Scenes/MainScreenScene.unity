@@ -2001,6 +2001,7 @@ MonoBehaviour:
     type: 2}
   bossAudioMixerGroup: {fileID: 8968441402616668332, guid: f42099f1280f4554cb1a4622031d0869,
     type: 2}
+  language: 0
 --- !u!4 &595675853
 Transform:
   m_ObjectHideFlags: 0

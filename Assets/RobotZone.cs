@@ -130,6 +130,7 @@ public class RobotZone : MonoBehaviour
     }
     public IEnumerator CameraMove()
     {
+        TMPObj.GetComponent<TextMeshProUGUI>().text = "";
         player.GetComponent<NewPlayerController>().enabled = false;
         Animator playerAnim = player.GetComponent<Animator>();
         playerAnim.SetBool("isRun", false);

@@ -145,12 +145,13 @@ public class RobotZone : MonoBehaviour
         }
         yield return new WaitForSeconds(2.0f);
         StartCoroutine(Text1());
-        yield return new WaitForSeconds(7.0f);
-        
+        yield return new WaitForSeconds(4.0f);
+        TMPObj.GetComponent<TextMeshProUGUI>().text = "";
+        yield return StartCoroutine(Text3());
         TMPImage.SetActive(false);
         TMPObj.GetComponent<TextMeshProUGUI>().text = "";
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(2.0f);
         SoundController.Instance.PlayObjectSoundRobot("Stand", clipRobotStand);
         StartCoroutine(SpawnEnemy());
 
@@ -199,8 +200,11 @@ public class RobotZone : MonoBehaviour
             yield return null;
         }
         yield return new WaitForSeconds(1.0f);
-        StartCoroutine(Text2());
-        yield return new WaitForSeconds(3.0f);
+        yield return StartCoroutine(Text2());
+        yield return new WaitForSeconds(1.0f);
+        TMPObj.GetComponent<TextMeshProUGUI>().text = "";
+        yield return StartCoroutine(Text4());
+        yield return new WaitForSeconds(1.0f);
         StartCoroutine(RobotPointing());
         SoundController.Instance.PlayObjectSoundRobot("Pointing", clipRobotPointing);
         TMPImage.SetActive(false);
@@ -300,6 +304,36 @@ public class RobotZone : MonoBehaviour
     {
         TMPImage.SetActive(true);
         text = TalkManager.table.datas[2].Text[language];
+        int cur = 0;
+        SoundController.Instance.PlaySound("RobotVoice", clipRobotVoiceFull);
+        while (cur < text.Length)
+        {
+            myLabel.text += text[cur++];
+            //SoundController.Instance.PlayType("RobotVoice", clipRobotVoiceShort, 0.02f);
+            yield return new WaitForSeconds(0.02f);
+        }
+        yield return new WaitForSeconds(1.5f);
+    }
+
+    IEnumerator Text3()
+    {
+        TMPImage.SetActive(true);
+        text = "Let me sweep it for you!";
+        int cur = 0;
+        SoundController.Instance.PlaySound("RobotVoice", clipRobotVoiceFull);
+        while (cur < text.Length)
+        {
+            myLabel.text += text[cur++];
+            //SoundController.Instance.PlayType("RobotVoice", clipRobotVoiceShort, 0.02f);
+            yield return new WaitForSeconds(0.02f);
+        }
+        yield return new WaitForSeconds(1.5f);
+    }
+
+    IEnumerator Text4()
+    {
+        TMPImage.SetActive(true);
+        text = "Go this way. I'll help you.";
         int cur = 0;
         SoundController.Instance.PlaySound("RobotVoice", clipRobotVoiceFull);
         while (cur < text.Length)

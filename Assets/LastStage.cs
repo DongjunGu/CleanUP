@@ -36,6 +36,7 @@ public class LastStage : MonoBehaviour
         SoundController.Instance.ResumeBackgroundMusic();
         SoundController.bgmNum = 5;
         yield return StartCoroutine(PrintText(index++));
+        yield return StartCoroutine(ExtraText());
         yield return StartCoroutine(PrintText(index++));
         TMPImage.SetActive(false);
         yield return StartCoroutine(CameraMovePlayer());
@@ -44,10 +45,24 @@ public class LastStage : MonoBehaviour
     IEnumerator PrintText(int index)
     {
         TMPImage.SetActive(true);
-        myLabel.alignment = TextAlignmentOptions.Left;
         text = TalkManager.table.datas[index].Text[language];
         int cur = 0;
         
+        while (cur < text.Length)
+        {
+            myLabel.text += text[cur++];
+            SoundController.Instance.PlayBossSound("Talk", clipTalk, 0.1f);
+            yield return new WaitForSeconds(0.1f);
+        }
+        yield return new WaitForSeconds(3.0f);
+        TMPObj.GetComponent<TextMeshProUGUI>().text = "";
+    }
+    IEnumerator ExtraText()
+    {
+        TMPImage.SetActive(true);
+        text = "SOOOOOO MESSSSSY!";
+        int cur = 0;
+
         while (cur < text.Length)
         {
             myLabel.text += text[cur++];

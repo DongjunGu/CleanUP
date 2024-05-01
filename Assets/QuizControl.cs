@@ -122,8 +122,8 @@ public class QuizControl : MonoBehaviour
             foodDrop.SetActive(true);
             yield return new WaitForSeconds(2.5f);
             NewPlayerController playerhp = player.GetComponent<NewPlayerController>();
-            playerhp.currentHp -= 200;//Test 200
-            playerhp.hpUI.takeDamage(200);
+            playerhp.currentHp -= 100;//Test 200
+            playerhp.hpUI.takeDamage(100);
             yield return new WaitForSeconds(2.0f);
             foodDrop.SetActive(false);
         }

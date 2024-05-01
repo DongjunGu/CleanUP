@@ -232,7 +232,7 @@ public class MouseEnemy : MonoBehaviour
     {
         yield return new WaitForSeconds(2.0f);
         TMPImage.SetActive(true);
-        text = "마우스가 당신을 추격합니다";
+        text = "Mouse is chasing you!";
         int cur = 0;
 
         while (cur < text.Length)
@@ -244,22 +244,7 @@ public class MouseEnemy : MonoBehaviour
         TMPImage.SetActive(false);
         TMPObj.GetComponent<TextMeshProUGUI>().text = "";
     }
-    IEnumerator Text4()
-    {
-        yield return new WaitForSeconds(2.0f);
-        TMPImage.SetActive(true);
-        text = "승리!";
-        int cur = 0;
-
-        while (cur < text.Length)
-        {
-            myLabel.text += text[cur++];
-            yield return new WaitForSeconds(0.001f);
-        }
-        yield return new WaitForSeconds(2.0f);
-        TMPImage.SetActive(false);
-        TMPObj.GetComponent<TextMeshProUGUI>().text = "";
-    }
+   
     IEnumerator MouseRush1(int speed)
     {
         SoundController.Instance.PlaySoundMouse("MouseMove", clipMouseMove, 2f);

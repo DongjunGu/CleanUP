@@ -165,7 +165,7 @@ public class SoundController : MonoBehaviour
             }
             else
             {
-                BackGroungMusic.volume = 0.1f;
+                BackGroungMusic.volume = 0.2f;
             }
             BackGroungMusic.clip = bgmClips[currentBgmNumber];
             BackGroungMusic.loop = true;

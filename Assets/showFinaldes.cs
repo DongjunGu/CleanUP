@@ -64,7 +64,6 @@ public class showFinaldes : MonoBehaviour
     {
         TMPImage.SetActive(true);
         text = TalkManager.table.datas[21].Text[language];
-        myLabel.alignment = TMPro.TextAlignmentOptions.Center;
         int cur = 0;
         while (cur < text.Length)
         {

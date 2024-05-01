@@ -154,7 +154,7 @@ MonoBehaviour:
   _scanRange: 25
   maxHP: 50
   currentHp: 50
-  damage: 50
+  damage: 10
   target: {fileID: 0}
   dustItemObject: {fileID: 1833970410474985166, guid: 5c771900069038340aac7d9f82f7daf5,
     type: 3}

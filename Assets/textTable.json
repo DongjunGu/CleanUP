@@ -4,7 +4,7 @@
       "Key": 0,
       "Text": [
         "Let's clean up the chess over there.",
-        "저기 어지럽혀져 있는 체스말을 정리하자"
+        "저기 어지럽혀져 있는 체스말을 정리하자."
       ]
     },
     {
@@ -32,21 +32,21 @@
       "Key": 4,
       "Text": [
         "Now, it's my turn.",
-        "너도 한번 어지럽혀져 봐라"
+        "너도 한번 어지럽혀져 봐라."
       ]
     },
     {
       "Key": 5,
       "Text": [
         "Quite impressive.\nTry to avoid this too!",
-        "제법이군 이것도 피해보시지"
+        "제법이군 이것도\n피해보시지!"
       ]
     },
     {
       "Key": 6,
       "Text": [
         "It's Quiz Time",
-        "이렇게 해선\n 끝이 없겠군"
+        "이렇게 해선\n끝이 없겠군."
 
       ]
     },
@@ -54,7 +54,7 @@
       "Key": 7,
       "Text": [
         "You should solve this in time,\nor it's my VICTORY.",
-        "제한 시간 안에\n 풀지 못하면\n 나의 승리다"
+        "제한 시간 안에\n풀지 못하면\n나의 승리다."
       ]
     },
     {
@@ -69,7 +69,7 @@
       "Key": 9,
       "Text": [
         "You're good.\nThen how about this?",
-        "좀 하는군..\n이건 어떨까?."
+        "좀 하는군..\n이건 어떨까?"
 
       ]
     },
@@ -77,7 +77,7 @@
       "Key": 10,
       "Text": [
         "Amazing!\nYou're clever!",
-        "머리가 비상하구나."
+        "똑똑하군!"
 
       ]
     },
@@ -85,42 +85,42 @@
       "Key": 11,
       "Text": [
         "Okay.. I see.\nMOUSE, it's your turn!",
-        "직접 처리해라!"
+        "마우스 처리해라!"
       ]
     },
     {
       "Key": 12,
       "Text": [
         "AWEEEE!! Stop me if you can.",
-        "너무 화가 나! 들이 받아 주지!"
+        "너무 화가 나! 피해보시지!"
       ]
     },
     {
       "Key": 13,
       "Text": [
         "Overloaded...",
-        "과부화 상태..!"
+        "과부화 상태..."
       ]
     },
     {
       "Key": 14,
       "Text": [
         "Okay..\nI'll deal with it myself.",
-        "너까지 당하다니..\n내가 직접 상대해주마"
+        "너까지 당하다니..\n내가 상대해주마."
       ]
     },
     {
       "Key": 15,
       "Text": [
-        "Come here",
-        "이리 들어 오너라"
+        "Come here.",
+        "이리 들어 오너라."
       ]
     },
     {
       "Key": 16,
       "Text": [
         "Did you see the way you've passed?",
-        "너가 지나쳐온 길을 봤느냐.\n얼마나 엉망인지..\n덤벼라"
+        "너가 지나쳐온 길을 봤느냐!"
       ]
     },
     {
@@ -148,7 +148,7 @@
       "Key": 20,
       "Text": [
         "I'll handle it!",
-        "내가 직접 처리하겠다"
+        "내가 직접 처리하겠다."
       ]
     },
     {
@@ -163,6 +163,34 @@
       "Text": [
         "Let me CLEAN UP my room!",
         "바로 치워야 겠다!"
+      ]
+    },
+    {
+      "Key": 23,
+      "Text": [
+        "Let me sweep it for you!",
+        "내가 쓸어주지!"
+      ]
+    },
+    {
+      "Key": 24,
+      "Text": [
+        "Go this way. I'll help you.",
+        "이 쪽으로 가. 내가 도와줄게."
+      ]
+    },
+    {
+      "Key": 25,
+      "Text": [
+        "SOOOOOO MESSSSSY!",
+        "너어어어어무 더러워!"
+      ]
+    },
+    {
+      "Key": 26,
+      "Text": [
+        "Mouse is chasing you!!",
+        "마우스가 추격합니다!"
       ]
     }
   ]

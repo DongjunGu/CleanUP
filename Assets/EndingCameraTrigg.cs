@@ -18,6 +18,11 @@ public class EndingCameraTrigg : MonoBehaviour
     public GameObject TMPObj;
 
     public AudioClip clipTalk;
+
+    private void Update()
+    {
+        language = LanguageToggle.mainLanguage;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -28,6 +33,7 @@ public class EndingCameraTrigg : MonoBehaviour
 
     public IEnumerator CameraMove()
     {
+        SoundController.bgmNum = 6;
         GetComponent<BoxCollider>().enabled = false;
         yield return new WaitForSeconds(1.0f);
         Animator playerAnim = player.GetComponent<Animator>();

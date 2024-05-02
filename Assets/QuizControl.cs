@@ -24,6 +24,7 @@ public class QuizControl : MonoBehaviour
     {
         StartCoroutine(QuizStartControl());
     }
+
     public void RestartQuiz()
     {
         foreach (GameObject obj in Paper)
@@ -41,7 +42,7 @@ public class QuizControl : MonoBehaviour
     }
     private void Update()
     {
-
+        language = LanguageToggle.mainLanguage;
     }
     IEnumerator QuizStartControl()
     {
@@ -102,7 +103,12 @@ public class QuizControl : MonoBehaviour
         if (NewPlayerController.Papernumber == answer)
         {
             SoundController.Instance.PlaySoundDesk("Correct", clipCorrect);
-            thirdText.text = "CORRECT";
+            if(language == 0)
+                thirdText.text = "CORRECT";
+            else
+            {
+                thirdText.text = "정답";
+            }
             yield return new WaitForSeconds(3.0f);
             ClearSubText();
             ClearThirdText();
@@ -110,11 +116,21 @@ public class QuizControl : MonoBehaviour
         else
         {
             SoundController.Instance.PlaySoundDesk("Wrong", clipWrong);
-            thirdText.text = "WRONG";
+            if (language == 0)
+                thirdText.text = "WRONG";
+            else
+            {
+                thirdText.text = "오답";
+            }
             yield return new WaitForSeconds(3.0f);
             ClearSubText();
             ClearThirdText();
-            thirdText.text = $"Answer = {answer}";
+            if (language == 0)
+                thirdText.text = $"Answer = {answer}";
+            else
+            {
+                thirdText.text = $"정답 = {answer}";
+            }
             yield return new WaitForSeconds(2.0f);
             ClearSubText();
             ClearThirdText();

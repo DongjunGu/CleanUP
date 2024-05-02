@@ -15018,7 +15018,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &725374709
 AudioSource:
   m_ObjectHideFlags: 0
@@ -15418,7 +15418,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9.4574, y: -5}
+  m_AnchoredPosition: {x: 9.4574, y: -11}
   m_SizeDelta: {x: 984.4858, y: 63.8316}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &753171458
@@ -16761,7 +16761,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837029227}
   m_LocalRotation: {x: -0, y: -0.9993537, z: -0, w: 0.035948094}
-  m_LocalPosition: {x: 65.6, y: 75.7, z: 40.9}
+  m_LocalPosition: {x: -28.3, y: 1.2, z: -117.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 28971677}
@@ -32637,6 +32637,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b16db977b209dbc4aa6e9d0462957f50, type: 3}
   - {fileID: 8300000, guid: 574af95fcd894234c8e8d0da2dbed0b0, type: 3}
   - {fileID: 8300000, guid: 79c2119d9679b71428a5f7ff2637a3ac, type: 3}
+  - {fileID: 8300000, guid: 8b9cba35c27f44c4ba92dffd71453387, type: 3}
   playerAudioMixerGroup: {fileID: -151544102130692524, guid: f42099f1280f4554cb1a4622031d0869,
     type: 2}
   playerRunMixerGroup: {fileID: -7719912909052665802, guid: f42099f1280f4554cb1a4622031d0869,
@@ -32649,7 +32650,6 @@ MonoBehaviour:
     type: 2}
   bossAudioMixerGroup: {fileID: 8968441402616668332, guid: f42099f1280f4554cb1a4622031d0869,
     type: 2}
-  language: 0
 --- !u!4 &1638271532
 Transform:
   m_ObjectHideFlags: 0

@@ -18,6 +18,11 @@ public class showFinaldes : MonoBehaviour
     public GameObject TMPObj;
 
     public AudioClip clipTalk;
+
+    private void Update()
+    {
+        language = LanguageToggle.mainLanguage;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")

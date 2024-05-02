@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class NewPlayerController : MonoBehaviour
 {
-    public static int stage = 1;
+    public static int stage = 0;
     public static int direction;
     [SerializeField] public static int hasDust;
     [SerializeField] public float _speed = 10.0f;

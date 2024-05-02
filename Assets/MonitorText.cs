@@ -33,14 +33,18 @@ public class MonitorText : MonoBehaviour
     {
         monitorText.text = "";
         StartCoroutine(MonitorTextStart());
-        //LastStage();
+    }
+
+    private void Update()
+    {
+        language = LanguageToggle.mainLanguage;
     }
 
     IEnumerator MonitorTextStart()
     {
         Animator monitorAnim = MonitorAnim.GetComponent<Animator>();
-        int index = 4;
-        yield return StartCoroutine(WelcomeText());
+        int index = 3;
+        yield return StartCoroutine(PrintText(index++));
         yield return StartCoroutine(PrintText(index++)); //4
         Almondzone.SetActive(true);
         yield return StartCoroutine(CountNumber(15));
@@ -91,25 +95,20 @@ public class MonitorText : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         LampLight.SetActive(false);
         int index = 14;
-        yield return StartCoroutine(PrintText(index++)); //14
-        yield return StartCoroutine(PrintText(index++)); //15
+        yield return StartCoroutine(PrintText(index++));
+        yield return StartCoroutine(PrintText(index++));
         ClearText();
-        //회오리 이미지
         SpinImage.SetActive(true);
         SoundController.Instance.PlaySoundDesk("Spin", clipSpin);
         yield return new WaitForSeconds(1.0f);
-        //화면전환
         mainCamera.transform.SetParent(socket);
         mainCamera.transform.localPosition = Vector3.zero;
         mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         SpringArm.GetComponent<SpringArmCamera>().enabled = true;
-        //모니터 collider 비활성화
         Monitor.GetComponent<MeshCollider>().enabled = false;
-        //이동스크립트 비활성화
         
         player.GetComponent<NewPlayerController>().enabled = false;
         player.GetComponent<Rigidbody>().useGravity = false;
-        //상승
         float elapsedTime = 0.0f;
         float duration = 2.0f;
 
@@ -121,7 +120,6 @@ public class MonitorText : MonoBehaviour
             yield return null;
         }
         player.GetComponent<Animator>().SetBool("isSpin", true);
-        //모니터로 이동
         float dist = Vector3.Distance(TeleportPos.position, player.transform.position);
         while (!TelePort.teleported)
         {
@@ -136,34 +134,20 @@ public class MonitorText : MonoBehaviour
     {
         monitorText.text = "";
     }
-    IEnumerator WelcomeText()
-    {
-        text = TalkManager.table.datas[3].Text[language];
-        int cur = 0;
-        //SoundController.Instance.PlayType("Typing", clipTyping, 3.0f);
 
-        while (cur < text.Length)
-        {
-            monitorText.text += text[cur++];
-            SoundController.Instance.PlayType("Typing", clipTyping, 0.1f);
-            yield return new WaitForSeconds(0.1f);
-        }
-        yield return new WaitForSeconds(1.5f);
-    }
     IEnumerator PrintText(int index)
     {
         ClearText();
 
         text = TalkManager.table.datas[index].Text[language];
         int cur = 0;
-        //SoundController.Instance.PlayType("Typing", clipTyping, 3.0f);
         while (cur < text.Length)
         {
             monitorText.text += text[cur++];
             SoundController.Instance.PlayType("Typing", clipTyping, 0.1f);
             yield return new WaitForSeconds(0.1f);
         }
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
 
     }
 

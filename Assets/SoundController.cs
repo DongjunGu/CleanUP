@@ -16,7 +16,6 @@ public class SoundController : MonoBehaviour
     public AudioMixerGroup deskAudioMixerGroup;
     public AudioMixerGroup mouseAudioMixerGroup;
     public AudioMixerGroup bossAudioMixerGroup;
-    public int language = 1;
     public static int bgmNum = 0;
     int currentBgmNumber;
     private void Awake()
@@ -161,6 +160,10 @@ public class SoundController : MonoBehaviour
                 BackGroungMusic.volume = 0.06f;
             }
             else if(currentBgmNumber == 5)
+            {
+                BackGroungMusic.volume = 0.1f;
+            }
+            else if(currentBgmNumber == 6)
             {
                 BackGroungMusic.volume = 0.1f;
             }

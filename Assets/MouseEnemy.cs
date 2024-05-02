@@ -55,6 +55,7 @@ public class MouseEnemy : MonoBehaviour
         StartCoroutine(MouseControl());
         damage = 50;
     }
+
     void SpawnHPBar()
     {
         prefab = Resources.Load("HpbarMouse") as GameObject;
@@ -93,6 +94,7 @@ public class MouseEnemy : MonoBehaviour
     }
     private void Update()
     {
+        language = LanguageToggle.mainLanguage;
     }
     public void OnDestroy()
     {
@@ -111,10 +113,6 @@ public class MouseEnemy : MonoBehaviour
             
 
     }
-    //public void NextStep()
-    //{
-    //    MouseClear?.Invoke();
-    //}
     IEnumerator Waiting()
     {
         while (currentHp > 250)
@@ -230,9 +228,9 @@ public class MouseEnemy : MonoBehaviour
     }
     IEnumerator Text3()
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
         TMPImage.SetActive(true);
-        text = "Mouse is chasing you!";
+        text = TalkManager.table.datas[26].Text[language];
         int cur = 0;
 
         while (cur < text.Length)

@@ -26,6 +26,11 @@ public class LastStage : MonoBehaviour
         StartCoroutine(StartLastStage());
     }
 
+    private void Update()
+    {
+        language = LanguageToggle.mainLanguage;
+    }
+
     IEnumerator StartLastStage()
     {
         int index = 16;
@@ -60,7 +65,7 @@ public class LastStage : MonoBehaviour
     IEnumerator ExtraText()
     {
         TMPImage.SetActive(true);
-        text = "SOOOOOO MESSSSSY!";
+        text = TalkManager.table.datas[25].Text[language];
         int cur = 0;
 
         while (cur < text.Length)

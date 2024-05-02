@@ -68,7 +68,7 @@ public class BossEnemy : MonoBehaviour
     }
     private void Update()
     {
-
+        language = LanguageToggle.mainLanguage;
     }
     void SpawnHPBar()
     {

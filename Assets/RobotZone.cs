@@ -59,6 +59,7 @@ public class RobotZone : MonoBehaviour
 
     void Update()
     {
+        language = LanguageToggle.mainLanguage;
         ClearRobotStage();
     }
    
@@ -186,10 +187,6 @@ public class RobotZone : MonoBehaviour
 
     IEnumerator CameraMove2()
     {
-        //Animator playerAnim = player.GetComponent<Animator>();
-        //playerAnim.SetBool("isRun", false);
-        //player.GetComponent<NewPlayerController>().enabled = false;
-        
         yield return new WaitForSeconds(1.0f);
         player.transform.LookAt(Robot.transform);
         mainCamera.transform.SetParent(cameraPos);
@@ -218,7 +215,6 @@ public class RobotZone : MonoBehaviour
         mainCamera.transform.localPosition = Vector3.zero;
         mainCamera.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         TMPObj.GetComponent<TextMeshProUGUI>().text = "";
-        //player.GetComponent<NewPlayerController>().enabled = true;
         SoundController.bgmNum = 2;
         SoundController.Instance.ResumeBackgroundMusic();
     }
@@ -252,7 +248,7 @@ public class RobotZone : MonoBehaviour
             robotAnim.SetBool("Clear", true);
             Invoke("RobotDown", 1f);
             StartCoroutine(CameraMove2());
-            
+
 
         }
     }
@@ -290,13 +286,11 @@ public class RobotZone : MonoBehaviour
     {
         TMPImage.SetActive(true);
         text = TalkManager.table.datas[1].Text[language];
-        //text1,text2
         int cur = 0;
         SoundController.Instance.PlaySoundLoopRobot("RobotVoice", clipRobotVoiceFull, 5.5f);
         while (cur < text.Length)
         {
             myLabel.text += text[cur++];
-            //SoundController.Instance.PlayType("RobotVoice", clipRobotVoiceShort, 0.02f);
             yield return new WaitForSeconds(0.02f);
         }
         yield return new WaitForSeconds(1.5f);
@@ -310,7 +304,6 @@ public class RobotZone : MonoBehaviour
         while (cur < text.Length)
         {
             myLabel.text += text[cur++];
-            //SoundController.Instance.PlayType("RobotVoice", clipRobotVoiceShort, 0.02f);
             yield return new WaitForSeconds(0.02f);
         }
         yield return new WaitForSeconds(1.5f);
@@ -319,13 +312,12 @@ public class RobotZone : MonoBehaviour
     IEnumerator Text3()
     {
         TMPImage.SetActive(true);
-        text = "Let me sweep it for you!";
+        text = TalkManager.table.datas[23].Text[language];
         int cur = 0;
         SoundController.Instance.PlaySound("RobotVoice", clipRobotVoiceFull);
         while (cur < text.Length)
         {
             myLabel.text += text[cur++];
-            //SoundController.Instance.PlayType("RobotVoice", clipRobotVoiceShort, 0.02f);
             yield return new WaitForSeconds(0.02f);
         }
         yield return new WaitForSeconds(1.5f);
@@ -334,13 +326,12 @@ public class RobotZone : MonoBehaviour
     IEnumerator Text4()
     {
         TMPImage.SetActive(true);
-        text = "Go this way. I'll help you.";
+        text = TalkManager.table.datas[24].Text[language];
         int cur = 0;
         SoundController.Instance.PlaySound("RobotVoice", clipRobotVoiceFull);
         while (cur < text.Length)
         {
             myLabel.text += text[cur++];
-            //SoundController.Instance.PlayType("RobotVoice", clipRobotVoiceShort, 0.02f);
             yield return new WaitForSeconds(0.02f);
         }
         yield return new WaitForSeconds(1.5f);

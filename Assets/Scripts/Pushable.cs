@@ -17,7 +17,6 @@ public class Pushable : MonoBehaviour
     public static bool allBlockSet = false;
     public AudioClip clipPush;
     bool isMoving = false;
-    bool isPlaying = false;
     AudioSource pushAudio;
     private void Awake()
     {

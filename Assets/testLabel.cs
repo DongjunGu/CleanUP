@@ -14,7 +14,11 @@ public class testLabel : MonoBehaviour
 
     public void Start()
     {
-        language = SoundController.Instance.language;
+        
+    }
+    private void Update()
+    {
+        language = LanguageToggle.mainLanguage;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -22,6 +26,7 @@ public class testLabel : MonoBehaviour
         {
             StartCoroutine(Showing());
             SoundController.bgmNum = 1;
+            NewPlayerController.stage = 1;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -43,7 +48,7 @@ public class testLabel : MonoBehaviour
             myLabel.text += text[cur++];
             yield return new WaitForSeconds(0.05f);
         }
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2.5f);
         CameraMode.IsGamePause = false;
     }
 }

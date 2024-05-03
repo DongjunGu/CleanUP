@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class NewPlayerController : MonoBehaviour
 {
@@ -324,7 +325,7 @@ public class NewPlayerController : MonoBehaviour
         _attackDelay += Time.deltaTime;
         _isAttack = orginWeapon.attackSpeed < _attackDelay;
 
-        if (_attackKey && _isAttack && !_isDodge && !_isJumping && !_isWipeAnimationPlaying)
+        if (!EventSystem.current.IsPointerOverGameObject() && _attackKey && _isAttack && !_isDodge && !_isJumping && !_isWipeAnimationPlaying)
         {
             StartCoroutine(PlayWipeAnimation());
             SoundController.Instance.PlaySound("Hit", cliphit1);

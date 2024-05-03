@@ -10,11 +10,11 @@ public class SwitchLanguageAnim : MonoBehaviour
     {
         if(LanguageToggle.mainLanguage == 1)
         {
-            Cut1.GetComponent<Animator>().SetBool("isKor", true);
+            Cut1.GetComponent<Animator>().SetTrigger("isKorean");
         }
         else if(LanguageToggle.mainLanguage == 0)
         {
-            Cut1.GetComponent<Animator>().SetBool("isKor", false);
+            Cut1.GetComponent<Animator>().SetTrigger("isEnglish");
         }
     }
 }

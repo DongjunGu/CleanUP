@@ -13,6 +13,7 @@ public class ExitGame : MonoBehaviour
         {
             RespawnImage.GetComponent<Image>().enabled = true;
             RespawnImage.GetComponent<Animator>().enabled = true;
+            Application.Quit();
         }
     }
 }

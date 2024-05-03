@@ -29,18 +29,12 @@ public class testLabel : MonoBehaviour
             NewPlayerController.stage = 1;
         }
     }
-    private void OnTriggerExit(Collider other)
-    {
-        TMPObj.GetComponent<TextMeshProUGUI>().text = "";
-        TMPImage.SetActive(false);
-        GetComponent<Collider>().enabled = false;
-        
-    }
+    
     IEnumerator Showing()
     {
         CameraMode.IsGamePause = true;
         TMPImage.SetActive(true);
-        myLabel.alignment = TextAlignmentOptions.Center;
+//        myLabel.alignment = TextAlignmentOptions.Center;
         text = TalkManager.table.datas[0].Text[language];
         int cur = 0;
         while(cur < text.Length)
@@ -50,5 +44,8 @@ public class testLabel : MonoBehaviour
         }
         yield return new WaitForSeconds(2.5f);
         CameraMode.IsGamePause = false;
+        TMPObj.GetComponent<TextMeshProUGUI>().text = "";
+        TMPImage.SetActive(false);
+        GetComponent<Collider>().enabled = false;
     }
 }

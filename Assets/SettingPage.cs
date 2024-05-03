@@ -21,36 +21,28 @@ public class SettingPage : MonoBehaviour
     }
     private void Update()
     {
-        //if (Input.GetKey(KeyCode.Escape))
-        //{
-        //    if (settingPage.activeSelf && isOpened)
-        //    {
-        //        settingPage.SetActive(false);
-        //        Invoke("Delay", 0.5f);
-        //    }
-        //    else if(!settingPage.activeSelf && !isOpened)
-        //    {
-        //        settingPage.SetActive(true);
-        //        Invoke("Delay", 0.5f);
-        //    }
-        //}
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (settingPage.activeSelf)
             {
                 settingPage.SetActive(false);
-                isOpened = !isOpened;
+                Time.timeScale = 1;
             }
             else if (!settingPage.activeSelf)
             {
                 settingPage.SetActive(true);
-                isOpened = !isOpened;
+                Time.timeScale = 0;
             }
         }
     }
 
-    public void Delay()
+    public void ClickSound()
     {
-        isOpened = !isOpened;
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.Play();
+    }
+    public void XButton()
+    {
+        Time.timeScale = 1;
     }
 }

@@ -32,7 +32,9 @@ public class MonitorText : MonoBehaviour
     void OnEnable()
     {
         monitorText.text = "";
+        language = LanguageToggle.mainLanguage;
         StartCoroutine(MonitorTextStart());
+
     }
 
     private void Update()

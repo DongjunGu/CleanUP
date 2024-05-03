@@ -14,7 +14,7 @@ public class RobotCount : MonoBehaviour
     private void OnDestroy()
     {
         Count--;
-        if (robotCount == 1)
+        if (Count == 0)
             RobotZone.hasClearedRobot = true;
 
     }

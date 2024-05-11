@@ -197,7 +197,6 @@ public class MouseEnemy : MonoBehaviour
     {
         yield return new WaitForSeconds(2.0f);
         TMPImage.SetActive(true);
-        //myLabel.alignment = TextAlignmentOptions.Center;
         text = TalkManager.table.datas[12].Text[language];
         int cur = 0;
 

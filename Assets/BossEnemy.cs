@@ -405,7 +405,6 @@ public class BossEnemy : MonoBehaviour
     IEnumerator PrintText(int index)
     {
         TMPImage.SetActive(true);
-        //myLabel.alignment = TextAlignmentOptions.Center;
         text = TalkManager.table.datas[index].Text[language];
         int cur = 0;
 

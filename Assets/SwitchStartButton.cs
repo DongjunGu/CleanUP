@@ -7,6 +7,6 @@ public class SwitchStartButton : MonoBehaviour
 {
    public void StartScene()
     {
-        SceneManager.LoadScene("CleanUPMain");
+        SceneManager.LoadScene("GameScene");
     }
 }

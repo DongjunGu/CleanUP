@@ -47,18 +47,18 @@ public class MonitorText : MonoBehaviour
         Animator monitorAnim = MonitorAnim.GetComponent<Animator>();
         int index = 3;
         yield return StartCoroutine(PrintText(index++));
-        yield return StartCoroutine(PrintText(index++)); //4
+        yield return StartCoroutine(PrintText(index++));
         Almondzone.SetActive(true);
         yield return StartCoroutine(CountNumber(15));
         DestroySpawnedObjects();
-        yield return StartCoroutine(PrintText(index++)); //5
+        yield return StartCoroutine(PrintText(index++));
         ClearText();
         MonitorAnim.SetActive(true);
         monitorAnim.SetBool("isAngry", true);
         yield return StartCoroutine(SpawnLaserEnemy());
         MonitorAnim.SetActive(false);
         Almondzone.SetActive(true);
-        yield return StartCoroutine(CountNumber(45)); //45sec
+        yield return StartCoroutine(CountNumber(45));
         ClearText();
         DestroySpawnedObjects();
         yield return new WaitForSeconds(2.0f);

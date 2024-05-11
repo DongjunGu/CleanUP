@@ -32,7 +32,6 @@ public class NewPlayerController : MonoBehaviour
     public GameObject remy;
     public GameObject[] dusts;
     public GameObject Inventory;
-    //public static int hasDust;
     public int maxDust;
     public GameObject dustObject;
     public int maxHP;
@@ -97,7 +96,6 @@ public class NewPlayerController : MonoBehaviour
     int orginWeaponIndex = -1;
     float _attackDelay;
     float maxSlopeAngle = 80.0f;
-    float lastFootstepTime;
     RaycastHit slopeHit;
     public static int Papernumber;
     public enum State
@@ -105,7 +103,7 @@ public class NewPlayerController : MonoBehaviour
         Normal, TriggerBox
     }
 
-    State myState = State.Normal;
+    State myState;
 
     void Awake()
     {
@@ -173,13 +171,12 @@ public class NewPlayerController : MonoBehaviour
             float dist = _speed * Time.deltaTime;
             anim.SetBool("isRun", true);
             
-
             playerDirection = (_moveHorizontal + _moveVertical).normalized;
 
             Vector3 slopeVelocity = AdjustDirectionToSlope(playerDirection);
 
-
             float offset = 1.0f;
+
             Vector3 raycastOrigin = transform.position + Vector3.up * 0.5f;
             if (Physics.Raycast(new Ray(raycastOrigin - slopeVelocity * offset, slopeVelocity), out RaycastHit hit, dist + offset * 2.0f, LayerMask.GetMask("Wall")))
             {
@@ -194,8 +191,6 @@ public class NewPlayerController : MonoBehaviour
             
             Quaternion targetRotation = Quaternion.LookRotation(new Vector3(slopeVelocity.x, 0, slopeVelocity.z), Vector3.up);
             player.rotation = Quaternion.Slerp(player.rotation, targetRotation, Time.deltaTime * _rotateSpeed);
-
-            
         }
         else
         {
@@ -435,13 +430,12 @@ public class NewPlayerController : MonoBehaviour
     {
         float offset = 0.5f;
         if (Physics.Raycast(new Ray(transform.position - anim.deltaPosition.normalized * offset, anim.deltaPosition.normalized), out RaycastHit hit,
-            anim.deltaPosition.magnitude + offset * 2.0f, LayerMask.GetMask("Wall"))) //TODO Add Obstacle
+            anim.deltaPosition.magnitude + offset * 2.0f, LayerMask.GetMask("Wall")))
         {
             transform.position += anim.deltaPosition.normalized * (hit.distance - offset * 2.0f);
         }
         else
         {
-            //MEMO 역행렬로 회전
             Vector3 temp = transform.InverseTransformDirection(anim.deltaPosition);
             transform.Translate(player.rotation * temp, Space.World);
         }
@@ -716,8 +710,6 @@ public class NewPlayerController : MonoBehaviour
 
         bool isGroundedNow = Physics.Raycast(raycastOrigin, Vector3.down, out hit, raycastDistance, combinedLayers);
 
-        Debug.DrawRay(raycastOrigin, Vector3.down * raycastDistance, isGroundedNow ? Color.green : Color.red);
-
         anim.SetBool("isGrounded", true);
 
 
@@ -784,12 +776,10 @@ public class NewPlayerController : MonoBehaviour
         if (Vector3.Dot(player.transform.right, tempDir.normalized) < 0)
         {
             player.transform.Rotate(Vector3.up * -rotateAngle);
-            //transform.Rotate(Vector3.up * -rotateAngle);
         }
         else
         {
             player.transform.Rotate(Vector3.up * rotateAngle);
-            //transform.Rotate(Vector3.up * rotateAngle);
         }
     }
 

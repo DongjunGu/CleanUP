@@ -73,7 +73,6 @@ public class EndingCameraTrigg : MonoBehaviour
     {
         TMPImage.SetActive(true);
         text = TalkManager.table.datas[22].Text[language];
-        //myLabel.alignment = TMPro.TextAlignmentOptions.Center;
         int cur = 0;
         while (cur < text.Length)
         {

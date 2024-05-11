@@ -41,7 +41,6 @@ public class Pushable : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             pushAudio.mute = false;
-            //pushAudio.Play();
         }
         if (Input.GetKeyUp(KeyCode.W))
         {
@@ -51,7 +50,7 @@ public class Pushable : MonoBehaviour
     }
     void AllBlockSet()
     {
-        if (count == 7) //Test, should be 7
+        if (count == 7)
             allBlockSet = true;
     }
 
@@ -108,9 +107,7 @@ public class Pushable : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-
             Transform playerTransform = transform.Find("player");
-
             if (playerTransform != null)
             {
                 anim.SetBool("playPush", true);
@@ -121,16 +118,12 @@ public class Pushable : MonoBehaviour
                     float dist = 3.0f * Time.deltaTime;
                     GameObject childObject = gameObject.transform.GetChild(0).gameObject;
                     float halfSize = childObject.GetComponent<BoxCollider>().size.x * 0.8f;
-
-                    
                     Vector3 rightDir = Quaternion.Euler(0, 90, 0) * moveDirection;
                     Vector3 leftDir = Quaternion.Euler(0, -90, 0) * moveDirection;
                     Vector3[] raycastOrigin = new Vector3[3];
                     raycastOrigin[0] = transform.position + Vector3.up * halfSize;
                     raycastOrigin[1] = raycastOrigin[0] + rightDir * halfSize;
                     raycastOrigin[2] = raycastOrigin[0] + leftDir * halfSize;
-
-
                     bool check = false;
                     for(int i = 0; i < 3; ++i)
                     {
@@ -141,16 +134,11 @@ public class Pushable : MonoBehaviour
                             break;
                         }
                     }
-
                     if(check == false)
                     {
                         transform.Translate(moveDirection * dist);
                         isMoving = true;
-                        //Debug.Log("push");
-                        //SoundController.Instance.PlaySound("Push", clipPush);
                     }
-
-
                 }
                 else
                 {
@@ -158,7 +146,6 @@ public class Pushable : MonoBehaviour
                     isMoving = false;
                     pushAudio.mute = true;
                 }
-
                 player.transform.parent = transform;
                 isPlayerChild = true;
             }

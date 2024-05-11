@@ -38,8 +38,6 @@ public class SpringArmCamera : MonoBehaviour
 
         transform.localEulerAngles = new Vector3(currentCameraRotationX, 0f, 0f);
 
-        //float dist = Vector3.Distance(mainCamera.transform.position, target.position);
-
         RaycastHit hit;
 
         float offset = 0.5f;
